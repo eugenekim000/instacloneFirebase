@@ -1,0 +1,30 @@
+.post {
+  /* display: "grid";
+  grid-template-columns: minmax(auto, 600px); */
+  background-color: white;
+  max-width: 500px;
+  border: 1px solid lightgray;
+  margin-bottom: 60px;
+}
+
+.post-image {
+  width: 100%;
+  object-fit: contain;
+  border-top: 1px solid lightgray;
+  border-bottom: 1px solid lightgray;
+}
+
+.post-text {
+  font-weight: normal;
+  padding: 15px;
+}
+
+.post-header {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.post-avatar {
+  margin-right: 10px;
+}
