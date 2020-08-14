@@ -16,6 +16,8 @@ interface Post {
   key: number;
 }
 
+type E = React.MouseEvent<HTMLButtonElement, MouseEvent>;
+
 function App() {
   const classes = useStyles();
 
@@ -32,10 +34,11 @@ function App() {
     });
   }, []);
 
-  const handleSignUp = (e: Event) => {
+  const handleSignUp = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     auth()
       .createUserWithEmailAndPassword(email, password)
+      .then(() => setOpen(() => false))
       .catch((error) => alert(error.message));
   };
 
@@ -83,7 +86,7 @@ function App() {
               onChange={(e) => setPassword(e.target.value)}
             ></Input>
 
-            <Button onClick={handleSignUp} type="submit">
+            <Button onClick={(e) => handleSignUp(e)} type="submit">
               Sign up
             </Button>
           </form>
