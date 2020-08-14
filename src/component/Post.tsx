@@ -1,15 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import "../Post.css";
 import Avatar from "@material-ui/core/Avatar";
-import { Url } from "url";
 
 interface Props {
   username: string;
   caption: string;
-  imageURL?: Url;
+  image?: string;
 }
 
-export const Post = ({ username, caption, imageURL }: Props) => {
+export const Post = ({ username, caption, image }: Props) => {
   return (
     <div className="post">
       <div className="post-header">
@@ -21,11 +20,7 @@ export const Post = ({ username, caption, imageURL }: Props) => {
         <h3> {username}</h3>
       </div>
 
-      <img
-        className="post-image"
-        alt="post"
-        src="https://preview.redd.it/06h4b6zwdzg51.jpg?width=640&crop=smart&auto=webp&s=bf2b4bfa410e75a284c38f0adf73a656fc8e1cd0"
-      ></img>
+      <img className="post-image" alt="post" src={image}></img>
       <h4 className="post-text">
         {" "}
         <strong>{username}</strong> {caption}
