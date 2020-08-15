@@ -2,6 +2,7 @@ import React, { ReactElement, useState } from "react";
 import { Button } from "@material-ui/core";
 import { storage, db } from "../firebase";
 import firebase from "firebase";
+import "../styling/ImageUpload.css";
 
 interface Props {
   username: string | null | undefined;
@@ -62,7 +63,7 @@ export default function ImageUpload({ username }: Props): ReactElement {
   };
 
   return (
-    <div>
+    <div className="image-upload">
       <progress value={progress} max="100" />
       <input
         type="text"

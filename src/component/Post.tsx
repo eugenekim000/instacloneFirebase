@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../Post.css";
+import "../styling/Post.css";
 import Avatar from "@material-ui/core/Avatar";
 
 interface Props {

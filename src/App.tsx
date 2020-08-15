@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
+import "./styling/App.css";
 import { Post } from "./component/Post";
 import { db } from "./firebase";
 import { Modal, Button, Input } from "@material-ui/core";
@@ -32,9 +32,13 @@ function App() {
   const [openSignIn, setOpenSignIn] = useState(false);
 
   useEffect(() => {
-    db.collection("posts").onSnapshot((snapshot) => {
-      setPosts(snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() })));
-    });
+    db.collection("posts")
+      .orderBy("timestamp", "desc")
+      .onSnapshot((snapshot) => {
+        setPosts(
+          snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() }))
+        );
+      });
   }, []);
 
   useEffect(() => {
@@ -166,23 +170,25 @@ function App() {
           </form>
         </div>
       </Modal>
+      <div className="app-button-container">
+        {user ? (
+          <Button
+            onClick={() =>
+              auth()
+                .signOut()
+                .then(() => setUser(null))
+            }
+          >
+            Sign Out
+          </Button>
+        ) : (
+          <div className="app-login-container">
+            <Button onClick={() => setOpen(true)}>Sign In</Button>
+            <Button onClick={() => setOpenSignIn(true)}>Sign Up</Button>
+          </div>
+        )}
+      </div>
 
-      {user ? (
-        <Button
-          onClick={() =>
-            auth()
-              .signOut()
-              .then(() => setUser(null))
-          }
-        >
-          Sign Out
-        </Button>
-      ) : (
-        <div className="app-login-container">
-          <Button onClick={() => setOpen(true)}>Sign In</Button>
-          <Button onClick={() => setOpenSignIn(true)}>Sign Up</Button>
-        </div>
-      )}
       {posts.map((post: Post) => (
         <Post {...post.post} key={post.id}></Post>
       ))}
