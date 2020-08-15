@@ -49,9 +49,13 @@ export default function ImageUpload({ username }: Props): ReactElement {
             db.collection("posts").add({
               timestamp: firebase.firestore.FieldValue.serverTimestamp(),
               caption: caption,
-              imageUrl: url,
+              image: url,
               username: username,
             });
+
+            setProgress(0);
+            setCaption("");
+            setImage(null);
           });
       }
     );
@@ -59,6 +63,7 @@ export default function ImageUpload({ username }: Props): ReactElement {
 
   return (
     <div>
+      <progress value={progress} max="100" />
       <input
         type="text"
         placeholder="Enter a caption..."

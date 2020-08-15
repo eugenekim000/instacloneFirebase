@@ -85,7 +85,11 @@ function App() {
           src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
         ></img>
       </div>
-      <ImageUpload username={user?.displayName}></ImageUpload>
+      {user?.displayName ? (
+        <ImageUpload username={user?.displayName}></ImageUpload>
+      ) : (
+        <h3>Please Log in to upload!</h3>
+      )}
       <Modal
         open={openSignIn}
         onClose={() => setOpenSignIn(false)}
