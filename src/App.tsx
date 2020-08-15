@@ -18,6 +18,8 @@ interface Post {
 
 type E = React.MouseEvent<HTMLButtonElement, MouseEvent>;
 
+type User = firebase.User;
+
 function App() {
   const classes = useStyles();
 
@@ -27,6 +29,8 @@ function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [user, setUser] = useState<User | null>(null);
+  const [openSignIn, setOpenSignIn] = useState(false);
 
   useEffect(() => {
     db.collection("posts").onSnapshot((snapshot) => {
@@ -34,10 +38,30 @@ function App() {
     });
   }, []);
 
+  useEffect(() => {
+    const unsubscribe = auth().onAuthStateChanged((authUser) => {
+      if (authUser) {
+        console.log(authUser, "dope");
+        setUser(authUser);
+        if (authUser.displayName) {
+        } else {
+          return authUser.updateProfile({ displayName: username });
+        }
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [user, username]);
+
   const handleSignUp = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     auth()
       .createUserWithEmailAndPassword(email, password)
+      .then((authUser) => {
+        return authUser.user?.updateProfile({ displayName: username });
+      })
       .then(() => setOpen(() => false))
       .catch((error) => alert(error.message));
   };
@@ -92,7 +116,14 @@ function App() {
           </form>
         </div>
       </Modal>
-      <Button onClick={() => setOpen(true)}>Sign In</Button>
+      {user ? (
+        <Button onClick={() => auth().signOut()}>Sign Out</Button>
+      ) : (
+        <div className="app-login-container">
+          <Button onClick={() => setOpen(true)}>Sign In</Button>
+          <Button onClick={() => setOpen(true)}>Sign Up</Button>
+        </div>
+      )}
       {posts.map((post: Post) => (
         <Post {...post.post} key={post.id}></Post>
       ))}
