@@ -5,6 +5,7 @@ import { db } from "./firebase";
 import { Modal, Button, Input } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { auth } from "firebase";
+import ImageUpload from "./component/ImageUpload";
 
 interface Post {
   post: {
@@ -15,8 +16,6 @@ interface Post {
   id: number;
   key: number;
 }
-
-type E = React.MouseEvent<HTMLButtonElement, MouseEvent>;
 
 type User = firebase.User;
 
@@ -62,8 +61,19 @@ function App() {
       .then((authUser) => {
         return authUser.user?.updateProfile({ displayName: username });
       })
+      .catch((error) => alert(error.message));
+
+    setOpen(() => false);
+  };
+
+  const handleSignIn = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    auth()
+      .signInWithEmailAndPassword(email, password)
       .then(() => setOpen(() => false))
       .catch((error) => alert(error.message));
+
+    setOpenSignIn(false);
   };
 
   return (
@@ -75,9 +85,10 @@ function App() {
           src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
         ></img>
       </div>
+      <ImageUpload username={user?.displayName}></ImageUpload>
       <Modal
-        open={open}
-        onClose={() => setOpen(false)}
+        open={openSignIn}
+        onClose={() => setOpenSignIn(false)}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
@@ -116,12 +127,56 @@ function App() {
           </form>
         </div>
       </Modal>
+
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        <div style={modalStyle} className={classes.paper}>
+          <img
+            className="app-header-image"
+            alt="Instagram"
+            src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+          ></img>
+
+          <form className="app-signup">
+            <Input
+              placeholder="email"
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            ></Input>
+
+            <Input
+              placeholder="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            ></Input>
+
+            <Button onClick={(e) => handleSignIn(e)} type="submit">
+              Sign in
+            </Button>
+          </form>
+        </div>
+      </Modal>
+
       {user ? (
-        <Button onClick={() => auth().signOut()}>Sign Out</Button>
+        <Button
+          onClick={() =>
+            auth()
+              .signOut()
+              .then(() => setUser(null))
+          }
+        >
+          Sign Out
+        </Button>
       ) : (
         <div className="app-login-container">
           <Button onClick={() => setOpen(true)}>Sign In</Button>
-          <Button onClick={() => setOpen(true)}>Sign Up</Button>
+          <Button onClick={() => setOpenSignIn(true)}>Sign Up</Button>
         </div>
       )}
       {posts.map((post: Post) => (
