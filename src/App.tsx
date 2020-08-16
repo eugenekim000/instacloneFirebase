@@ -13,11 +13,11 @@ interface Post {
     username: string;
     caption: string;
   };
-  id: number;
+  id: string;
   key: number;
 }
 
-type User = firebase.User;
+type User = string;
 
 function App() {
   const classes = useStyles();
@@ -28,7 +28,7 @@ function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<any>(null);
   const [openSignIn, setOpenSignIn] = useState(false);
 
   useEffect(() => {
@@ -89,33 +89,31 @@ function App() {
           src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
         ></img>
 
-        <div className="app-button-container">
-          {user ? (
-            <Button
-              onClick={() =>
-                auth()
-                  .signOut()
-                  .then(() => setUser(null))
-              }
-            >
-              Sign Out
-            </Button>
-          ) : (
-            <div className="app-login-container">
-              <Button onClick={() => setOpen(true)}>Sign In</Button>
-              <Button onClick={() => setOpenSignIn(true)}>Sign Up</Button>
-            </div>
-          )}
-        </div>
+        {user ? (
+          <Button
+            onClick={() =>
+              auth()
+                .signOut()
+                .then(() => setUser(null))
+            }
+          >
+            Sign Out
+          </Button>
+        ) : (
+          <div className="app-login-container">
+            <Button onClick={() => setOpen(true)}>Sign Up</Button>
+            <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
+          </div>
+        )}
       </div>
       {user?.displayName ? (
         <ImageUpload username={user?.displayName}></ImageUpload>
       ) : (
-        <h3>Please Log in to upload!</h3>
+        <h3 className="image-upload-login">Please Log in to upload!</h3>
       )}
       <Modal
-        open={openSignIn}
-        onClose={() => setOpenSignIn(false)}
+        open={open}
+        onClose={() => setOpen(false)}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
@@ -156,8 +154,8 @@ function App() {
       </Modal>
 
       <Modal
-        open={open}
-        onClose={() => setOpen(false)}
+        open={openSignIn}
+        onClose={() => setOpenSignIn(false)}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
@@ -190,9 +188,16 @@ function App() {
         </div>
       </Modal>
 
-      {posts.map((post: Post) => (
-        <Post {...post.post} key={post.id}></Post>
-      ))}
+      <div className="app-posts">
+        {posts.map((post: Post) => (
+          <Post
+            {...post.post}
+            key={post.id}
+            postId={post.id}
+            user={user}
+          ></Post>
+        ))}
+      </div>
     </div>
   );
 }

@@ -30,3 +30,33 @@
 .post-avatar {
   margin-right: 10px;
 }
+
+.post-comment-box {
+  min-height: 56px;
+  display: flex;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-top: 10px;
+  border-top: 1px solid rgba(var(--ce3, 239, 239, 239), 1);
+}
+
+.post-input {
+  flex: 1;
+  border: none;
+  padding: 10px;
+}
+
+.post-button {
+  flex: 0;
+  border: none;
+  color: #6082a3;
+  background-color: transparent;
+}
+
+.post-comments {
+  padding: 15px;
+}
+
+*:focus {
+  outline: none;
+}

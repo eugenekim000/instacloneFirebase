@@ -4,34 +4,36 @@
 
 .App {
   background-color: #fafafa;
-  height: 100vh;
 }
 
 .app-header {
+  top: 0;
+  position: sticky;
   background-color: white;
   border-bottom: 1px solid lightgray;
+  padding: 16px 20px 8px;
   margin-bottom: 24px;
   display: flex;
+  object-fit: contain;
+  justify-content: space-between;
+  z-index: 1;
 }
 
 .app-header-image {
-  padding: 16px 20px 8px;
   object-fit: contain;
 }
 
 .app-signup {
   display: flex;
-  max-width: 100px;
-  max-height: 10px;
-  margin-left: auto;
+  flex-direction: column;
 }
 
-.app-button-container {
-  max-width: 100px;
-  max-height: 10px;
-  margin-left: auto;
-}
-
-.app-button-container button {
+.image-upload-login {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin: auto;
   margin-top: 10px;
+  margin-bottom: 20px;
+  text-align: center;
 }

@@ -68,7 +68,7 @@ export default function ImageUpload({ username }: Props): ReactElement {
 
   return (
     <div className="image-upload">
-      <progress value={progress} max="100" />
+      <progress className="image-upload-progress" value={progress} max="100" />
       <input
         type="text"
         placeholder="Enter a caption..."
