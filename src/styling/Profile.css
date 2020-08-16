@@ -1,3 +1,7 @@
+.profile-container {
+  padding: 30px 20px 0px 20px;
+}
+
 .profile-header {
   display: flex;
   margin-left: auto;
@@ -12,10 +16,6 @@
   max-width: 250px;
   margin-left: 70px;
   margin-right: 70px;
-}
-
-.profile-container {
-  padding: 30px 20px 0px 20px;
 }
 
 .profile-description-container {

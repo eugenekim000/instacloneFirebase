@@ -1,6 +1,4 @@
 .post {
-  /* display: "grid";
-  grid-template-columns: minmax(auto, 600px); */
   background-color: white;
   max-width: 500px;
   border: 1px solid lightgray;
