@@ -1,11 +1,13 @@
 import React, { ReactElement } from "react";
 import { Avatar, makeStyles, Button } from "@material-ui/core";
 import "../../styling/Profile.css";
+import { dummyImages } from "../../helper.js";
 
 interface Props {}
 
 export default function Profile({}: Props): ReactElement {
   const classes = useStyles();
+  const dummy = dummyImages;
 
   return (
     <div className="profile-container">
@@ -27,7 +29,13 @@ export default function Profile({}: Props): ReactElement {
         </section>
       </header>
 
-      <div className="profile-images"></div>
+      <div className="profile-images">
+        {dummy.map((image) => (
+          <div className="profile-image">
+            <img src={image}></img>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

@@ -26,11 +26,28 @@
 }
 
 .profile-images {
-  border-top: 1px solid #dbdbdb;
   max-width: 935px;
-  display: flex;
+  display: grid;
   margin-left: auto;
   margin-right: auto;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 28px;
+}
+
+.profile-image {
+  overflow: hidden;
+  height: 0;
+  padding: 50% 0;
+  position: relative;
+}
+
+.profile-image img {
+  min-width: 100%;
+  min-height: 100%;
+  max-width: 150%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .profile-buttons {
@@ -51,4 +68,8 @@
 
 .profile-stats > :not(:last-child) {
   margin-right: 5rem;
+}
+
+.profile-line {
+  border-top: 1px solid #dbdbdb;
 }
