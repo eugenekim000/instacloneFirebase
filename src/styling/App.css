@@ -4,6 +4,10 @@
 
 .App {
   background-color: #fafafa;
+  height: 100vh;
+  flex-direction: column;
+  display: flex;
+  position: relative;
 }
 
 .app-header {

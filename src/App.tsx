@@ -6,6 +6,7 @@ import { Modal, Button, Input } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { auth } from "firebase";
 import ImageUpload from "./component/ImageUpload";
+import Profile from "./component/profile/Profile";
 
 interface Post {
   post: {
@@ -106,11 +107,11 @@ function App() {
           </div>
         )}
       </div>
-      {user?.displayName ? (
+      {/* {user?.displayName ? (
         <ImageUpload username={user?.displayName}></ImageUpload>
       ) : (
         <h3 className="image-upload-login">Please Log in to upload!</h3>
-      )}
+      )} */}
       <Modal
         open={open}
         onClose={() => setOpen(false)}
@@ -187,7 +188,7 @@ function App() {
           </form>
         </div>
       </Modal>
-
+      {/* 
       <div className="app-posts">
         {posts.map((post: Post) => (
           <Post
@@ -197,7 +198,8 @@ function App() {
             user={user}
           ></Post>
         ))}
-      </div>
+      </div> */}
+      <Profile></Profile>
     </div>
   );
 }
