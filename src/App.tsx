@@ -88,6 +88,25 @@ function App() {
           alt="Instagram"
           src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
         ></img>
+
+        <div className="app-button-container">
+          {user ? (
+            <Button
+              onClick={() =>
+                auth()
+                  .signOut()
+                  .then(() => setUser(null))
+              }
+            >
+              Sign Out
+            </Button>
+          ) : (
+            <div className="app-login-container">
+              <Button onClick={() => setOpen(true)}>Sign In</Button>
+              <Button onClick={() => setOpenSignIn(true)}>Sign Up</Button>
+            </div>
+          )}
+        </div>
       </div>
       {user?.displayName ? (
         <ImageUpload username={user?.displayName}></ImageUpload>
@@ -170,24 +189,6 @@ function App() {
           </form>
         </div>
       </Modal>
-      <div className="app-button-container">
-        {user ? (
-          <Button
-            onClick={() =>
-              auth()
-                .signOut()
-                .then(() => setUser(null))
-            }
-          >
-            Sign Out
-          </Button>
-        ) : (
-          <div className="app-login-container">
-            <Button onClick={() => setOpen(true)}>Sign In</Button>
-            <Button onClick={() => setOpenSignIn(true)}>Sign Up</Button>
-          </div>
-        )}
-      </div>
 
       {posts.map((post: Post) => (
         <Post {...post.post} key={post.id}></Post>

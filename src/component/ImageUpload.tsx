@@ -26,6 +26,10 @@ export default function ImageUpload({ username }: Props): ReactElement {
   };
 
   const handleUpload = () => {
+    if (!image) {
+      alert("Please upload an image!");
+      return;
+    }
     const uploadTask = storage.ref(`images/${image!.name}`).put(image);
 
     uploadTask.on(

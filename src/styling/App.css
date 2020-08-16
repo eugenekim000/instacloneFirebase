@@ -2,29 +2,36 @@
   margin: 0;
 }
 
-.app {
+.App {
   background-color: #fafafa;
   height: 100vh;
 }
 
 .app-header {
   background-color: white;
-  padding: 20px;
-  object-fit: contain;
   border-bottom: 1px solid lightgray;
   margin-bottom: 24px;
+  display: flex;
+}
+
+.app-header-image {
+  padding: 16px 20px 8px;
+  object-fit: contain;
 }
 
 .app-signup {
   display: flex;
-  flex-direction: column;
+  max-width: 100px;
+  max-height: 10px;
+  margin-left: auto;
 }
 
 .app-button-container {
-  max-width: 500px;
+  max-width: 100px;
+  max-height: 10px;
+  margin-left: auto;
 }
 
 .app-button-container button {
-  margin-left: auto;
-  margin-right: auto;
+  margin-top: 10px;
 }
