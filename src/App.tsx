@@ -7,6 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { auth } from "firebase";
 import ImageUpload from "./component/ImageUpload";
 import Profile from "./component/profile/Profile";
+import Explore from "./component/explore/Explore";
 
 interface Post {
   post: {
@@ -199,7 +200,8 @@ function App() {
           ></Post>
         ))}
       </div> */}
-      <Profile></Profile>
+      {/* <Profile></Profile> */}
+      <Explore></Explore>
     </div>
   );
 }
