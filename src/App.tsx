@@ -23,9 +23,6 @@ interface Post {
 type User = string;
 
 function App() {
-  const classes = useStyles();
-
-  const [modalStyle] = React.useState(getModalStyle);
   const [posts, setPosts] = useState<Partial<any>>([]);
   const [open, setOpen] = useState(false);
   const [openSignIn, setOpenSignIn] = useState(false);
@@ -66,28 +63,6 @@ function App() {
     };
   }, [user, username]);
 
-  const handleSignUp = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-    auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((authUser) => {
-        return authUser.user?.updateProfile({ displayName: username });
-      })
-      .catch((error) => alert(error.message));
-
-    setOpen(() => false);
-  };
-
-  const handleSignIn = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-    auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => setOpen(() => false))
-      .catch((error) => alert(error.message));
-
-    setOpenSignIn(false);
-  };
-
   return (
     <div className="App">
       <div className="app-header">
@@ -123,7 +98,6 @@ function App() {
       <AuthModal
         openSignIn={open}
         setOpenSignIn={setOpen}
-        handleSignIn={handleSignUp}
         setEmail={setEmail}
         setPassword={setPassword}
         setUsername={setUsername}
@@ -136,7 +110,6 @@ function App() {
       <AuthModal
         openSignIn={openSignIn}
         setOpenSignIn={setOpenSignIn}
-        handleSignIn={handleSignIn}
         setEmail={setEmail}
         setPassword={setPassword}
         email={email}
@@ -144,32 +117,15 @@ function App() {
         signin={true}
       ></AuthModal>
 
-      {/* <Profile></Profile> */}
+      {posts.map((post: Post) => (
+        <Post {...post.post} key={post.id} postId={post.id} user={user}></Post>
+      ))}
+
+      {/* 
+      <Profile></Profile> */}
       {/* <Explore></Explore> */}
     </div>
   );
 }
 
 export default App;
-
-function getModalStyle() {
-  const top = 50;
-  const left = 50;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    position: "absolute",
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));

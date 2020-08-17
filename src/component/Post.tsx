@@ -26,7 +26,7 @@ export const Post = ({ username, caption, image, postId, user }: Props) => {
         .collection("posts")
         .doc(postId)
         .collection("comments")
-        .orderBy("timestamp", "desc")
+        .orderBy("timestamp", "asc")
         .onSnapshot((snapshot) => {
           setcomments(snapshot.docs.map((doc) => doc.data()));
         });

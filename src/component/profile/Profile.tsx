@@ -28,6 +28,7 @@ export default function Profile({}: Props): ReactElement {
           <div>description</div>
         </section>
       </header>
+      <div className="profile-line"></div>
 
       <div className="profile-images">
         {dummy.map((image) => (

@@ -1,11 +1,12 @@
 import React, { ReactElement } from "react";
 import { Modal, Button, Input } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { auth } from "firebase";
+import "../styling/App.css";
 
 interface Props {
   openSignIn: any;
   setOpenSignIn: any;
-  handleSignIn: any;
   setEmail: any;
   setPassword: any;
   email: any;
@@ -18,7 +19,6 @@ interface Props {
 export default function AuthModal({
   openSignIn,
   setOpenSignIn,
-  handleSignIn,
   setEmail,
   setPassword,
   email,
@@ -29,6 +29,27 @@ export default function AuthModal({
 }: Props): ReactElement {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
+
+  const handleSignUp = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((authUser) => {
+        return authUser.user?.updateProfile({ displayName: username });
+      })
+      .catch((error) => alert(error.message));
+
+    setOpenSignIn(() => false);
+  };
+
+  const handleSignIn = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    auth()
+      .signInWithEmailAndPassword(email, password)
+      .catch((error) => alert(error.message));
+
+    setOpenSignIn(false);
+  };
 
   return (
     <Modal
@@ -68,7 +89,10 @@ export default function AuthModal({
             onChange={(e) => setPassword(e.target.value)}
           ></Input>
 
-          <Button onClick={(e) => handleSignIn(e)} type="submit">
+          <Button
+            onClick={(e) => (signin ? handleSignIn(e) : handleSignUp(e))}
+            type="submit"
+          >
             {signin ? "Sign in" : "Sign Up"}
           </Button>
         </form>
