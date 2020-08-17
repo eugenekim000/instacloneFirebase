@@ -9,6 +9,7 @@ import ImageUpload from "./component/ImageUpload";
 import Profile from "./component/profile/Profile";
 import Explore from "./component/explore/Explore";
 import AuthModal from "./component/AuthModal";
+import Settings from "./component/settings/Settings";
 
 interface Post {
   post: {
@@ -72,7 +73,30 @@ function App() {
           src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
         ></img>
 
-        {user ? (
+        <AuthModal
+          openSignIn={open}
+          setOpenSignIn={setOpen}
+          setEmail={setEmail}
+          setPassword={setPassword}
+          setUsername={setUsername}
+          email={email}
+          password={password}
+          username={username}
+          signin={false}
+        ></AuthModal>
+
+        <AuthModal
+          openSignIn={openSignIn}
+          setOpenSignIn={setOpenSignIn}
+          setEmail={setEmail}
+          setPassword={setPassword}
+          email={email}
+          password={password}
+          signin={true}
+        ></AuthModal>
+
+        {/* upload component */}
+        {/* {user ? (
           <Button
             onClick={() =>
               auth()
@@ -87,43 +111,25 @@ function App() {
             <Button onClick={() => setOpen(true)}>Sign Up</Button>
             <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
           </div>
-        )}
+        )} */}
       </div>
-      {user?.displayName ? (
+      {/* {user?.displayName ? (
         <ImageUpload username={user?.displayName}></ImageUpload>
       ) : (
         <h3 className="image-upload-login">Please Log in to upload!</h3>
-      )}
+      )} */}
 
-      <AuthModal
-        openSignIn={open}
-        setOpenSignIn={setOpen}
-        setEmail={setEmail}
-        setPassword={setPassword}
-        setUsername={setUsername}
-        email={email}
-        password={password}
-        username={username}
-        signin={false}
-      ></AuthModal>
-
-      <AuthModal
-        openSignIn={openSignIn}
-        setOpenSignIn={setOpenSignIn}
-        setEmail={setEmail}
-        setPassword={setPassword}
-        email={email}
-        password={password}
-        signin={true}
-      ></AuthModal>
-
-      {posts.map((post: Post) => (
+      {/* posts on feed */}
+      {/* {posts.map((post: Post) => (
         <Post {...post.post} key={post.id} postId={post.id} user={user}></Post>
-      ))}
+      ))} */}
 
       {/* 
       <Profile></Profile> */}
       {/* <Explore></Explore> */}
+
+      {/* Setting page */}
+      <Settings></Settings>
     </div>
   );
 }
