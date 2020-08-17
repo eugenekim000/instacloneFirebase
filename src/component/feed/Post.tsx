@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "../styling/Post.css";
+import "../../styling/Post.css";
 import Avatar from "@material-ui/core/Avatar";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import firebase from "firebase";
 
 interface Props {
@@ -18,18 +18,25 @@ export const Post = ({ username, caption, image, postId, user }: Props) => {
   );
 
   const [comment, setComment] = useState("");
+  useEffect(() => {
+    console.log("rerendering post component");
+  }, []);
 
   useEffect(() => {
-    let unsubscribe: () => void;
+    // let unsubscribe: () => void;
+    let unsubscribe: any;
     if (postId) {
-      unsubscribe = db
-        .collection("posts")
-        .doc(postId)
-        .collection("comments")
-        .orderBy("timestamp", "asc")
-        .onSnapshot((snapshot) => {
-          setcomments(snapshot.docs.map((doc) => doc.data()));
-        });
+      // unsubscribe = db
+      //   .collection("posts")
+      //   .doc(postId)
+      //   .collection("comments")
+      //   .orderBy("timestamp", "asc")
+      //   .onSnapshot((snapshot) => {
+      //     setcomments(snapshot.docs.map((doc) => doc.data()));
+      //   });
+
+      unsubscribe = () =>
+        console.log("reading comments from data base", postId);
     }
 
     return () => {

@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./styling/App.css";
-import { Post } from "./component/Post";
+import { Post } from "./component/feed/Post";
 import { db } from "./firebase";
-import { Modal, Button, Input } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Button } from "@material-ui/core";
 import { auth } from "firebase";
-import ImageUpload from "./component/ImageUpload";
+import ImageUpload from "./component/feed/ImageUpload";
 import Profile from "./component/profile/Profile";
 import Explore from "./component/explore/Explore";
 import AuthModal from "./component/AuthModal";
-import Settings from "./component/settings/Settings";
+import EditProfilePage from "./component/settings/EditProfilePage";
 
 interface Post {
   post: {
@@ -33,6 +33,7 @@ function App() {
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
+    console.log("render");
     db.collection("posts")
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
@@ -43,6 +44,7 @@ function App() {
   }, []);
 
   useEffect(() => {
+    console.log("render");
     const unsubscribe = auth().onAuthStateChanged((authUser) => {
       if (authUser) {
         console.log(authUser, "dope");
@@ -64,6 +66,28 @@ function App() {
     };
   }, [user, username]);
 
+  const FeedPage = () => {
+    return (
+      <>
+        {user?.displayName ? (
+          <>
+            <ImageUpload username={user?.displayName}></ImageUpload>
+            {posts.map((post: Post) => (
+              <Post
+                {...post.post}
+                key={post.id}
+                postId={post.id}
+                user={user}
+              ></Post>
+            ))}
+          </>
+        ) : (
+          <h3 className="image-upload-login">Please Log in to upload!</h3>
+        )}
+      </>
+    );
+  };
+
   return (
     <div className="App">
       <div className="app-header">
@@ -73,30 +97,7 @@ function App() {
           src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
         ></img>
 
-        <AuthModal
-          openSignIn={open}
-          setOpenSignIn={setOpen}
-          setEmail={setEmail}
-          setPassword={setPassword}
-          setUsername={setUsername}
-          email={email}
-          password={password}
-          username={username}
-          signin={false}
-        ></AuthModal>
-
-        <AuthModal
-          openSignIn={openSignIn}
-          setOpenSignIn={setOpenSignIn}
-          setEmail={setEmail}
-          setPassword={setPassword}
-          email={email}
-          password={password}
-          signin={true}
-        ></AuthModal>
-
-        {/* upload component */}
-        {/* {user ? (
+        {user ? (
           <Button
             onClick={() =>
               auth()
@@ -111,25 +112,38 @@ function App() {
             <Button onClick={() => setOpen(true)}>Sign Up</Button>
             <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
           </div>
-        )} */}
+        )}
+
+        <AuthModal
+          openSignIn={open}
+          setOpenSignIn={setOpen}
+          setEmail={setEmail}
+          setPassword={setPassword}
+          setUsername={setUsername}
+          email={email}
+          password={password}
+          username={username}
+          signin={false}
+        ></AuthModal>
+        <AuthModal
+          openSignIn={openSignIn}
+          setOpenSignIn={setOpenSignIn}
+          setEmail={setEmail}
+          setPassword={setPassword}
+          email={email}
+          password={password}
+          signin={true}
+        ></AuthModal>
       </div>
-      {/* {user?.displayName ? (
-        <ImageUpload username={user?.displayName}></ImageUpload>
-      ) : (
-        <h3 className="image-upload-login">Please Log in to upload!</h3>
-      )} */}
 
-      {/* posts on feed */}
-      {posts.map((post: Post) => (
-        <Post {...post.post} key={post.id} postId={post.id} user={user}></Post>
-      ))}
-
-      {/* 
-      <Profile></Profile> */}
-      {/* <Explore></Explore> */}
-
-      {/* Setting page */}
-      {/* <Settings></Settings> */}
+      <Router>
+        <Switch>
+          <Route exact path="/" component={FeedPage} />
+          <Route path="/explore" component={Explore} />
+          <Route exact path="/:username" component={Profile} />
+          <Route path="/acounts/edit" component={EditProfilePage} />
+        </Switch>
+      </Router>
     </div>
   );
 }

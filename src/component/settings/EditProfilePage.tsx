@@ -8,7 +8,7 @@ const styleSelectedButton = {
   borderLeft: "1px solid #222",
   fontWeight: 550,
 };
-export default function Settings({}: Props): ReactElement {
+export default function EditProfilePage({}: Props): ReactElement {
   const classes = useStyles();
   const [edit, setEdit] = useState("edit");
 
