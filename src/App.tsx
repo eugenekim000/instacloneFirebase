@@ -120,16 +120,16 @@ function App() {
       )} */}
 
       {/* posts on feed */}
-      {/* {posts.map((post: Post) => (
+      {posts.map((post: Post) => (
         <Post {...post.post} key={post.id} postId={post.id} user={user}></Post>
-      ))} */}
+      ))}
 
       {/* 
       <Profile></Profile> */}
       {/* <Explore></Explore> */}
 
       {/* Setting page */}
-      <Settings></Settings>
+      {/* <Settings></Settings> */}
     </div>
   );
 }
