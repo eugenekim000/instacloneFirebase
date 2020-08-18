@@ -5,7 +5,7 @@ import firebase from "firebase";
 import "../../styling/ImageUpload.css";
 
 interface Props {
-  username: string | null | undefined;
+  username: string | undefined;
 }
 
 interface HTMLInputEvent extends Event {
@@ -57,6 +57,11 @@ export default function ImageUpload({ username }: Props): ReactElement {
               image: url,
               username: username,
             });
+
+            db.collection("users")
+              .doc(username)
+              .collection("posts")
+              .add({ image: url });
 
             setProgress(0);
             setCaption("");

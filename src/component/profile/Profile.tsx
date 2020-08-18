@@ -26,29 +26,31 @@ export default function Profile(props: any): ReactElement {
   useEffect(() => {
     console.log(props.match.params.username, "from profile!");
 
-    let getUserData = db.collection("users").doc("1234");
+    let paramUsername = props.match.params.username;
 
-    let userStats = getUserData.get().then((doc) => {
-      let data: any = doc.data();
-      if (data === undefined) {
+    let userDataQuery = db.collection("users").doc(paramUsername);
+
+    let userStats = userDataQuery.get().then((docSnapshot) => {
+      if (!docSnapshot.exists) {
         history.push("/account/notfound");
         return;
       }
-      console.log(doc.data());
+      console.log(docSnapshot.data());
       console.log("loading after history");
-      // const { followersNum, followingNum, profile } = data;
-      // setFollowers(followersNum);
-      // setFollowing(followingNum);
-      // setProfileDesc(profile);
+      const data: any = docSnapshot.data();
+      const { followersNum, followingNum, profile } = data;
+      setFollowers(followersNum);
+      setFollowing(followingNum);
+      setProfileDesc(profile);
     });
 
-    let userPosts = getUserData
+    let userPosts = userDataQuery
       .collection("posts")
       .get()
       .then((snapshot) => {
         setPosts(
           snapshot.docs.map((doc) => {
-            return doc.data().url;
+            return doc.data().image;
           })
         );
       })

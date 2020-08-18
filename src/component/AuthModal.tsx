@@ -32,9 +32,17 @@ export default function AuthModal({
   const [modalStyle] = React.useState(getModalStyle);
 
   const checkUsernameAvail = async (checkName: string | undefined) => {
-    let present = db.collection("users").doc(checkName).get();
-    if (present !== undefined) return false;
-    return true;
+    let userQuery = await db.collection("users").doc(checkName);
+
+    let check = userQuery.get().then((docSnapshot) => {
+      if (docSnapshot.exists) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+
+    return check;
   };
 
   const handleSignUp = async (
@@ -44,6 +52,7 @@ export default function AuthModal({
 
     let usernameCheck = await checkUsernameAvail(username);
     if (!usernameCheck) {
+      console.log(usernameCheck, "usernamecheck");
       alert("username already taken!");
       return;
     }
