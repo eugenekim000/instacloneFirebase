@@ -44,7 +44,8 @@ export default function Profile(props: any): ReactElement {
             return doc.data().url;
           })
         );
-      });
+      })
+      .then(() => setNumPosts(posts.length));
 
     let userFollowing;
     let userFollowers;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./styling/App.css";
 import { Post } from "./component/feed/Post";
 import { db } from "./firebase";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { auth } from "firebase";
 import ImageUpload from "./component/feed/ImageUpload";
@@ -90,53 +90,54 @@ function App() {
 
   return (
     <div className="App">
-      <div className="app-header">
-        <img
-          className="app-header-image"
-          alt="Instagram"
-          src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
-        ></img>
-
-        {user ? (
-          <Button
-            onClick={() =>
-              auth()
-                .signOut()
-                .then(() => setUser(null))
-            }
-          >
-            Sign Out
-          </Button>
-        ) : (
-          <div className="app-login-container">
-            <Button onClick={() => setOpen(true)}>Sign Up</Button>
-            <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
-          </div>
-        )}
-
-        <AuthModal
-          openSignIn={open}
-          setOpenSignIn={setOpen}
-          setEmail={setEmail}
-          setPassword={setPassword}
-          setUsername={setUsername}
-          email={email}
-          password={password}
-          username={username}
-          signin={false}
-        ></AuthModal>
-        <AuthModal
-          openSignIn={openSignIn}
-          setOpenSignIn={setOpenSignIn}
-          setEmail={setEmail}
-          setPassword={setPassword}
-          email={email}
-          password={password}
-          signin={true}
-        ></AuthModal>
-      </div>
-
       <Router>
+        <div className="app-header">
+          <Link to="/">
+            <img
+              className="app-header-image"
+              alt="Instagram"
+              src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+            ></img>
+          </Link>
+
+          {user ? (
+            <Button
+              onClick={() =>
+                auth()
+                  .signOut()
+                  .then(() => setUser(null))
+              }
+            >
+              Sign Out
+            </Button>
+          ) : (
+            <div className="app-login-container">
+              <Button onClick={() => setOpen(true)}>Sign Up</Button>
+              <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
+            </div>
+          )}
+
+          <AuthModal
+            openSignIn={open}
+            setOpenSignIn={setOpen}
+            setEmail={setEmail}
+            setPassword={setPassword}
+            setUsername={setUsername}
+            email={email}
+            password={password}
+            username={username}
+            signin={false}
+          ></AuthModal>
+          <AuthModal
+            openSignIn={openSignIn}
+            setOpenSignIn={setOpenSignIn}
+            setEmail={setEmail}
+            setPassword={setPassword}
+            email={email}
+            password={password}
+            signin={true}
+          ></AuthModal>
+        </div>
         <Switch>
           <Route exact path="/" component={FeedPage} />
           <Route path="/explore" component={Explore} />
