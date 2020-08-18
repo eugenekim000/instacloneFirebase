@@ -67,9 +67,12 @@ export const Post = ({ username, caption, image, postId, user }: Props) => {
 
       <img className="post-image" alt="post" src={image}></img>
       <h4 className="post-text">
-        {" "}
         <strong>{username}</strong> {caption}
       </h4>
+
+      <section className="post-icons">
+        <img src="../../images/black-heart.png" alt="like-button" />
+      </section>
 
       <div className="post-comments">
         {comments.map((comment) => (
