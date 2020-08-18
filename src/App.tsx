@@ -33,7 +33,7 @@ function App() {
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    console.log("render");
+    console.log("app render");
     db.collection("posts")
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
@@ -141,7 +141,7 @@ function App() {
           <Route exact path="/" component={FeedPage} />
           <Route path="/explore" component={Explore} />
           <Route exact path="/:username" component={Profile} />
-          <Route path="/acounts/edit" component={EditProfilePage} />
+          <Route path="/accounts/edit" component={EditProfilePage} />
         </Switch>
       </Router>
     </div>

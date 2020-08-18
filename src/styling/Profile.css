@@ -23,6 +23,7 @@
   max-width: 613px;
   max-height: 194px;
   justify-items: start;
+  overflow: hidden;
 }
 
 .profile-images {
@@ -72,4 +73,14 @@
 
 .profile-line {
   border-top: 1px solid #dbdbdb;
+}
+
+@media (max-width: 735px) {
+  .profile-avatar-container {
+    margin-left: 0px;
+    margin-right: 20px;
+  }
+  .profile-stats > :not(:last-child) {
+    margin-right: 2rem;
+  }
 }

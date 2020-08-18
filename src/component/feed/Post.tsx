@@ -3,6 +3,7 @@ import "../../styling/Post.css";
 import Avatar from "@material-ui/core/Avatar";
 import { db } from "../../firebase";
 import firebase from "firebase";
+import { Link } from "react-router-dom";
 
 interface Props {
   username: string;
@@ -23,20 +24,18 @@ export const Post = ({ username, caption, image, postId, user }: Props) => {
   }, []);
 
   useEffect(() => {
-    // let unsubscribe: () => void;
-    let unsubscribe: any;
-    if (postId) {
-      // unsubscribe = db
-      //   .collection("posts")
-      //   .doc(postId)
-      //   .collection("comments")
-      //   .orderBy("timestamp", "asc")
-      //   .onSnapshot((snapshot) => {
-      //     setcomments(snapshot.docs.map((doc) => doc.data()));
-      //   });
+    let unsubscribe: () => void;
 
-      unsubscribe = () =>
-        console.log("reading comments from data base", postId);
+    if (postId) {
+      unsubscribe = db
+        .collection("posts")
+        .doc(postId)
+        .collection("comments")
+        .orderBy("timestamp", "asc")
+        .onSnapshot((snapshot) => {
+          setcomments(snapshot.docs.map((doc) => doc.data()));
+        });
+      console.log("rerendering post Id");
     }
 
     return () => {
@@ -75,7 +74,10 @@ export const Post = ({ username, caption, image, postId, user }: Props) => {
       <div className="post-comments">
         {comments.map((comment) => (
           <p>
-            <strong>{comment.username} </strong> {comment.text}
+            <Link to={`/${comment.username}`}>
+              <strong>{comment.username} </strong>
+            </Link>
+            {comment.text}
           </p>
         ))}
       </div>
