@@ -3,6 +3,7 @@ import { Modal, Button, Input } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { auth } from "firebase";
 import "../styling/App.css";
+import { db } from "../firebase";
 
 interface Props {
   openSignIn: any;
@@ -30,11 +31,31 @@ export default function AuthModal({
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
 
-  const handleSignUp = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const checkUsernameAvail = async (checkName: string | undefined) => {
+    let present = db.collection("users").doc(checkName).get();
+    if (present !== undefined) return false;
+    return true;
+  };
+
+  const handleSignUp = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault();
-    auth()
+
+    let usernameCheck = await checkUsernameAvail(username);
+    if (!usernameCheck) {
+      alert("username already taken!");
+      return;
+    }
+
+    await auth()
       .createUserWithEmailAndPassword(email, password)
       .then((authUser) => {
+        db.collection("users").doc(username).set({
+          followersNum: 0,
+          followingNum: 0,
+          profile: "",
+        });
         return authUser.user?.updateProfile({ displayName: username });
       })
       .catch((error) => alert(error.message));

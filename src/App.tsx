@@ -10,6 +10,7 @@ import Profile from "./component/profile/Profile";
 import Explore from "./component/explore/Explore";
 import AuthModal from "./component/AuthModal";
 import EditProfilePage from "./component/settings/EditProfilePage";
+import NotFound from "./component/NotFound";
 
 interface Post {
   post: {
@@ -143,6 +144,7 @@ function App() {
           <Route path="/explore" component={Explore} />
           <Route exact path="/:username" component={Profile} />
           <Route path="/accounts/edit" component={EditProfilePage} />
+          <Route exact path="*" component={NotFound} />
         </Switch>
       </Router>
     </div>

@@ -3,6 +3,7 @@ import { Avatar, makeStyles, Button } from "@material-ui/core";
 import "../../styling/Profile.css";
 import { dummyImages } from "../../helper.js";
 import { db } from "../../firebase";
+import { useHistory } from "react-router-dom";
 import firebase from "firebase";
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 
 export default function Profile(props: any): ReactElement {
   const classes = useStyles();
+  const history = useHistory();
   const dummy = dummyImages;
 
   const [username, setUsername] = useState("test");
@@ -24,15 +26,20 @@ export default function Profile(props: any): ReactElement {
   useEffect(() => {
     console.log(props.match.params.username, "from profile!");
 
-    let getUserData = db.collection("users").doc("uhnyeah");
+    let getUserData = db.collection("users").doc("1234");
 
     let userStats = getUserData.get().then((doc) => {
       let data: any = doc.data();
+      if (data === undefined) {
+        history.push("/account/notfound");
+        return;
+      }
       console.log(doc.data());
-      const { followersNum, followingNum, profile } = data;
-      setFollowers(followersNum);
-      setFollowing(followingNum);
-      setProfileDesc(profile);
+      console.log("loading after history");
+      // const { followersNum, followingNum, profile } = data;
+      // setFollowers(followersNum);
+      // setFollowing(followingNum);
+      // setProfileDesc(profile);
     });
 
     let userPosts = getUserData
