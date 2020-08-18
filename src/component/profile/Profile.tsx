@@ -14,41 +14,41 @@ export default function Profile(props: any): ReactElement {
   const dummy = dummyImages;
 
   const [username, setUsername] = useState("test");
-  const [numPosts, setNumPosts] = useState(2);
-  const [posts, setPosts] = useState([
-    "https://preview.redd.it/fwpb1mkd5lh51.jpg?width=640&height=640&crop=smart&auto=webp&s=ca5d8790477580e981361fe7a6f805523b1281f5",
-  ]);
-  const [followers, setFollowers] = useState(1);
-  const [following, setFollowing] = useState(4);
+  const [numPosts, setNumPosts] = useState(0);
+  const [posts, setPosts] = useState<any>([""]);
+  const [followers, setFollowers] = useState(0);
+  const [following, setFollowing] = useState(0);
   const [profileDesc, setProfileDesc] = useState("this is a profile desc xD");
   const [avatar, setAvatar] = useState("");
 
   useEffect(() => {
     console.log(props.match.params.username, "from profile!");
 
-    let data = db
-      .collection("users")
-      .doc("uhnyeah")
+    let getUserData = db.collection("users").doc("uhnyeah");
+
+    let userStats = getUserData.get().then((doc) => {
+      let data: any = doc.data();
+      console.log(doc.data());
+      const { followersNum, followingNum, profile } = data;
+      setFollowers(followersNum);
+      setFollowing(followingNum);
+      setProfileDesc(profile);
+    });
+
+    let userPosts = getUserData
+      .collection("posts")
       .get()
-      .then((doc) => {
-        console.log(doc.data());
+      .then((snapshot) => {
+        setPosts(
+          snapshot.docs.map((doc) => {
+            return doc.data().url;
+          })
+        );
       });
+
+    let userFollowing;
+    let userFollowers;
   }, []);
-
-  // db
-  //       .collection("posts")
-  //       .doc(postId)
-  //       .collection("comments")
-  //       .orderBy("timestamp", "asc")
-  //       .onSnapshot((snapshot) => {
-  //         setcomments(snapshot.docs.map((doc) => doc.data()));
-  //       });
-
-  // find user name
-  // -find posts
-  // -find followers
-  // -find following
-  // -profile
 
   return (
     <div className="profile-container">
@@ -73,7 +73,7 @@ export default function Profile(props: any): ReactElement {
       <div className="profile-line"></div>
 
       <div className="profile-images">
-        {posts.map((image) => (
+        {posts.map((image: string) => (
           <div className="profile-image">
             <img src={image}></img>
           </div>
