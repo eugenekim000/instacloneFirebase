@@ -17,7 +17,7 @@
 
 .post-text {
   font-weight: normal;
-  padding: 15px 15px 0px 15px;
+  padding: 0px 15px 0px 15px;
 }
 
 .post-header {
@@ -53,12 +53,27 @@
 }
 
 .post-comments {
-  padding: 15px;
+  padding: 0px 15px 0px 15px;
 }
 
 .post-comments a {
   text-decoration: none;
   color: black;
+}
+
+.post-icons-container {
+  margin-left: 13px;
+}
+
+.post-like-button {
+  width: 24px;
+  height: 24px;
+  margin: 3px;
+}
+
+.post-chat-button {
+  background: transparent;
+  border: none;
 }
 
 *:focus {

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../../styling/Post.css";
 import Avatar from "@material-ui/core/Avatar";
 import { db } from "../../firebase";
 import firebase from "firebase";
 import { Link } from "react-router-dom";
-
+import { ReactComponent as UnlikeIcon } from "../../images/black-like.svg";
+import { ReactComponent as ChatIcon } from "../../images/chat.svg";
 interface Props {
   username: string;
   caption: string;
@@ -13,10 +14,17 @@ interface Props {
   user: any;
 }
 
+const blackEmoji =
+  "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/twitter/71/black-heart_1f5a4.png";
+const chatEmoji =
+  "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/microsoft/54/speech-balloon_1f4ac.png";
+
 export const Post = ({ username, caption, image, postId, user }: Props) => {
   const [comments, setcomments] = useState<firebase.firestore.DocumentData[]>(
     []
   );
+
+  const textInput = useRef<HTMLInputElement>(null);
 
   const [comment, setComment] = useState("");
   useEffect(() => {
@@ -54,6 +62,10 @@ export const Post = ({ username, caption, image, postId, user }: Props) => {
     setComment("");
   };
 
+  const handleClick = () => {
+    textInput.current?.focus();
+  };
+
   return (
     <div className="post">
       <div className="post-header">
@@ -66,13 +78,22 @@ export const Post = ({ username, caption, image, postId, user }: Props) => {
       </div>
 
       <img className="post-image" alt="post" src={image}></img>
+
+      <div className="post-icons-container">
+        <section className="post-icons">
+          <span className="post-like-button">
+            <UnlikeIcon style={{ height: 24, width: 24 }} />
+          </span>
+          <span></span>
+          <button className="post-chat-button" onClick={handleClick}>
+            <ChatIcon style={{ height: 24, width: 24 }} />
+          </button>
+        </section>
+      </div>
+
       <h4 className="post-text">
         <strong>{username}</strong> {caption}
       </h4>
-
-      <section className="post-icons">
-        <img src="../../images/black-heart.png" alt="like-button" />
-      </section>
 
       <div className="post-comments">
         {comments.map((comment) => (
@@ -88,6 +109,7 @@ export const Post = ({ username, caption, image, postId, user }: Props) => {
       {user && (
         <form className="post-comment-box">
           <input
+            ref={textInput}
             className="post-input"
             value={comment}
             type="text"
