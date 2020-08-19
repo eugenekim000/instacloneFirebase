@@ -11,6 +11,7 @@ import Explore from "./component/explore/Explore";
 import AuthModal from "./component/AuthModal";
 import EditProfilePage from "./component/settings/EditProfilePage";
 import NotFound from "./component/NotFound";
+import Header from "./component/Header";
 
 interface Post {
   post: {
@@ -26,46 +27,46 @@ type User = string;
 
 function App() {
   const [posts, setPosts] = useState<Partial<any>>([]);
-  const [open, setOpen] = useState(false);
-  const [openSignIn, setOpenSignIn] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
+  // const [open, setOpen] = useState(false);
+  // const [openSignIn, setOpenSignIn] = useState(false);
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [username, setUsername] = useState("");
   const [user, setUser] = useState<any>(null);
 
-  useEffect(() => {
-    console.log("app render");
-    db.collection("posts")
-      .orderBy("timestamp", "desc")
-      .onSnapshot((snapshot) => {
-        setPosts(
-          snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() }))
-        );
-      });
-  }, []);
+  // useEffect(() => {
+  //   console.log("app render");
+  //   db.collection("posts")
+  //     .orderBy("timestamp", "desc")
+  //     .onSnapshot((snapshot) => {
+  //       setPosts(
+  //         snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() }))
+  //       );
+  //     });
+  // }, []);
 
-  useEffect(() => {
-    console.log("render");
-    const unsubscribe = auth().onAuthStateChanged((authUser) => {
-      if (authUser) {
-        console.log(authUser, "dope");
+  // useEffect(() => {
+  //   console.log("render");
+  //   const unsubscribe = auth().onAuthStateChanged((authUser) => {
+  //     if (authUser) {
+  //       console.log(authUser, "dope");
 
-        setUser(authUser);
+  //       setUser(authUser);
 
-        console.log(user, "has been set!");
-        if (authUser.displayName) {
-          console.log(user);
-          console.log(user.displayName, "displayname!!!");
-        } else {
-          return authUser.updateProfile({ displayName: username });
-        }
-      }
-    });
+  //       console.log(user, "has been set!");
+  //       if (authUser.displayName) {
+  //         console.log(user);
+  //         console.log(user.displayName, "displayname!!!");
+  //       } else {
+  //         return authUser.updateProfile({ displayName: username });
+  //       }
+  //     }
+  //   });
 
-    return () => {
-      unsubscribe();
-    };
-  }, [user, username]);
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // }, [user, username]);
 
   const FeedPage = () => {
     return (
@@ -92,7 +93,8 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <div className="app-header">
+        <Header setPosts={setPosts} setUser={setUser} user={user}></Header>
+        {/* <div className="app-header">
           <Link to="/">
             <img
               className="app-header-image"
@@ -138,7 +140,7 @@ function App() {
             password={password}
             signin={true}
           ></AuthModal>
-        </div>
+        </div> */}
         <Switch>
           <Route exact path="/" component={FeedPage} />
           <Route path="/explore" component={Explore} />

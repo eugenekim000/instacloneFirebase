@@ -121,7 +121,10 @@ export const Post = ({ username, caption, image, postId, user }: Props) => {
           alt="user"
           src="https://i.redd.it/k2tlvc7inyg51.jpg"
         ></Avatar>
-        <h3> {username}</h3>
+
+        <Link to={`/${username}`}>
+          <h3> {username}</h3>
+        </Link>
       </div>
 
       <img className="post-image" alt="post" src={image}></img>
@@ -144,7 +147,13 @@ export const Post = ({ username, caption, image, postId, user }: Props) => {
 
       <h4 className="post-text">
         <h4> {displayPostLikes(postLikeNum)}</h4>
-        <strong>{username}</strong> {caption}
+        <Link to={`/${username}`}>
+          <h3>
+            {" "}
+            <strong>{username}</strong>
+          </h3>
+        </Link>{" "}
+        {caption}
       </h4>
 
       <div className="post-comments">

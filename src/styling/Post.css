@@ -54,12 +54,17 @@
 
 .post-comments {
   padding: 0px 15px 0px 15px;
+  font-size: 12px;
 }
 
-.post-comments a {
+.post-text {
+  font-size: 12px;
+}
+
+/* .post-comments a {
   text-decoration: none;
   color: black;
-}
+} */
 
 .post-icons-container {
   margin-left: 13px;
@@ -77,4 +82,9 @@
 
 *:focus {
   outline: none;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
