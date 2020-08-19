@@ -5,6 +5,7 @@ import { db } from "../../firebase";
 import firebase from "firebase";
 import { Link } from "react-router-dom";
 import { ReactComponent as UnlikeIcon } from "../../images/black-like.svg";
+import { ReactComponent as LikeIcon } from "../../images/red-like.svg";
 import { ReactComponent as ChatIcon } from "../../images/chat.svg";
 interface Props {
   username: string;
@@ -27,9 +28,10 @@ export const Post = ({ username, caption, image, postId, user }: Props) => {
   const textInput = useRef<HTMLInputElement>(null);
 
   const [comment, setComment] = useState("");
-  useEffect(() => {
-    console.log("rerendering post component");
-  }, []);
+  //TODO ADD POST TYPES
+  const [postLikes, setPostLikes] = useState<any>([]);
+  const [postLikeNum, setPostLikeNum] = useState(0);
+  const [likedState, setLikedState] = useState(false);
 
   useEffect(() => {
     let unsubscribe: () => void;
@@ -45,6 +47,15 @@ export const Post = ({ username, caption, image, postId, user }: Props) => {
         });
       console.log("rerendering post Id");
     }
+
+    let postLikeQuery = db.collection("posts").doc(postId).collection("likes");
+    postLikeQuery.get().then((snapShot) => {
+      if (snapShot.empty) return;
+      else {
+        setPostLikeNum(snapShot.size);
+        // setPostLikes(snapShot.docs.map((doc) => doc.data()));
+      }
+    });
 
     return () => {
       unsubscribe();
@@ -62,8 +73,26 @@ export const Post = ({ username, caption, image, postId, user }: Props) => {
     setComment("");
   };
 
-  const handleClick = () => {
+  const handleChatClick = () => {
     textInput.current?.focus();
+  };
+
+  const handleLikeClick = () => {
+    //liking
+    if (!likedState) {
+      setPostLikeNum((prevState) => prevState + 1);
+      setLikedState((prevState) => !prevState);
+    } else {
+      setPostLikeNum((prevState) => prevState - 1);
+      setLikedState((prevState) => !prevState);
+    }
+  };
+
+  const displayPostLikes = (postLikeNum: number) => {
+    console.log("display post likes");
+    if (postLikeNum > 1) return `${postLikeNum} likes`;
+    else if (postLikeNum === 1) return "1 like";
+    return "Be the first to like this";
   };
 
   return (
@@ -81,16 +110,21 @@ export const Post = ({ username, caption, image, postId, user }: Props) => {
 
       <div className="post-icons-container">
         <section className="post-icons">
-          <span className="post-like-button">
-            <UnlikeIcon style={{ height: 24, width: 24 }} />
-          </span>
-          <span></span>
-          <button className="post-chat-button" onClick={handleClick}>
+          <button className="post-like-button" onClick={handleLikeClick}>
+            {likedState ? (
+              <LikeIcon style={{ height: 24, width: 24 }} />
+            ) : (
+              <UnlikeIcon style={{ height: 24, width: 24 }} />
+            )}
+          </button>
+
+          <button className="post-chat-button" onClick={handleChatClick}>
             <ChatIcon style={{ height: 24, width: 24 }} />
           </button>
         </section>
       </div>
 
+      <h4> {displayPostLikes(postLikeNum)}</h4>
       <h4 className="post-text">
         <strong>{username}</strong> {caption}
       </h4>
