@@ -1,7 +1,30 @@
 import React, { ReactElement } from "react";
+import ImageUpload from "./ImageUpload";
+import Post from "./Post";
 
-interface Props {}
+interface Props {
+  user: any;
+  posts: any;
+}
 
-export default function FeedPage({}: Props): ReactElement {
-  return <div></div>;
+export default function FeedPage({ user, posts }: Props): ReactElement {
+  return (
+    <>
+      {user?.displayName ? (
+        <>
+          <ImageUpload username={user?.displayName}></ImageUpload>
+          {posts.map((post: Post) => (
+            <Post
+              {...post.post}
+              key={post.id}
+              postId={post.id}
+              user={user}
+            ></Post>
+          ))}
+        </>
+      ) : (
+        <h3 className="image-upload-login">Please Log in to upload!</h3>
+      )}
+    </>
+  );
 }
