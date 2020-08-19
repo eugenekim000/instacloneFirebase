@@ -3,24 +3,18 @@ import "../../styling/Settings.css";
 import { Avatar, makeStyles } from "@material-ui/core";
 import { useStyles } from "./EditProfilePage";
 import { UserContext } from "../../App";
+import { storage } from "../../firebase";
 import { auth } from "firebase";
 
 interface Props {}
 
 export default function EditPublic({}: Props): ReactElement {
-  const [avatarImg, setAvatarImg] = useState(
-    "https://www.google.com/logos/doodles/2020/julius-lothar-meyers-190th-birthday-6753651837108694.2-l.png"
-  );
   const [name, setName] = useState("");
   const [userName, setUserName] = useState("");
   const [website, setWebsite] = useState("");
   const [bio, setBio] = useState("");
   const [email, setEmail] = useState("");
   const user = useContext(UserContext);
-
-  useEffect(() => {
-    console.log(user, "user from edit public!!");
-  }, []);
 
   const classes = useStyles();
 
@@ -33,18 +27,45 @@ export default function EditPublic({}: Props): ReactElement {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log(user);
+    console.log(user, "submit");
+  };
+
+  const handleProfilePic = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const image = e.target.files![0];
+
+    const uploadTask = storage.ref(`images/avatars/${image!.name}`).put(image);
+
+    uploadTask.on(
+      "state_changed",
+      () => {},
+      (err: any) => console.log(err.message, "upload"),
+      () => {
+        uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+          user
+            .updateProfile({
+              photoURL: url,
+            })
+            .then(() => {
+              console.log(user.photoURL);
+            })
+            .catch((err: any) => console.log(err.message));
+        });
+      }
+    );
   };
 
   return (
     <div className="settings-input-container">
       <div className="setting-input-container">
-        <Avatar className={classes.medium} src={avatarImg} />
+        <Avatar className={classes.medium} src={user ? user.photoURL : ""} />
         <div className="setting-username">
           <div>{user ? user.displayName : ""}</div>
-          <button className="setting-username-button">
-            Change Profile Picture
-          </button>
+          <input
+            className="setting-username-button"
+            id="edit-avatar"
+            type="file"
+            onChange={handleProfilePic}
+          />
         </div>
       </div>
 
