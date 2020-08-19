@@ -8,6 +8,7 @@ import Explore from "./component/explore/Explore";
 import EditProfilePage from "./component/settings/EditProfilePage";
 import NotFound from "./component/NotFound";
 import Header from "./component/Header";
+import FeedPage from "./component/feed/FeedPage";
 
 interface Post {
   post: {
@@ -31,34 +32,38 @@ function App() {
   const [posts, setPosts] = useState<Partial<any>>([]);
   const [user, setUser] = useState<any>(null);
 
-  const FeedPage = () => {
-    return (
-      <>
-        {user?.displayName ? (
-          <>
-            <ImageUpload username={user?.displayName}></ImageUpload>
-            {posts.map((post: Post) => (
-              <Post
-                {...post.post}
-                key={post.id}
-                postId={post.id}
-                user={user}
-              ></Post>
-            ))}
-          </>
-        ) : (
-          <h3 className="image-upload-login">Please Log in to upload!</h3>
-        )}
-      </>
-    );
-  };
+  // const FeedPage = () => {
+  //   return (
+  //     <>
+  //       {user?.displayName ? (
+  //         <>
+  //           <ImageUpload username={user?.displayName}></ImageUpload>
+  //           {posts.map((post: Post) => (
+  //             <Post
+  //               {...post.post}
+  //               key={post.id}
+  //               postId={post.id}
+  //               user={user}
+  //             ></Post>
+  //           ))}
+  //         </>
+  //       ) : (
+  //         <h3 className="image-upload-login">Please Log in to upload!</h3>
+  //       )}
+  //     </>
+  //   );
+  // };
 
   return (
     <div className="App">
       <Router>
         <Header setPosts={setPosts} setUser={setUser} user={user}></Header>
         <Switch>
-          <Route exact path="/" render={() => <FeedPage />} />
+          <Route
+            exact
+            path="/"
+            render={() => <FeedPage user={user} posts={posts} />}
+          />
           <Route path="/explore" component={Explore} />
           <Route exact path="/:username" component={Profile} />
           <Route path="/accounts/edit" component={EditProfilePage} />

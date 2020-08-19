@@ -1,10 +1,20 @@
 import React, { ReactElement } from "react";
 import ImageUpload from "./ImageUpload";
-import Post from "./Post";
+import { Post } from "./Post";
 
 interface Props {
   user: any;
   posts: any;
+}
+
+interface Post {
+  post: {
+    image: string;
+    username: string;
+    caption: string;
+  };
+  id: string;
+  key: number;
 }
 
 export default function FeedPage({ user, posts }: Props): ReactElement {
