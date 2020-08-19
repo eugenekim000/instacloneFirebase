@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import { ReactComponent as UnlikeIcon } from "../../images/black-like.svg";
 import { ReactComponent as LikeIcon } from "../../images/red-like.svg";
 import { ReactComponent as ChatIcon } from "../../images/chat.svg";
+import { postLikeQuery } from "../../queries";
+
 interface Props {
   username: string;
   caption: string;
@@ -14,11 +16,6 @@ interface Props {
   postId: string;
   user: any;
 }
-
-const blackEmoji =
-  "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/twitter/71/black-heart_1f5a4.png";
-const chatEmoji =
-  "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/60/microsoft/54/speech-balloon_1f4ac.png";
 
 export const Post = ({ username, caption, image, postId, user }: Props) => {
   const [comments, setcomments] = useState<firebase.firestore.DocumentData[]>(
@@ -28,10 +25,21 @@ export const Post = ({ username, caption, image, postId, user }: Props) => {
   const textInput = useRef<HTMLInputElement>(null);
 
   const [comment, setComment] = useState("");
-  //TODO ADD POST TYPES
-  const [postLikes, setPostLikes] = useState<any>([]);
   const [postLikeNum, setPostLikeNum] = useState(0);
   const [likedState, setLikedState] = useState(false);
+
+  useEffect(() => {
+    postLikeQuery(postId)
+      .doc(user.displayName)
+      .get()
+      .then((doc) => {
+        console.log(doc, "inital render checking if user liked post");
+        if (doc.exists) {
+          setLikedState(true);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   useEffect(() => {
     let unsubscribe: () => void;
@@ -48,14 +56,22 @@ export const Post = ({ username, caption, image, postId, user }: Props) => {
       console.log("rerendering post Id");
     }
 
-    let postLikeQuery = db.collection("posts").doc(postId).collection("likes");
-    postLikeQuery.get().then((snapShot) => {
-      if (snapShot.empty) return;
-      else {
-        setPostLikeNum(snapShot.size);
-        // setPostLikes(snapShot.docs.map((doc) => doc.data()));
-      }
-    });
+    let getPostLikes = postLikeQuery(postId);
+    getPostLikes
+      .get()
+      .then(
+        (
+          snapShot: firebase.firestore.QuerySnapshot<
+            firebase.firestore.DocumentData
+          >
+        ) => {
+          if (snapShot.empty) return;
+          else {
+            setPostLikeNum(snapShot.size);
+            // setPostLikes(snapShot.docs.map((doc) => doc.data()));
+          }
+        }
+      );
 
     return () => {
       unsubscribe();
@@ -82,14 +98,16 @@ export const Post = ({ username, caption, image, postId, user }: Props) => {
     if (!likedState) {
       setPostLikeNum((prevState) => prevState + 1);
       setLikedState((prevState) => !prevState);
+      postLikeQuery(postId).doc(user.displayName).set({ exists: true });
     } else {
       setPostLikeNum((prevState) => prevState - 1);
       setLikedState((prevState) => !prevState);
+      postLikeQuery(postId).doc(user.displayName).delete();
     }
   };
 
   const displayPostLikes = (postLikeNum: number) => {
-    console.log("display post likes");
+    console.log("display post likes", postId);
     if (postLikeNum > 1) return `${postLikeNum} likes`;
     else if (postLikeNum === 1) return "1 like";
     return "Be the first to like this";
@@ -124,8 +142,8 @@ export const Post = ({ username, caption, image, postId, user }: Props) => {
         </section>
       </div>
 
-      <h4> {displayPostLikes(postLikeNum)}</h4>
       <h4 className="post-text">
+        <h4> {displayPostLikes(postLikeNum)}</h4>
         <strong>{username}</strong> {caption}
       </h4>
 

@@ -66,9 +66,8 @@
 }
 
 .post-like-button {
-  width: 24px;
-  height: 24px;
-  margin: 3px;
+  background: transparent;
+  border: none;
 }
 
 .post-chat-button {
