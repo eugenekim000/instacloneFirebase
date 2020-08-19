@@ -33,7 +33,7 @@ export default function EditPublic({}: Props): ReactElement {
   const handleProfilePic = (e: React.ChangeEvent<HTMLInputElement>) => {
     const image = e.target.files![0];
 
-    const uploadTask = storage.ref(`images/avatars/${image!.name}`).put(image);
+    const uploadTask = storage.ref(`avatars/${image!.name}`).put(image);
 
     uploadTask.on(
       "state_changed",
