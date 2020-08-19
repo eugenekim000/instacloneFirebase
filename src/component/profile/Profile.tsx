@@ -3,7 +3,7 @@ import { Avatar, makeStyles, Button } from "@material-ui/core";
 import "../../styling/Profile.css";
 import { dummyImages } from "../../helper.js";
 import { db } from "../../firebase";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import firebase from "firebase";
 
 interface Props {
@@ -30,7 +30,7 @@ export default function Profile(props: any): ReactElement {
 
     let userDataQuery = db.collection("users").doc(paramUsername);
 
-    let userStats = userDataQuery.get().then((docSnapshot) => {
+    userDataQuery.get().then((docSnapshot) => {
       if (!docSnapshot.exists) {
         history.push("/account/notfound");
         return;
@@ -44,7 +44,7 @@ export default function Profile(props: any): ReactElement {
       setProfileDesc(profile);
     });
 
-    let userPosts = userDataQuery
+    userDataQuery
       .collection("posts")
       .get()
       .then((snapshot) => {
@@ -69,7 +69,9 @@ export default function Profile(props: any): ReactElement {
         <section className="profile-description-container">
           <div className="profile-buttons">
             <h2>{username}</h2>
-            <button>Edit Profile</button>
+            <Link to="/accounts/edit">
+              <button>Edit Profile</button>
+            </Link>
             <button>log out</button>
           </div>
 
