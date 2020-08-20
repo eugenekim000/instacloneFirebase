@@ -50,6 +50,22 @@ export default function ({}: Props): ReactElement {
     setNewPassword("");
     setConfirmPassword("");
   };
+
+  const handleForgottenPW = (e: any) => {
+    e.preventDefault();
+    let confirmChoice = window.confirm("Send password rest email?");
+    if (confirmChoice) {
+      firebase
+        .auth()
+        .sendPasswordResetEmail(user.email)
+        .then(() => {
+          alert("Email has been sent!");
+        })
+        .catch((err: any) => {
+          console.log(err);
+        });
+    }
+  };
   return (
     <div className="settings-input-container">
       <div className="setting-input-container">
@@ -63,6 +79,7 @@ export default function ({}: Props): ReactElement {
         <div className="setting-input-container">
           <label>Old Password</label>
           <input
+            type="password"
             onChange={(e) => onChangeHandler(e, setPassword)}
             placeholder={password}
             value={password}
@@ -71,6 +88,7 @@ export default function ({}: Props): ReactElement {
         <div className="setting-input-container">
           <label>New Password</label>
           <input
+            type="password"
             onChange={(e) => onChangeHandler(e, setNewPassword)}
             placeholder={newPassword}
             value={newPassword}
@@ -79,6 +97,7 @@ export default function ({}: Props): ReactElement {
         <div className="setting-input-container">
           <label>Confirm New Password</label>
           <input
+            type="password"
             onChange={(e) => onChangeHandler(e, setConfirmPassword)}
             placeholder={confirmPassword}
             value={confirmPassword}
@@ -91,13 +110,18 @@ export default function ({}: Props): ReactElement {
             className="setting-input-container-submit-button"
             onClick={(e) => handlePasswordChange(e)}
           >
-            Submit
+            Change Password
           </button>
         </div>
 
         <div className="setting-input-container">
           <label></label>
-          <button className="setting-username-button">Forgot Password?</button>
+          <button
+            className="setting-username-button"
+            onClick={(e) => handleForgottenPW(e)}
+          >
+            Forgot Password?
+          </button>
         </div>
       </form>
     </div>
