@@ -58,12 +58,20 @@ export default function ImageUpload({ username }: Props): ReactElement {
           .child(image.name)
           .getDownloadURL()
           .then((url) => {
-            db.collection("posts").add({
-              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-              caption: caption,
-              image: url,
-              username: username,
-            });
+            db.collection("posts")
+              .add({
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                caption: caption,
+                image: url,
+                username: username,
+              })
+              .then((docRef) => {
+                db.collection("users")
+                  .doc(username)
+                  .collection("posts")
+                  .doc(docRef.id)
+                  .set({ image: url });
+              });
 
             db.collection("users")
               .doc(username)

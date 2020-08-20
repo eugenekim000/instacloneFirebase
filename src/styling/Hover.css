@@ -16,12 +16,14 @@
   display: inline-block;
   background-color: black;
   opacity: 0.5;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-/* .profile-image:hover img {
-  filter: brightness(70%);
+.stats-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 50%;
 }
-
-.profile-image:hover {
-  filter: brightness(70%);
-} */

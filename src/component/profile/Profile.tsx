@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState, useContext } from "react";
-import { Avatar, makeStyles, Button } from "@material-ui/core";
+import { Avatar, makeStyles } from "@material-ui/core";
 import { userQuery as userProfileQuery } from "../../queries";
 import "../../styling/Profile.css";
 import { useHistory, Link } from "react-router-dom";
@@ -108,9 +108,10 @@ export default function Profile(props: any): ReactElement {
       <div className="profile-line"></div>
 
       <div className="profile-images">
-        {posts.map(({ imageURL, id }: Posts) => (
-          <HoverImg image={imageURL} id={id}></HoverImg>
-        ))}
+        {posts[0] &&
+          posts.map(({ imageURL, id }: Posts) => (
+            <HoverImg image={imageURL} id={id}></HoverImg>
+          ))}
       </div>
     </div>
   );
