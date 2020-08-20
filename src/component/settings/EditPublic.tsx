@@ -107,9 +107,6 @@ export default function EditPublic({}: Props): ReactElement {
           .catch((err: any) => alert(err.message));
       })
       .catch((err: any) => err.message);
-
-    console.log(email, "this is email");
-    console.log(user, "submit");
   };
 
   return (

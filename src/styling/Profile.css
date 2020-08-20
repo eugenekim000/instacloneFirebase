@@ -73,6 +73,10 @@
 
 .profile-line {
   border-top: 1px solid #dbdbdb;
+  max-width: 939px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 52px;
 }
 
 @media (max-width: 735px) {
