@@ -1,0 +1,20 @@
+.unfollow-button {
+  background-color: transparent;
+  color: black;
+  font-weight: 600;
+  width: 5rem;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  padding: 5px 10px 5px 10px;
+}
+
+.follow-button {
+  background-color: #0095f6;
+  color: white;
+  font-weight: 600;
+  width: 5rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}

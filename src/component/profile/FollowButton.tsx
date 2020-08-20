@@ -1,40 +1,49 @@
 import React, { ReactElement, useState, useEffect } from "react";
-import { userQuery } from "../../queries";
+import "../../styling/FollowButton.css";
+import { userQuery, followingQuery, followersQuery } from "../../queries";
 
 interface Props {
   user: string;
   username: string;
+  setFollowers: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function FollowButton({ user, username }: Props): ReactElement {
+export default function FollowButton({
+  user,
+  username,
+  setFollowers,
+}: Props): ReactElement {
   const [isFollowing, setIsFollowing] = useState(false);
-  let usernameRef = userQuery(user).collection("following").doc(username);
-  let usernameFollowersRef = userQuery(username)
-    .collection("followers")
-    .doc(user);
 
   useEffect(() => {
-    usernameRef
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          setIsFollowing(true);
-        } else {
-          setIsFollowing(false);
-        }
-      })
-      .catch((err: any) => console.log(err));
+    console.log(user, username, "user and username!!");
+    if (user && username) {
+      followingQuery(user, username)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            setIsFollowing(true);
+          } else {
+            setIsFollowing(false);
+          }
+        })
+        .catch((err: any) => console.log(err));
+    }
   }, []);
 
   const handleFollow = (e: any) => {
     e.preventDefault();
+
     console.log("handle follow");
-    usernameRef
+    followingQuery(user, username)
       .set({ exist: true })
       .then(() =>
-        usernameFollowersRef
+        followersQuery(user, username)
           .set({ exist: true })
-          .then(() => setIsFollowing(true))
+          .then(() => {
+            setFollowers((prevState) => prevState + 1);
+            setIsFollowing(true);
+          })
           .catch((err: any) => console.log(err.message))
       )
       .catch((err: any) => console.log(err.message));
@@ -42,12 +51,13 @@ export default function FollowButton({ user, username }: Props): ReactElement {
 
   const handleUnFollow = (e: any) => {
     e.preventDefault();
-    usernameRef
+    followingQuery(user, username)
       .delete()
       .then(() => {
-        usernameFollowersRef
+        followersQuery(user, username)
           .delete()
           .then(() => {
+            setFollowers((prevState) => prevState - 1);
             setIsFollowing(false);
           })
           .catch((err: any) => console.log(err.message));

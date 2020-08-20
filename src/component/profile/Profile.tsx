@@ -5,9 +5,15 @@ import "../../styling/Profile.css";
 import { useHistory, Link } from "react-router-dom";
 import { UserContext } from "../../App";
 import FollowButton from "./FollowButton";
+import HoverImg from "../HoverImg";
 
 interface Props {
   props: any;
+}
+
+interface Posts {
+  id: string;
+  imageURL: string;
 }
 
 export default function Profile(props: any): ReactElement {
@@ -51,9 +57,10 @@ export default function Profile(props: any): ReactElement {
       .get()
       .then((snapshot) => {
         setPosts(
-          snapshot.docs.map((doc) => {
-            return doc.data().image;
-          })
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            imageURL: doc.data().image,
+          }))
         );
       })
       .then(() => setNumPosts(posts.length));
@@ -81,7 +88,11 @@ export default function Profile(props: any): ReactElement {
                 </>
               ) : (
                 user.displayName && (
-                  <FollowButton user={user.displayName} username={username} />
+                  <FollowButton
+                    user={user.displayName}
+                    username={username}
+                    setFollowers={setFollowers}
+                  />
                 )
               ))}
           </div>
@@ -97,10 +108,8 @@ export default function Profile(props: any): ReactElement {
       <div className="profile-line"></div>
 
       <div className="profile-images">
-        {posts.map((image: string) => (
-          <div className="profile-image">
-            <img src={image}></img>
-          </div>
+        {posts.map(({ imageURL, id }: Posts) => (
+          <HoverImg image={imageURL} id={id}></HoverImg>
         ))}
       </div>
     </div>
