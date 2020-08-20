@@ -27,6 +27,7 @@ export default function EditPublic({}: Props): ReactElement {
 
   useEffect(() => {
     if (user && user.displayName) {
+      setEmail(user.email);
       setUserName(user.displayName);
       userProfileQuery(user.displayName)
         .get()
@@ -87,22 +88,27 @@ export default function EditPublic({}: Props): ReactElement {
       .doc(userName)
       .get()
       .then((snapshot) => {
-        if (snapshot.exists) {
-          alert("this username is already taken!");
-          return;
-        } else {
-          user
-            .updateProfile({ displayName: userName })
-            .catch((err: any) => alert(err.message));
+        // user
+        //   .updateProfile({ displayName: userName })
+        //   .catch((err: any) => alert(err.message));
 
-          userProfileQuery(user.displayName).update({
-            website,
-            bio,
-            name,
-          });
-        }
-      });
+        userProfileQuery(user.displayName).update({
+          website,
+          bio,
+          name,
+        });
 
+        user
+          .updateEmail(email)
+          .then(() => {
+            alert("update sucessful!");
+            console.log(user);
+          })
+          .catch((err: any) => alert(err.message));
+      })
+      .catch((err: any) => err.message);
+
+    console.log(email, "this is email");
     console.log(user, "submit");
   };
 
@@ -134,14 +140,14 @@ export default function EditPublic({}: Props): ReactElement {
             value={name}
           ></input>
         </div>
-        <div className="setting-input-container">
+        {/* <div className="setting-input-container">
           <label>Username</label>
           <input
             onChange={(e) => onChangeHandler(e, setUserName)}
             placeholder={user ? user.displayName : ""}
             value={userName}
           ></input>
-        </div>
+        </div> */}
         <div className="setting-input-container">
           <label>Website</label>
           <input
@@ -171,8 +177,12 @@ export default function EditPublic({}: Props): ReactElement {
           </div>
         </div>
         <div className="setting-input-container">
-          <label onChange={(e) => onChangeHandler(e, setEmail)}>Email</label>
-          <input></input>
+          <label>Email</label>
+          <input
+            onChange={(e) => onChangeHandler(e, setEmail)}
+            value={email}
+            placeholder={email}
+          ></input>
         </div>
 
         <div className="setting-input-container">
