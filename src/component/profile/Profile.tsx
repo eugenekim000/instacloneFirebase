@@ -80,7 +80,9 @@ export default function Profile(props: any): ReactElement {
                   <button>log out</button>
                 </>
               ) : (
-                <FollowButton user={user.displayName} username={username} />
+                user.displayName && (
+                  <FollowButton user={user.displayName} username={username} />
+                )
               ))}
           </div>
 

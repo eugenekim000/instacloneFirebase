@@ -31,21 +31,37 @@ export default function FollowButton({ user, username }: Props): ReactElement {
     console.log("handle follow");
     usernameRef
       .set({ exist: true })
-      .catch((err: any) => console.log(err.message));
-    usernameFollowersRef
-      .set({ exist: true })
+      .then(() =>
+        usernameFollowersRef
+          .set({ exist: true })
+          .then(() => setIsFollowing(true))
+          .catch((err: any) => console.log(err.message))
+      )
       .catch((err: any) => console.log(err.message));
   };
 
-  const handleUnFollow = () => {
-    usernameRef.delete().catch((err: any) => console.log(err.message));
-    usernameFollowersRef.delete().catch((err: any) => console.log(err.message));
+  const handleUnFollow = (e: any) => {
+    e.preventDefault();
+    usernameRef
+      .delete()
+      .then(() => {
+        usernameFollowersRef
+          .delete()
+          .then(() => {
+            setIsFollowing(false);
+          })
+          .catch((err: any) => console.log(err.message));
+      })
+      .catch((err: any) => console.log(err.message));
   };
 
   return (
     <>
       {isFollowing ? (
-        <button onClick={() => handleUnFollow()} className="unfollow-button">
+        <button
+          onClick={(e: any) => handleUnFollow(e)}
+          className="unfollow-button"
+        >
           Unfollow
         </button>
       ) : (
