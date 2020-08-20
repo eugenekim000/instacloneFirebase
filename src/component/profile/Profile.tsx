@@ -1,5 +1,6 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { Avatar, makeStyles, Button } from "@material-ui/core";
+import { userProfileQuery } from "../../queries";
 import "../../styling/Profile.css";
 import { dummyImages } from "../../helper.js";
 import { db } from "../../firebase";
@@ -24,27 +25,26 @@ export default function Profile(props: any): ReactElement {
   const [avatar, setAvatar] = useState("");
 
   useEffect(() => {
-    console.log(props.match.params.username, "from profile!");
-
     let paramUsername = props.match.params.username;
 
-    let userDataQuery = db.collection("users").doc(paramUsername);
+    userProfileQuery(paramUsername)
+      .get()
+      .then((docSnapshot) => {
+        if (!docSnapshot.exists) {
+          history.push("/account/notfound");
+          return;
+        }
+        console.log(docSnapshot.data());
+        console.log("loading after history");
+        const data: any = docSnapshot.data();
+        const { followersNum, followingNum, profile } = data;
+        if (data.avatar) setAvatar(data.avatar);
+        setFollowers(followersNum);
+        setFollowing(followingNum);
+        setProfileDesc(profile);
+      });
 
-    userDataQuery.get().then((docSnapshot) => {
-      if (!docSnapshot.exists) {
-        history.push("/account/notfound");
-        return;
-      }
-      console.log(docSnapshot.data());
-      console.log("loading after history");
-      const data: any = docSnapshot.data();
-      const { followersNum, followingNum, profile } = data;
-      setFollowers(followersNum);
-      setFollowing(followingNum);
-      setProfileDesc(profile);
-    });
-
-    userDataQuery
+    userProfileQuery(paramUsername)
       .collection("posts")
       .get()
       .then((snapshot) => {

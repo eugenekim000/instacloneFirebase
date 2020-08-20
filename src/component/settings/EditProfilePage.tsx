@@ -6,12 +6,7 @@ import EditPassword from "./EditPassword";
 
 interface Props {}
 
-const styleSelectedButton = {
-  borderLeft: "1px solid #222",
-  fontWeight: 550,
-};
 export default function EditProfilePage({}: Props): ReactElement {
-  const classes = useStyles();
   const [edit, setEdit] = useState("edit");
 
   return (
@@ -57,3 +52,8 @@ export const useStyles = makeStyles((theme) => ({
     justifySelf: "end",
   },
 }));
+
+const styleSelectedButton = {
+  borderLeft: "1px solid #222",
+  fontWeight: 550,
+};

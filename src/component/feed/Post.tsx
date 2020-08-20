@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+
 import "../../styling/Post.css";
 import Avatar from "@material-ui/core/Avatar";
 import { db } from "../../firebase";
@@ -7,7 +8,7 @@ import { Link } from "react-router-dom";
 import { ReactComponent as UnlikeIcon } from "../../images/black-like.svg";
 import { ReactComponent as LikeIcon } from "../../images/red-like.svg";
 import { ReactComponent as ChatIcon } from "../../images/chat.svg";
-import { postLikeQuery } from "../../queries";
+import { postLikeQuery, userQuery } from "../../queries";
 
 interface Props {
   username: string;
@@ -21,24 +22,28 @@ export const Post = ({ username, caption, image, postId, user }: Props) => {
   const [comments, setcomments] = useState<firebase.firestore.DocumentData[]>(
     []
   );
-
   const textInput = useRef<HTMLInputElement>(null);
-
   const [comment, setComment] = useState("");
   const [postLikeNum, setPostLikeNum] = useState(0);
   const [likedState, setLikedState] = useState(false);
+  const [postAvatar, setPostAvatar] = useState("");
 
   useEffect(() => {
     postLikeQuery(postId)
       .doc(user.displayName)
       .get()
       .then((doc) => {
-        console.log(doc, "inital render checking if user liked post");
         if (doc.exists) {
           setLikedState(true);
         }
       })
       .catch((err) => console.log(err));
+    userQuery(username)
+      .get()
+      .then((doc) => {
+        let data = doc.data();
+        if (data?.avatar !== undefined) setPostAvatar(data.avatar);
+      });
   }, []);
 
   useEffect(() => {
@@ -116,11 +121,7 @@ export const Post = ({ username, caption, image, postId, user }: Props) => {
   return (
     <div className="post">
       <div className="post-header">
-        <Avatar
-          className="post-avatar"
-          alt="user"
-          src="https://i.redd.it/k2tlvc7inyg51.jpg"
-        ></Avatar>
+        <Avatar className="post-avatar" alt="user" src={postAvatar}></Avatar>
 
         <Link to={`/${username}`}>
           <h3> {username}</h3>

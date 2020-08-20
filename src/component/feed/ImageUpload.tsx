@@ -30,10 +30,7 @@ export default function ImageUpload({ username }: Props): ReactElement {
       alert("Please upload an image!");
       return;
     }
-    console.log(
-      firebase.firestore.Timestamp.now().seconds.toString(),
-      "firebase timestamp"
-    );
+
     const uploadTask = storage
       .ref(
         `images/${
