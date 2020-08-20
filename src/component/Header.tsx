@@ -38,14 +38,11 @@ export default function Header({
     console.log("render");
     const unsubscribe = auth().onAuthStateChanged((authUser) => {
       if (authUser) {
-        console.log(authUser, "dope");
-
         setUser(authUser);
 
         console.log(user, "has been set!");
         if (authUser.displayName) {
           console.log(user);
-          console.log(user.displayName, "displayname!!!");
         } else {
           return authUser.updateProfile({ displayName: username });
         }
