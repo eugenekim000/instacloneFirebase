@@ -1,9 +1,10 @@
 import React, { ReactElement, useEffect, useState, useContext } from "react";
 import { Avatar, makeStyles, Button } from "@material-ui/core";
-import { userProfileQuery } from "../../queries";
+import { userQuery as userProfileQuery } from "../../queries";
 import "../../styling/Profile.css";
 import { useHistory, Link } from "react-router-dom";
 import { UserContext } from "../../App";
+import FollowButton from "./FollowButton";
 
 interface Props {
   props: any;
@@ -70,16 +71,17 @@ export default function Profile(props: any): ReactElement {
         <section className="profile-description-container">
           <div className="profile-buttons">
             <h2>{username}</h2>
-            {user && username === user.displayName ? (
-              <>
-                <Link to="/accounts/edit">
-                  <button>Edit Profile</button>
-                </Link>
-                <button>log out</button>
-              </>
-            ) : (
-              <> </>
-            )}
+            {user &&
+              (username === user.displayName ? (
+                <>
+                  <Link to="/accounts/edit">
+                    <button>Edit Profile</button>
+                  </Link>
+                  <button>log out</button>
+                </>
+              ) : (
+                <FollowButton user={user.displayName} username={username} />
+              ))}
           </div>
 
           <div className="profile-stats">

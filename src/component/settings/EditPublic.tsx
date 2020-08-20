@@ -5,7 +5,7 @@ import React, {
   useRef,
   useEffect,
 } from "react";
-import { userQuery, userProfileQuery } from "../../queries";
+import { userQuery, userQuery as userProfileQuery } from "../../queries";
 import { Avatar, makeStyles } from "@material-ui/core";
 import { useStyles } from "./EditProfilePage";
 import { UserContext } from "../../App";

@@ -5,6 +5,3 @@ export const postLikeQuery = (postId: string) =>
 
 export const userQuery = (username: string) =>
   db.collection("users").doc(username);
-
-export const userProfileQuery = (paramUsername: string) =>
-  db.collection("users").doc(paramUsername);
