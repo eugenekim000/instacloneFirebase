@@ -8,9 +8,12 @@ interface Props {
 
 export default function FollowButton({ user, username }: Props): ReactElement {
   const [isFollowing, setIsFollowing] = useState(false);
+  let usernameRef = userQuery(user).collection("following").doc(username);
+  let usernameFollowersRef = userQuery(username)
+    .collection("followers")
+    .doc(user);
 
   useEffect(() => {
-    let usernameRef = userQuery(user).collection("followers").doc(username);
     usernameRef
       .get()
       .then((doc) => {
@@ -23,18 +26,30 @@ export default function FollowButton({ user, username }: Props): ReactElement {
       .catch((err: any) => console.log(err));
   }, []);
 
-  const handleUnFollow = () => {};
+  const handleFollow = (e: any) => {
+    e.preventDefault();
+    console.log("handle follow");
+    usernameRef
+      .set({ exist: true })
+      .catch((err: any) => console.log(err.message));
+    usernameFollowersRef
+      .set({ exist: true })
+      .catch((err: any) => console.log(err.message));
+  };
 
-  const handleFollow = () => {};
+  const handleUnFollow = () => {
+    usernameRef.delete().catch((err: any) => console.log(err.message));
+    usernameFollowersRef.delete().catch((err: any) => console.log(err.message));
+  };
 
   return (
     <>
       {isFollowing ? (
-        <button onClick={handleUnFollow} className="unfollow-button">
+        <button onClick={() => handleUnFollow()} className="unfollow-button">
           Unfollow
         </button>
       ) : (
-        <button onClick={handleFollow} className="follow-button">
+        <button onClick={(e: any) => handleFollow(e)} className="follow-button">
           Follow
         </button>
       )}
