@@ -8,9 +8,10 @@ import PostModal from "../PostModal";
 interface Props {
   image: string;
   id: string;
+  username: string;
 }
 
-export default function HoverImg({ image, id }: Props): ReactElement {
+export default function HoverImg({ image, id, username }: Props): ReactElement {
   const history = useHistory();
 
   const [commentsNum, setCommentsNum] = useState(0);
@@ -65,7 +66,12 @@ export default function HoverImg({ image, id }: Props): ReactElement {
         </div>
       </div>
 
-      <PostModal open={open} setOpen={setOpen} id={id}></PostModal>
+      <PostModal
+        open={open}
+        setOpen={setOpen}
+        id={id}
+        url={username}
+      ></PostModal>
     </div>
   );
 }

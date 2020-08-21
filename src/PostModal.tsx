@@ -6,28 +6,26 @@ interface Props {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   id: string;
+  url: string;
 }
 
-export default function PostModal({ open, setOpen, id }: Props): ReactElement {
+export default function PostModal({
+  open,
+  setOpen,
+  id,
+  url,
+}: Props): ReactElement {
   useEffect(() => {
     // postsQuery(id).get();
     return () => {};
   }, []);
 
-  const secondToLast = document.referrer.lastIndexOf(
-    "/",
-    document.referrer.lastIndexOf("/") - 1
-  );
   return (
     <div>
       <Modal
         open={open}
         onClose={() => {
-          window.history.replaceState(
-            null,
-            "New Page Title",
-            window.previousLocation
-          );
+          window.history.replaceState(null, "New Page Title", `/${url}`);
           setOpen(false);
         }}
         aria-labelledby="simple-modal-title"

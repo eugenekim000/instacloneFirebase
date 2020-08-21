@@ -108,7 +108,7 @@ export default function Profile(props: any): ReactElement {
       <div className="profile-images">
         {posts[0] &&
           posts.map(({ imageURL, id }: Posts) => (
-            <HoverImg image={imageURL} id={id}></HoverImg>
+            <HoverImg image={imageURL} id={id} username={username}></HoverImg>
           ))}
       </div>
     </div>
