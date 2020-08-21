@@ -40,14 +40,16 @@ export default function HoverImg({ image, id }: Props): ReactElement {
       <div className="overlay">
         <div className="stats-container">
           {commentsNum > 0 && (
-            <div>
-              <ChatIcon style={{ height: 24, width: 24 }} /> {commentsNum}
-            </div>
+            <>
+              <ChatIcon className="hover-icon" />{" "}
+              <span className="hover-stat-chat">{commentsNum}</span>
+            </>
           )}
           {likesNum > 0 && (
-            <div>
-              <HeartIcon style={{ height: 24, width: 24 }} /> {likesNum}
-            </div>
+            <>
+              <HeartIcon className="hover-icon" />{" "}
+              <span className="hover-stat-heart">{likesNum}</span>
+            </>
           )}
         </div>
       </div>
