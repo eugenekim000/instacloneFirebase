@@ -31,13 +31,10 @@ export default function ImageUpload({ username }: Props): ReactElement {
       return;
     }
 
-    const uploadTask = storage
-      .ref(
-        `images/${
-          image!.name + firebase.firestore.Timestamp.now().seconds.toString()
-        }`
-      )
-      .put(image);
+    const fileName =
+      image!.name + firebase.firestore.Timestamp.now().seconds.toString();
+
+    const uploadTask = storage.ref(`images/${fileName}`).put(image);
 
     uploadTask.on(
       "state_changed",
@@ -49,13 +46,14 @@ export default function ImageUpload({ username }: Props): ReactElement {
         setProgress(progress);
       },
       (error) => {
+        console.log("error is happening on uploadtask.on");
         console.log(error);
         alert(error.message);
       },
       () => {
         storage
           .ref("images")
-          .child(image.name)
+          .child(fileName)
           .getDownloadURL()
           .then((url) => {
             db.collection("posts")

@@ -3,6 +3,7 @@ import { postCommentsQuery, postLikeQuery } from "./../queries";
 import "../styling/Hover.css";
 import { ReactComponent as HeartIcon } from "../images/heart-black.svg";
 import { ReactComponent as ChatIcon } from "../images/chat-black.svg";
+import PostModal from "../PostModal";
 interface Props {
   image: string;
   id: string;
@@ -11,6 +12,7 @@ interface Props {
 export default function HoverImg({ image, id }: Props): ReactElement {
   const [commentsNum, setCommentsNum] = useState(0);
   const [likesNum, setLikesNum] = useState(0);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     console.log(image, id, "this is from the hoving compnent");
@@ -34,10 +36,15 @@ export default function HoverImg({ image, id }: Props): ReactElement {
     }
   }, []);
 
+  const handleClick = () => {
+    console.log("clicked!");
+    setOpen(true);
+  };
+
   return (
     <div className="profile-image">
       <img src={image} alt="user-imag-off" className="post-image"></img>
-      <div className="overlay">
+      <div className="overlay" onClick={handleClick}>
         <div className="stats-container">
           {commentsNum > 0 && (
             <>
@@ -53,6 +60,8 @@ export default function HoverImg({ image, id }: Props): ReactElement {
           )}
         </div>
       </div>
+
+      <PostModal open={open} setOpen={setOpen} id={id}></PostModal>
     </div>
   );
 }
