@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { ReactComponent as UnlikeIcon } from "../../images/black-like.svg";
 import { ReactComponent as LikeIcon } from "../../images/red-like.svg";
 import { ReactComponent as ChatIcon } from "../../images/chat.svg";
+import { ReactComponent as MoreIcon } from "../../images/more.svg";
 import { postLikeQuery, userQuery } from "../../queries";
 
 interface Props {
@@ -126,6 +127,10 @@ export const FeedPost = ({ username, caption, image, postId, user }: Props) => {
         <Link to={`/${username}`}>
           <h3> {username}</h3>
         </Link>
+
+        <MoreIcon
+          style={{ height: 14, width: 14, position: "absolute", right: "15px" }}
+        />
       </div>
 
       <img className="post-image" alt="post" src={image}></img>

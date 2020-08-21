@@ -19,7 +19,7 @@ export default function PostPage(props: any): ReactElement {
   return (
     <>
       {render && (
-        <div>
+        <div className="individual-post-page">
           <Post paramPostId={paramPostId}></Post>
         </div>
       )}
