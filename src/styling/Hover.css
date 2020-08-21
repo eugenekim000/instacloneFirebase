@@ -20,10 +20,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  border-width: 0px;
 }
 .stats-container {
   display: flex;
   justify-content: center;
   align-items: center;
   max-width: 50%;
+}
+
+.stats-container img {
+  height: 22px;
+  width: 22px;
 }

@@ -73,11 +73,6 @@ export default function ImageUpload({ username }: Props): ReactElement {
                   .set({ image: url });
               });
 
-            db.collection("users")
-              .doc(username)
-              .collection("posts")
-              .add({ image: url });
-
             setProgress(0);
             setCaption("");
             setImage(null);

@@ -1,6 +1,8 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { postCommentsQuery, postLikeQuery } from "./../queries";
 import "../styling/Hover.css";
+import { ReactComponent as HeartIcon } from "../images/heart-black.svg";
+import { ReactComponent as ChatIcon } from "../images/chat-black.svg";
 interface Props {
   image: string;
   id: string;
@@ -37,8 +39,16 @@ export default function HoverImg({ image, id }: Props): ReactElement {
       <img src={image} alt="user-imag-off" className="post-image"></img>
       <div className="overlay">
         <div className="stats-container">
-          {commentsNum && <div>comments: {commentsNum}</div>}
-          {likesNum && <div>likes: {likesNum}</div>}
+          {commentsNum > 0 && (
+            <div>
+              <ChatIcon style={{ height: 24, width: 24 }} /> {commentsNum}
+            </div>
+          )}
+          {likesNum > 0 && (
+            <div>
+              <HeartIcon style={{ height: 24, width: 24 }} /> {likesNum}
+            </div>
+          )}
         </div>
       </div>
     </div>

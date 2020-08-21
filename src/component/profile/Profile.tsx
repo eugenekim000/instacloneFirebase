@@ -56,17 +56,15 @@ export default function Profile(props: any): ReactElement {
       .collection("posts")
       .get()
       .then((snapshot) => {
+        console.log(snapshot.docs, "snapshot docs");
+        setNumPosts(snapshot.docs.length);
         setPosts(
           snapshot.docs.map((doc) => ({
             id: doc.id,
             imageURL: doc.data().image,
           }))
         );
-      })
-      .then(() => setNumPosts(posts.length));
-
-    let userFollowing;
-    let userFollowers;
+      });
   }, []);
 
   return (
