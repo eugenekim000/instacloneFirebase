@@ -18,7 +18,7 @@ interface Props {
   user: any;
 }
 
-export const Post = ({ username, caption, image, postId, user }: Props) => {
+export const FeedPost = ({ username, caption, image, postId, user }: Props) => {
   const [comments, setcomments] = useState<firebase.firestore.DocumentData[]>(
     []
   );

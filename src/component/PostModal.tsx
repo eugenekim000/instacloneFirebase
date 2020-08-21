@@ -1,7 +1,6 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { Modal } from "@material-ui/core";
-import { postsQuery } from "./queries";
-
+import { Post } from "../component/post/Post";
 interface Props {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,11 +14,6 @@ export default function PostModal({
   id,
   url,
 }: Props): ReactElement {
-  useEffect(() => {
-    // postsQuery(id).get();
-    return () => {};
-  }, []);
-
   return (
     <div>
       <Modal
@@ -31,7 +25,9 @@ export default function PostModal({
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        <div> this is a modal div</div>
+        <div className="modal-post-container">
+          <Post paramPostId={id} />
+        </div>
       </Modal>
     </div>
   );

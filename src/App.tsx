@@ -7,6 +7,7 @@ import EditProfilePage from "./component/settings/EditProfilePage";
 import NotFound from "./component/NotFound";
 import Header from "./component/Header";
 import FeedPage from "./component/feed/FeedPage";
+// import Post from "./component/post/legacyPost";
 import PostPage from "./component/post/PostPage";
 
 interface AppContext {

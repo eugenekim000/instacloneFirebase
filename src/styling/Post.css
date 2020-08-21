@@ -1,4 +1,4 @@
-.post {
+.feed-post-container {
   background-color: white;
   max-width: 500px;
   min-width: 500px;
@@ -6,6 +6,18 @@
   margin-bottom: 60px;
   margin-left: auto;
   margin-right: auto;
+}
+
+.modal-post-container {
+  background-color: white;
+  max-width: 500px;
+  min-width: 500px;
+  border: 1px solid lightgray;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .post-image {

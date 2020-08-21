@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import ImageUpload from "./ImageUpload";
-import { Post } from "./Post";
+import { FeedPost } from "./FeedPost";
 
 interface Props {
   user: any;
@@ -24,12 +24,14 @@ export default function FeedPage({ user, posts }: Props): ReactElement {
         <>
           <ImageUpload username={user?.displayName}></ImageUpload>
           {posts.map((post: Post) => (
-            <Post
-              {...post.post}
-              key={post.id}
-              postId={post.id}
-              user={user}
-            ></Post>
+            <div className="feed-post-container">
+              <FeedPost
+                {...post.post}
+                key={post.id}
+                postId={post.id}
+                user={user}
+              ></FeedPost>
+            </div>
           ))}
         </>
       ) : (

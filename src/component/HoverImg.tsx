@@ -4,7 +4,7 @@ import "../styling/Hover.css";
 import { ReactComponent as HeartIcon } from "../images/heart-black.svg";
 import { ReactComponent as ChatIcon } from "../images/chat-black.svg";
 import { useHistory } from "react-router-dom";
-import PostModal from "../PostModal";
+import PostModal from "./PostModal";
 interface Props {
   image: string;
   id: string;
