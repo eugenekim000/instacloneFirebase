@@ -7,6 +7,7 @@ import EditProfilePage from "./component/settings/EditProfilePage";
 import NotFound from "./component/NotFound";
 import Header from "./component/Header";
 import FeedPage from "./component/feed/FeedPage";
+import PostPage from "./component/post/PostPage";
 
 interface AppContext {
   user: any;
@@ -32,6 +33,7 @@ function App() {
             <Route path="/explore" component={Explore} />
             <Route exact path="/:username" component={Profile} />
             <Route path="/accounts/edit" component={EditProfilePage} />
+            <Route path="/post/:postid" component={PostPage} />
             <Route exact path="*" component={NotFound} />
           </Switch>
         </UserContext.Provider>
