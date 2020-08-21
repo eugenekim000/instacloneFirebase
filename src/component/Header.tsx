@@ -35,14 +35,13 @@ export default function Header({
   }, []);
 
   useEffect(() => {
-    console.log("render");
+    console.log("render header, user username");
     const unsubscribe = auth().onAuthStateChanged((authUser) => {
       if (authUser) {
         setUser(authUser);
 
-        console.log(user, "has been set!");
         if (authUser.displayName) {
-          console.log(user);
+          console.log(user, "this is the user - from header");
         } else {
           return authUser.updateProfile({ displayName: username });
         }

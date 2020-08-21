@@ -1,8 +1,7 @@
 import { db } from "./firebase";
 
-export const postsQuery = (postId: string) => {
+export const postsQuery = (postId: string) =>
   db.collection("posts").doc(postId);
-};
 
 export const postLikeQuery = (postId: string) =>
   db.collection("posts").doc(postId).collection("likes");
