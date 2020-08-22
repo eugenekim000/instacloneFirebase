@@ -79,6 +79,29 @@
   margin-bottom: 52px;
 }
 
+.profile-follow-list-container {
+  background-color: white;
+  display: flex;
+  width: 400px;
+  height: 46px;
+  padding: 8px 16px 8px 16px;
+  flex-direction: row;
+}
+
+.profile-follow-list-container button {
+  margin-left: auto;
+}
+
+.profile-follow-username {
+  justify-content: flex-start;
+  text-align: left;
+  margin-left: 10px;
+}
+
+.follow-list-header {
+  text-align: center;
+}
+
 @media (max-width: 735px) {
   .profile-avatar-container {
     margin-left: 0px;

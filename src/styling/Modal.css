@@ -21,3 +21,37 @@
   border-bottom: 1px solid #dbdbdb;
   background-color: white;
 }
+
+.follow-modal-container {
+  display: flex;
+  max-height: 20rem;
+  width: 350px;
+  text-align: center;
+  flex-direction: column;
+  justify-self: center;
+  border-radius: 10px;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  overflow: hidden;
+  transform: translate(-50%, -50%);
+}
+
+.follow-list-container {
+  display: flex;
+  flex-direction: row;
+  background: white;
+  padding: 8px 16px 8px 16px;
+}
+
+.follow-list-container button {
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.follow-username {
+  text-align: left;
+  margin-left: 10px;
+  font-size: 12px;
+}

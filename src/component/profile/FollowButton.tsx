@@ -5,7 +5,7 @@ import { userQuery, followingQuery, followersQuery } from "../../queries";
 interface Props {
   user: string;
   username: string;
-  setFollowers: React.Dispatch<React.SetStateAction<number>>;
+  setFollowers?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function FollowButton({
@@ -41,8 +41,10 @@ export default function FollowButton({
         followersQuery(user, username)
           .set({ exist: true })
           .then(() => {
-            setFollowers((prevState) => prevState + 1);
-            setIsFollowing(true);
+            if (setFollowers) {
+              setFollowers((prevState) => prevState + 1);
+              setIsFollowing(true);
+            }
           })
           .catch((err: any) => console.log(err.message))
       )
@@ -57,8 +59,10 @@ export default function FollowButton({
         followersQuery(user, username)
           .delete()
           .then(() => {
-            setFollowers((prevState) => prevState - 1);
-            setIsFollowing(false);
+            if (setFollowers) {
+              setFollowers((prevState) => prevState - 1);
+              setIsFollowing(false);
+            }
           })
           .catch((err: any) => console.log(err.message));
       })

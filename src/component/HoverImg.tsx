@@ -3,7 +3,6 @@ import { postCommentsQuery, postLikeQuery } from "./../queries";
 import "../styling/Hover.css";
 import { ReactComponent as HeartIcon } from "../images/heart-black.svg";
 import { ReactComponent as ChatIcon } from "../images/chat-black.svg";
-import { useHistory } from "react-router-dom";
 import PostModal from "./PostModal";
 interface Props {
   image: string;
@@ -12,8 +11,6 @@ interface Props {
 }
 
 export default function HoverImg({ image, id, username }: Props): ReactElement {
-  const history = useHistory();
-
   const [commentsNum, setCommentsNum] = useState(0);
   const [likesNum, setLikesNum] = useState(0);
   const [open, setOpen] = useState(false);

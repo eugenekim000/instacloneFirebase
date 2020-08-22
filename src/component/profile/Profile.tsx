@@ -6,6 +6,7 @@ import { useHistory, Link } from "react-router-dom";
 import { UserContext } from "../../App";
 import FollowButton from "./FollowButton";
 import HoverImg from "../HoverImg";
+import { FollowModal } from "../modals/FollowModal";
 
 interface Props {
   props: any;
@@ -28,6 +29,7 @@ export default function Profile(props: any): ReactElement {
   const [following, setFollowing] = useState(0);
   const [profileDesc, setProfileDesc] = useState("this is a profile desc xD");
   const [avatar, setAvatar] = useState("");
+  const [openFollowing, setOpenFollowing] = useState(false);
 
   const user = useContext(UserContext);
 
@@ -70,6 +72,10 @@ export default function Profile(props: any): ReactElement {
 
   return (
     <div className="profile-container">
+      <FollowModal
+        openFollowing={openFollowing}
+        setOpenFollowing={setOpenFollowing}
+      />
       <header className="profile-header">
         <div className="profile-avatar-container">
           <Avatar className={classes.large} src={avatar} />
@@ -98,7 +104,12 @@ export default function Profile(props: any): ReactElement {
 
           <div className="profile-stats">
             <p>{numPosts} posts</p> <p>{followers} followers</p>{" "}
-            <p>{following} following</p>
+            <p
+              onClick={() => setOpenFollowing(true)}
+              style={{ cursor: "pointer" }}
+            >
+              {following} following
+            </p>
           </div>
           <div>{profileDesc}</div>
           <div>{website}</div>
