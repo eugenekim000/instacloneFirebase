@@ -4,7 +4,7 @@ import { userQuery as userProfileQuery } from "../../queries";
 import "../../styling/Profile.css";
 import { useHistory, Link } from "react-router-dom";
 import { UserContext } from "../../App";
-import FollowButton from "./FollowButton";
+import { FollowButton } from "./FollowButton";
 import HoverImg from "../HoverImg";
 import { FollowModal } from "../modals/FollowModal";
 
@@ -30,7 +30,7 @@ export default function Profile(props: any): ReactElement {
   const [profileDesc, setProfileDesc] = useState("this is a profile desc xD");
   const [avatar, setAvatar] = useState("");
   const [openFollowing, setOpenFollowing] = useState(false);
-
+  const [openFollowers, setOpenFollowers] = useState(false);
   const user = useContext(UserContext);
 
   useEffect(() => {
@@ -75,6 +75,12 @@ export default function Profile(props: any): ReactElement {
       <FollowModal
         openFollowing={openFollowing}
         setOpenFollowing={setOpenFollowing}
+        followType="Following"
+      />
+      <FollowModal
+        openFollowing={openFollowers}
+        setOpenFollowing={setOpenFollowers}
+        followType="Followers"
       />
       <header className="profile-header">
         <div className="profile-avatar-container">
@@ -103,7 +109,13 @@ export default function Profile(props: any): ReactElement {
           </div>
 
           <div className="profile-stats">
-            <p>{numPosts} posts</p> <p>{followers} followers</p>{" "}
+            <p>{numPosts} posts</p>{" "}
+            <p
+              onClick={() => setOpenFollowers(true)}
+              style={{ cursor: "pointer" }}
+            >
+              {followers} followers
+            </p>{" "}
             <p
               onClick={() => setOpenFollowing(true)}
               style={{ cursor: "pointer" }}

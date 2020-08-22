@@ -8,11 +8,11 @@ interface Props {
   setFollowers?: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function FollowButton({
+export const FollowButton = ({
   user,
   username,
   setFollowers,
-}: Props): ReactElement {
+}: Props): ReactElement => {
   const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
@@ -43,8 +43,8 @@ export default function FollowButton({
           .then(() => {
             if (setFollowers) {
               setFollowers((prevState) => prevState + 1);
-              setIsFollowing(true);
             }
+            setIsFollowing(true);
           })
           .catch((err: any) => console.log(err.message))
       )
@@ -61,8 +61,8 @@ export default function FollowButton({
           .then(() => {
             if (setFollowers) {
               setFollowers((prevState) => prevState - 1);
-              setIsFollowing(false);
             }
+            setIsFollowing(false);
           })
           .catch((err: any) => console.log(err.message));
       })
@@ -85,4 +85,4 @@ export default function FollowButton({
       )}
     </>
   );
-}
+};
