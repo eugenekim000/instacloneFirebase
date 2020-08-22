@@ -8,6 +8,7 @@ export function PostFetch({ paramPostId }: any): ReactElement {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState("");
   const [username, setUsername] = useState("");
+  const [fileName, setFileName] = useState("");
   const [render, setRender] = useState(false);
 
   const history = useHistory();
@@ -24,10 +25,11 @@ export function PostFetch({ paramPostId }: any): ReactElement {
             history.push("/posts/notfound");
             return;
           }
-          const { username, image, caption } = snapShot.data();
+          const { username, image, caption, filename } = snapShot.data();
           setUsername(username);
           setImage(image);
           setCaption(caption);
+          setFileName(filename);
         })
         .then(() => setRender(true))
         .catch((err: any) => console.log(err.message));
@@ -45,6 +47,7 @@ export function PostFetch({ paramPostId }: any): ReactElement {
           image={image}
           postId={paramPostId}
           user={user}
+          fileName={fileName}
         />
       )}
     </div>

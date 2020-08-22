@@ -18,6 +18,7 @@ interface Props {
   image?: string;
   postId: string;
   user: any;
+  fileName: string;
 }
 
 export const PostRender = ({
@@ -26,6 +27,7 @@ export const PostRender = ({
   image,
   postId,
   user,
+  fileName,
 }: Props) => {
   const [comments, setcomments] = useState<firebase.firestore.DocumentData[]>(
     []
@@ -134,6 +136,7 @@ export const PostRender = ({
         postId={postId}
         user={user}
         username={username}
+        fileName={fileName}
       ></OptionModal>
 
       <div className="post-header">

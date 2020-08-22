@@ -3,6 +3,7 @@ import { Modal } from "@material-ui/core";
 import "../styling/Modal.css";
 import { useHistory } from "react-router-dom";
 import { postsQuery, userPostQuery } from "../queries";
+import { db, storage } from "../firebase";
 
 interface Props {
   open: boolean;
@@ -10,9 +11,11 @@ interface Props {
   postId: string;
   user: any;
   username: string;
+  fileName: string;
 }
 
 let origin = window.location.origin;
+let currentLocation = window.location.href;
 
 export function OptionModal({
   open,
@@ -20,6 +23,7 @@ export function OptionModal({
   postId,
   user,
   username,
+  fileName,
 }: Props): ReactElement {
   const history = useHistory();
   const ownerCheck = username === user.displayName;
@@ -36,6 +40,25 @@ export function OptionModal({
   const handleDelete = () => {
     postsQuery(postId).delete();
     userPostQuery(user.displayName, postId).delete();
+
+    storage
+      .ref("images")
+      .child(fileName)
+      .delete()
+      .then(() => {
+        console.log("success!");
+        if (origin === currentLocation) {
+          return;
+        } else {
+          history.push(`/${user.displayName}`);
+        }
+
+        setOption(false);
+      })
+      .catch((err: any) => {
+        console.log(err.message);
+        setOption(false);
+      });
   };
 
   return (
@@ -46,7 +69,7 @@ export function OptionModal({
         {ownerCheck && (
           <button
             style={{ color: "red", fontWeight: "bold" }}
-            onClick={() => handleDelete}
+            onClick={handleDelete}
           >
             Delete Post
           </button>

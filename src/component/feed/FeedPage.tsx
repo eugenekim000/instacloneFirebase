@@ -12,6 +12,7 @@ interface Post {
     image: string;
     username: string;
     caption: string;
+    fileName: string;
   };
   id: string;
   key: number;
