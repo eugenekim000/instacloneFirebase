@@ -2,6 +2,7 @@ import React, { ReactElement } from "react";
 import { Modal } from "@material-ui/core";
 import "../styling/Modal.css";
 import { useHistory } from "react-router-dom";
+import { postsQuery, userPostQuery } from "../queries";
 
 interface Props {
   open: boolean;
@@ -26,9 +27,15 @@ export function OptionModal({
   const handleRedirect = () => {
     history.push(`/post/${postId}`);
   };
+
   const handleCopy = () => {
     navigator.clipboard.writeText(`${origin}/post/${postId}`);
     setOption(false);
+  };
+
+  const handleDelete = () => {
+    postsQuery(postId).delete();
+    userPostQuery(user.displayName, postId).delete();
   };
 
   return (
@@ -37,7 +44,10 @@ export function OptionModal({
         <button onClick={handleRedirect}>Go to Post</button>
         <button onClick={handleCopy}>Copy Link</button>
         {ownerCheck && (
-          <button style={{ color: "red", fontWeight: "bold" }}>
+          <button
+            style={{ color: "red", fontWeight: "bold" }}
+            onClick={() => handleDelete}
+          >
             Delete Post
           </button>
         )}

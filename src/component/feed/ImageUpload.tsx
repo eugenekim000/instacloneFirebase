@@ -62,6 +62,7 @@ export default function ImageUpload({ username }: Props): ReactElement {
                 caption: caption,
                 image: url,
                 username: username,
+                filename: fileName,
               })
               .then((docRef) => {
                 db.collection("users")
