@@ -1,10 +1,10 @@
 import React, { ReactElement, useEffect, useState, useContext } from "react";
-import { FeedPost } from "../feed/FeedPost";
+import { PostRender } from "../post/PostRender";
 import { UserContext } from "../../App";
 import { useHistory, Link } from "react-router-dom";
 import { postsQuery } from "../../queries";
 
-export default function PostPage(props: any): ReactElement {
+export function PostFetch({ paramPostId }: any): ReactElement {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState("");
   const [username, setUsername] = useState("");
@@ -12,10 +12,10 @@ export default function PostPage(props: any): ReactElement {
 
   const history = useHistory();
   const user = useContext(UserContext);
-  const paramPostId = props.match.params.postid;
 
   useEffect(() => {
     console.log(user, "this is the user");
+    console.log(paramPostId, "this is from temp post");
     if (user) {
       postsQuery(paramPostId)
         .get()
@@ -39,7 +39,7 @@ export default function PostPage(props: any): ReactElement {
   return (
     <div>
       {render && (
-        <FeedPost
+        <PostRender
           username={username}
           caption={caption}
           image={image}

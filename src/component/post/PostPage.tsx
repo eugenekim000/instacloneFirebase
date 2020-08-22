@@ -1,9 +1,8 @@
 import React, { ReactElement, useEffect, useState, useContext } from "react";
-import { FeedPost } from "../feed/FeedPost";
 import { UserContext } from "../../App";
 import { useHistory, Link } from "react-router-dom";
 import { postsQuery } from "../../queries";
-import { Post } from "./Post";
+import { PostFetch } from "./PostFetch";
 
 interface Props {}
 
@@ -20,7 +19,7 @@ export default function PostPage(props: any): ReactElement {
     <>
       {render && (
         <div className="individual-post-page">
-          <Post paramPostId={paramPostId}></Post>
+          <PostFetch paramPostId={paramPostId}></PostFetch>
         </div>
       )}
     </>

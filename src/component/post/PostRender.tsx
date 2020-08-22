@@ -10,6 +10,7 @@ import { ReactComponent as LikeIcon } from "../../images/red-like.svg";
 import { ReactComponent as ChatIcon } from "../../images/chat.svg";
 import { ReactComponent as MoreIcon } from "../../images/more.svg";
 import { postLikeQuery, userQuery } from "../../queries";
+import { OptionModal } from "../OptionModal";
 
 interface Props {
   username: string;
@@ -19,7 +20,13 @@ interface Props {
   user: any;
 }
 
-export const FeedPost = ({ username, caption, image, postId, user }: Props) => {
+export const PostRender = ({
+  username,
+  caption,
+  image,
+  postId,
+  user,
+}: Props) => {
   const [comments, setcomments] = useState<firebase.firestore.DocumentData[]>(
     []
   );
@@ -28,6 +35,7 @@ export const FeedPost = ({ username, caption, image, postId, user }: Props) => {
   const [postLikeNum, setPostLikeNum] = useState(0);
   const [likedState, setLikedState] = useState(false);
   const [postAvatar, setPostAvatar] = useState("");
+  const [option, setOption] = useState(false);
 
   useEffect(() => {
     postLikeQuery(postId)
@@ -100,7 +108,6 @@ export const FeedPost = ({ username, caption, image, postId, user }: Props) => {
   };
 
   const handleLikeClick = () => {
-    //liking
     if (!likedState) {
       setPostLikeNum((prevState) => prevState + 1);
       setLikedState((prevState) => !prevState);
@@ -121,6 +128,14 @@ export const FeedPost = ({ username, caption, image, postId, user }: Props) => {
 
   return (
     <div className="post">
+      <OptionModal
+        open={option}
+        setOption={setOption}
+        postId={postId}
+        user={user}
+        username={username}
+      ></OptionModal>
+
       <div className="post-header">
         <Avatar className="post-avatar" alt="user" src={postAvatar}></Avatar>
 
@@ -128,9 +143,16 @@ export const FeedPost = ({ username, caption, image, postId, user }: Props) => {
           <h3> {username}</h3>
         </Link>
 
-        <MoreIcon
-          style={{ height: 14, width: 14, position: "absolute", right: "15px" }}
-        />
+        <div onClick={() => setOption(true)}>
+          <MoreIcon
+            style={{
+              height: 14,
+              width: 14,
+              position: "absolute",
+              right: "15px",
+            }}
+          />
+        </div>
       </div>
 
       <img className="post-image" alt="post" src={image}></img>

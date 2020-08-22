@@ -1,0 +1,22 @@
+.option-modal-container {
+  display: flex;
+  max-height: 40rem;
+  width: 40rem;
+  text-align: center;
+  flex-direction: column;
+  justify-self: center;
+  border-radius: 10px;
+  border: 1px solid lightgray;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+
+.option-modal-container button {
+  padding: 1.5rem;
+  border: none;
+  border-bottom: 1px solid #dbdbdb;
+}

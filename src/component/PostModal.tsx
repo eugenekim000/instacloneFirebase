@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { Modal } from "@material-ui/core";
-import { Post } from "../component/post/Post";
+import { PostFetch } from "./post/PostFetch";
 interface Props {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -26,7 +26,7 @@ export default function PostModal({
         aria-describedby="simple-modal-description"
       >
         <div className="modal-post-container">
-          <Post paramPostId={id} />
+          <PostFetch paramPostId={id} />
         </div>
       </Modal>
     </div>
