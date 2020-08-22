@@ -54,6 +54,7 @@ export default function Profile(props: any): ReactElement {
 
     userProfileQuery(paramUsername)
       .collection("posts")
+      .orderBy("timestamp", "desc")
       .get()
       .then((snapshot) => {
         console.log(snapshot.docs, "snapshot docs");

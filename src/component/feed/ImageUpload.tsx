@@ -31,8 +31,9 @@ export default function ImageUpload({ username }: Props): ReactElement {
       return;
     }
 
-    const fileName =
-      image!.name + firebase.firestore.Timestamp.now().seconds.toString();
+    const currentTime = firebase.firestore.Timestamp.now().seconds.toString();
+
+    const fileName = image!.name + currentTime;
 
     const uploadTask = storage.ref(`images/${fileName}`).put(image);
 
@@ -58,7 +59,7 @@ export default function ImageUpload({ username }: Props): ReactElement {
           .then((url) => {
             db.collection("posts")
               .add({
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                timestamp: currentTime,
                 caption: caption,
                 image: url,
                 username: username,
@@ -69,7 +70,7 @@ export default function ImageUpload({ username }: Props): ReactElement {
                   .doc(username)
                   .collection("posts")
                   .doc(docRef.id)
-                  .set({ image: url });
+                  .set({ image: url, timestamp: currentTime });
               });
 
             setProgress(0);

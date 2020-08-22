@@ -25,13 +25,16 @@ export default function Header({
 
   useEffect(() => {
     console.log("app render");
-    db.collection("posts")
+    const unsubscribe = db
+      .collection("posts")
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
         setPosts(
           snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() }))
         );
       });
+
+    return unsubscribe;
   }, []);
 
   useEffect(() => {
