@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import "../../styling/Explore.css";
 import { allPostQuery } from "../../queries";
 import { shuffle } from "../../helper";
+import HoverImg from "../HoverImg";
 
 interface Props {}
 
@@ -20,6 +21,7 @@ export default function Explore({}: Props): ReactElement {
             snapShot.docs.map((doc) => {
               return {
                 image: doc.data().image,
+                username: doc.data().username,
                 id: doc.id,
               };
             })
@@ -34,14 +36,8 @@ export default function Explore({}: Props): ReactElement {
       {render && (
         <div className="explore-images-container">
           <div className="explore-images">
-            {posts.map((post: any) => (
-              <div className="explore-image">
-                <img
-                  src={post.image}
-                  key={post.id}
-                  alt="post in explore feed"
-                ></img>
-              </div>
+            {posts.map(({ username, id, image }: any) => (
+              <HoverImg username={username} id={id} image={image} />
             ))}
           </div>
         </div>
