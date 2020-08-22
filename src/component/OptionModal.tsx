@@ -62,7 +62,7 @@ export function OptionModal({
   };
 
   return (
-    <Modal open={open} onClose={() => setOption(false)}>
+    <Modal open={open} onClose={() => setOption(false)} className='generic-modal-container'>
       <div className="option-modal-container">
         <button onClick={handleRedirect}>Go to Post</button>
         <button onClick={handleCopy}>Copy Link</button>

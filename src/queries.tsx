@@ -1,5 +1,7 @@
 import { db } from "./firebase";
 
+export const allPostQuery = () => db.collection("posts");
+
 export const postsQuery = (postId: string) =>
   db.collection("posts").doc(postId);
 

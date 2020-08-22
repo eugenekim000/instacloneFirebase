@@ -1,12 +1,11 @@
 .option-modal-container {
   display: flex;
-  max-height: 40rem;
-  width: 40rem;
+  max-height: 20rem;
+  width: 18rem;
   text-align: center;
   flex-direction: column;
   justify-self: center;
   border-radius: 10px;
-  border: 1px solid lightgray;
   margin: 0;
   position: absolute;
   top: 50%;
@@ -16,7 +15,9 @@
 }
 
 .option-modal-container button {
-  padding: 1.5rem;
+  font-size: 10px;
+  padding: 0.7rem;
   border: none;
   border-bottom: 1px solid #dbdbdb;
+  background-color: white;
 }
