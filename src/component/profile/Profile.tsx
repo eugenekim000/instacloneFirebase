@@ -1,6 +1,10 @@
 import React, { ReactElement, useEffect, useState, useContext } from "react";
 import { Avatar, makeStyles } from "@material-ui/core";
-import { userQuery as userProfileQuery } from "../../queries";
+import {
+  userQuery as userProfileQuery,
+  allFollowingQuery,
+  allFollowersQuery,
+} from "../../queries";
 import "../../styling/Profile.css";
 import { useHistory, Link } from "react-router-dom";
 import { UserContext } from "../../App";
@@ -24,9 +28,10 @@ export default function Profile(props: any): ReactElement {
   const [website, setWebsite] = useState("");
   const [username, setUsername] = useState("");
   const [numPosts, setNumPosts] = useState(0);
-  const [posts, setPosts] = useState<any>([""]);
   const [followers, setFollowers] = useState(0);
-  const [following, setFollowing] = useState(0);
+  const [posts, setPosts] = useState<any>([""]);
+  const [followersUsers, setFollowerUsers] = useState<any>([]);
+  const [followingUsers, setFollowingUsers] = useState<any>([]);
   const [profileDesc, setProfileDesc] = useState("this is a profile desc xD");
   const [avatar, setAvatar] = useState("");
   const [openFollowing, setOpenFollowing] = useState(false);
@@ -46,12 +51,34 @@ export default function Profile(props: any): ReactElement {
         }
 
         const data: any = docSnapshot.data();
-        const { followersNum, followingNum, bio, website } = data;
+        const { bio, website } = data;
         if (data.avatar) setAvatar(data.avatar);
-        setFollowers(followersNum ? followersNum : 0);
-        setFollowing(followingNum ? followingNum : 0);
         setProfileDesc(bio);
         setWebsite(website);
+      });
+
+    allFollowingQuery(paramUsername)
+      .get()
+      .then((docSnapshot) => {
+        if (!docSnapshot.docs) {
+          return;
+        } else {
+          console.log(
+            docSnapshot.docs.map((doc) => doc.id),
+            "following from profile component"
+          );
+          setFollowingUsers(docSnapshot.docs.map((doc) => doc.id));
+        }
+      });
+
+    allFollowersQuery(paramUsername)
+      .get()
+      .then((docSnapshot) => {
+        if (!docSnapshot.docs) {
+          return;
+        } else {
+          setFollowerUsers(docSnapshot.docs.map((doc) => doc.id));
+        }
       });
 
     userProfileQuery(paramUsername)
@@ -73,11 +100,13 @@ export default function Profile(props: any): ReactElement {
   return (
     <div className="profile-container">
       <FollowModal
+        followData={followingUsers}
         openFollowing={openFollowing}
         setOpenFollowing={setOpenFollowing}
         followType="Following"
       />
       <FollowModal
+        followData={followersUsers}
         openFollowing={openFollowers}
         setOpenFollowing={setOpenFollowers}
         followType="Followers"
@@ -121,11 +150,13 @@ export default function Profile(props: any): ReactElement {
               onClick={() => setOpenFollowing(true)}
               style={{ cursor: "pointer" }}
             >
-              {following} following
+              {followingUsers.length} following
             </p>
           </div>
           <div>{profileDesc}</div>
-          <div>{website}</div>
+          <a style={{ color: "#00376b" }} href={website}>
+            {website}
+          </a>
         </section>
       </header>
       <div className="profile-line"></div>

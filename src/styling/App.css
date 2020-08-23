@@ -91,4 +91,5 @@
   max-height: 200px;
   width: 120%;
   overflow: auto;
+  filter: drop-shadow(0 0 3px #dbdbdb);
 }
