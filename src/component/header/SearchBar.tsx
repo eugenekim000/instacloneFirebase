@@ -1,5 +1,5 @@
 import React, { ReactElement, useState, useEffect } from "react";
-import { allUserQuery } from "../../queries";
+import { allUserQuery, userQuery } from "../../queries";
 import firebase from "firebase";
 import SearchBarResult from "./SearchBarResult";
 
@@ -16,10 +16,19 @@ export default function SearchBar(): ReactElement {
         .where(firebaseId, ">=", "e")
         .where(firebaseId, "<=", "e" + "\uf8ff")
         .get()
-        .then((snapShot) => {
-          console.log("found!!!!");
-          console.log(snapShot.docs);
-          setFoundUsers(snapShot.docs.map((doc) => doc.id));
+        .then((snapShot) => snapShot.docs.map((doc) => doc.id))
+        .then((docIds) =>
+          docIds.map((docId) =>
+            userQuery(docId)
+              .get()
+              .then((snapShot: any) => {
+                const { name, avatar } = snapShot.data();
+                return { name, avatar, username: docId };
+              })
+          )
+        )
+        .then((finalData) => {
+          Promise.all([...finalData]).then((values) => setFoundUsers(values));
         });
     }
 
@@ -40,7 +49,11 @@ export default function SearchBar(): ReactElement {
         onChange={(e) => handleChange(e)}
       ></input>
       {foundUsers.length > 0 && (
-        <SearchBarResult setInput={setInput} setFoundUsers={setFoundUsers} />
+        <SearchBarResult
+          setInput={setInput}
+          setFoundUsers={setFoundUsers}
+          foundUsers={foundUsers}
+        />
       )}
     </div>
   );

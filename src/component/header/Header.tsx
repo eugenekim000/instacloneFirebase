@@ -61,8 +61,12 @@ export default function Header({
         <SearchBar />
 
         <div className="header-icon-container">
-          <Compass />
-          <User />
+          <Link to="/explore">
+            <Compass />
+          </Link>
+          <Link to={user ? `/${user.displayName}` : ""}>
+            <User />
+          </Link>
           <Camera />
         </div>
 

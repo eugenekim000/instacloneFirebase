@@ -93,9 +93,10 @@ export default function Profile(props: any): ReactElement {
               (username === user.displayName ? (
                 <>
                   <Link to="/accounts/edit">
-                    <button>Edit Profile</button>
+                    <button className="profile-edit-button">
+                      Edit Profile
+                    </button>
                   </Link>
-                  <button>log out</button>
                 </>
               ) : (
                 user.displayName && (

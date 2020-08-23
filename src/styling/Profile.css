@@ -102,6 +102,17 @@
   text-align: center;
 }
 
+.profile-edit-button {
+  background-color: transparent;
+  color: black;
+  font-weight: 600;
+  width: 6rem;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  padding: 5px 10px 5px 10px;
+  font-size: 10px;
+}
+
 @media (max-width: 735px) {
   .profile-avatar-container {
     margin-left: 0px;
