@@ -23,20 +23,6 @@ export default function Header({
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
 
-  // useEffect(() => {
-  //   console.log("app render");
-  //   const unsubscribe = db
-  //     .collection("posts")
-  //     .orderBy("timestamp", "desc")
-  //     .onSnapshot((snapshot) => {
-  //       setPosts(
-  //         snapshot.docs.map((doc) => ({ id: doc.id, post: doc.data() }))
-  //       );
-  //     });
-
-  //   return unsubscribe;
-  // }, []);
-
   useEffect(() => {
     console.log("render header, user username");
     const unsubscribe = auth().onAuthStateChanged((authUser) => {
@@ -65,6 +51,10 @@ export default function Header({
           src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
         ></img>
       </Link>
+
+      <input placeholder="Search"></input>
+
+      <div className="header-icon-container"> </div>
 
       {user ? (
         <Button
