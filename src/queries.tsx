@@ -17,6 +17,9 @@ export const userQuery = (username: string) =>
 export const userPostQuery = (user: string, postId: string) =>
   db.collection("users").doc(user).collection("posts").doc(postId);
 
+export const allFollowingQuery = (user: string) =>
+  userQuery(user).collection("following");
+
 export const followingQuery = (user: string, username: string) =>
   userQuery(user).collection("following").doc(username);
 

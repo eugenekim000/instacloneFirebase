@@ -47,7 +47,7 @@ export function PostFetch({ paramPostId }: any): ReactElement {
           image={image}
           postId={paramPostId}
           user={user}
-          fileName={fileName}
+          filename={fileName}
         />
       )}
     </div>

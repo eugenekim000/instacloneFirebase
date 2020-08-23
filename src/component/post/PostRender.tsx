@@ -18,7 +18,7 @@ interface Props {
   image?: string;
   postId: string;
   user: any;
-  fileName: string;
+  filename: string;
 }
 
 export const PostRender = ({
@@ -27,7 +27,7 @@ export const PostRender = ({
   image,
   postId,
   user,
-  fileName,
+  filename,
 }: Props) => {
   const [comments, setcomments] = useState<firebase.firestore.DocumentData[]>(
     []
@@ -40,6 +40,14 @@ export const PostRender = ({
   const [option, setOption] = useState(false);
 
   useEffect(() => {
+    console.log(
+      username,
+      caption,
+      image,
+      postId,
+      filename,
+      "this is from postrender"
+    );
     postLikeQuery(postId)
       .doc(user.displayName)
       .get()
@@ -136,7 +144,7 @@ export const PostRender = ({
         postId={postId}
         user={user}
         username={username}
-        fileName={fileName}
+        fileName={filename}
       ></OptionModal>
 
       <div className="post-header">
@@ -153,6 +161,7 @@ export const PostRender = ({
               width: 14,
               position: "absolute",
               right: "15px",
+              cursor: "pointer",
             }}
           />
         </div>
