@@ -1,14 +1,15 @@
-import "../styling/App.css";
+import "../../styling/App.css";
 import React, { ReactElement, useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { auth } from "firebase";
-import { db } from "../firebase";
-import AuthModal from "./AuthModal";
+import { db } from "../../firebase";
+import AuthModal from "../AuthModal";
 
-import { ReactComponent as Compass } from "../images/compass-unselected.svg";
-import { ReactComponent as User } from "../images/user-unselected.svg";
-import { ReactComponent as Camera } from "../images/camera.svg";
+import { ReactComponent as Compass } from "../../images/compass-unselected.svg";
+import { ReactComponent as User } from "../../images/user-unselected.svg";
+import { ReactComponent as Camera } from "../../images/camera.svg";
+import SearchBar from "./SearchBar";
 
 interface Props {
   setPosts: any;
@@ -57,7 +58,7 @@ export default function Header({
           ></img>
         </Link>
 
-        <input placeholder="Search" className="header-search-bar"></input>
+        <SearchBar />
 
         <div className="header-icon-container">
           <Compass />

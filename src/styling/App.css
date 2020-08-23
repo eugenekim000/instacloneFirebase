@@ -78,3 +78,14 @@
 .header-search-bar:focus {
   text-align: left;
 }
+
+.search-bar-container {
+  position: relative;
+}
+
+.search-result-container {
+  position: absolute;
+  background: darkblue;
+  height: 100px;
+  width: 100px;
+}
