@@ -11,6 +11,7 @@ import Header from "./component/header/Header";
 import FeedPage from "./component/feed/FeedPage";
 import PostPage from "./component/post/PostPage";
 import Login from "./component/landing/Login";
+import SignUp from "./component/landing/SignUp";
 
 interface AppContext {
   user: any;
@@ -59,7 +60,7 @@ function App() {
         )}
         <Switch>
           <Route path="/login" component={Login} />
-          <Route path="/signup" component={Login} />
+          <Route path="/signup" component={SignUp} />
           <Route exact path="*" component={Login} />
         </Switch>
       </Router>

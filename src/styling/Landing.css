@@ -1,19 +1,98 @@
+input::placeholder {
+  color: lightgrey;
+}
+
 .login-container {
-  width: 250px;
-  height: 400px;
-  background: white;
-  border: 1px solid #dbdbdb;
+  width: 175px;
+  height: auto;
   display: flex;
   flex-direction: column;
   object-fit: contain;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 50px;
-  padding: 18px 36px 18px 36px;
+  margin-top: 100px;
   align-items: center;
+  font-size: 11px;
+}
+
+.login-image-container {
+  margin-bottom: 15px;
 }
 
 .login-input-forms {
   display: flex;
   flex-direction: column;
+}
+
+.login-input-forms button {
+  padding: 5px 0 5px 0;
+  border-radius: 3px;
+  color: white;
+  background-color: #0095f6;
+  font-weight: bold;
+}
+
+.login-input-forms * {
+  margin-bottom: 5px;
+  font-size: 10px;
+}
+
+.login-input-forms button {
+  border: 1px solid #dbdbdb;
+}
+
+.login-input-wrapper {
+  padding: 2px 0 2px 0;
+  border: 1px solid #dbdbdb;
+  border-radius: 2px;
+  position: relative;
+}
+
+.login-input-wrapper input {
+  border: none;
+  display: flex;
+  left: 0;
+  bottom: 0;
+  padding-top: 5px;
+}
+
+.login-image-container {
+  text-align: center;
+}
+
+.login-main-container {
+  width: 100%;
+  background: white;
+  border: 1px solid #dbdbdb;
+  justify-content: space-between;
+  padding: 18px 36px 18px 36px;
+  text-align: center;
+}
+
+.login-main-container p {
+  font-size: 10px;
+  color: #00376b;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.login-pw-recover-container {
+  width: 100%;
+  background: white;
+  border: 1px solid #dbdbdb;
+  margin-top: 10px;
+  padding: 18px 36px 18px 36px;
+}
+
+.login-github {
+  width: 100%;
+  background: white;
+  border: 1px solid #dbdbdb;
+  margin-top: 10px;
+  padding: 10px 38px 10px 36px;
+  font-weight: bold;
+}
+
+.login-github p {
+  text-align: center;
 }
