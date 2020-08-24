@@ -1,9 +1,9 @@
 import "../../styling/App.css";
-import React, { ReactElement, useEffect, useState } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React, { ReactElement, useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { auth } from "firebase";
-import AuthModal from "../AuthModal";
+import { ProfileDropdown } from "./ProfileDropdown";
 
 import { ReactComponent as Compass } from "../../images/compass-unselected.svg";
 import { ReactComponent as User } from "../../images/user-unselected.svg";
@@ -26,25 +26,7 @@ export default function Header({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-
-  // useEffect(() => {
-  //   console.log("render header, user username");
-  //   const unsubscribe = auth().onAuthStateChanged((authUser) => {
-  //     if (authUser) {
-  //       setUser(authUser);
-
-  //       if (authUser.displayName) {
-  //         console.log(user, "this is the user - from header");
-  //       } else {
-  //         return authUser.updateProfile({ displayName: username });
-  //       }
-  //     }
-  //   });
-
-  //   return () => {
-  //     unsubscribe();
-  //   };
-  // }, [user, username]);
+  const [render, setRender] = useState(false);
 
   return (
     <div className="app-header">
@@ -63,12 +45,16 @@ export default function Header({
           <Link to="/explore">
             <Compass />
           </Link>
-          <Link to={user ? `/${user.displayName}` : ""}>
-            <User />
-          </Link>
-          <Camera />
-        </div>
 
+          <Camera />
+
+          {/* <Link to={user ? `/${user.displayName}` : ""}> */}
+          <>
+            <User onClick={() => setRender(true)} />
+            {render && <ProfileDropdown />}
+          </>
+        </div>
+        {/* 
         {user ? (
           <Button
             onClick={() =>
@@ -84,28 +70,7 @@ export default function Header({
             <Button onClick={() => setOpen(true)}>Sign Up</Button>
             <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
           </div>
-        )}
-
-        <AuthModal
-          openSignIn={open}
-          setOpenSignIn={setOpen}
-          setEmail={setEmail}
-          setPassword={setPassword}
-          setUsername={setUsername}
-          email={email}
-          password={password}
-          username={username}
-          signin={false}
-        ></AuthModal>
-        <AuthModal
-          openSignIn={openSignIn}
-          setOpenSignIn={setOpenSignIn}
-          setEmail={setEmail}
-          setPassword={setPassword}
-          email={email}
-          password={password}
-          signin={true}
-        ></AuthModal>
+        )} */}
       </div>
     </div>
   );
