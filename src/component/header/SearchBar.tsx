@@ -8,13 +8,14 @@ const firebaseId = firebase.firestore.FieldPath.documentId();
 export default function SearchBar(): ReactElement {
   const [input, setInput] = useState("");
   const [foundUsers, setFoundUsers] = useState<any>([]);
+  const [render, setRender] = useState(false);
 
   useEffect(() => {
     let prefixFound: any;
     if (input) {
       prefixFound = allUserQuery()
-        .where(firebaseId, ">=", "e")
-        .where(firebaseId, "<=", "e" + "\uf8ff")
+        .where(firebaseId, ">=", input)
+        .where(firebaseId, "<=", input + "\uf8ff")
         .get()
         .then((snapShot) => snapShot.docs.map((doc) => doc.id))
         .then((docIds) =>
@@ -29,8 +30,11 @@ export default function SearchBar(): ReactElement {
         )
         .then((finalData) => {
           Promise.all([...finalData]).then((values) => setFoundUsers(values));
+          setRender(true);
         });
     }
+
+    if (input === "") setRender(false);
 
     return () => prefixFound;
   }, [input]);
@@ -48,7 +52,7 @@ export default function SearchBar(): ReactElement {
         className="header-search-bar"
         onChange={(e) => handleChange(e)}
       ></input>
-      {foundUsers.length > 0 && (
+      {render && (
         <SearchBarResult
           setInput={setInput}
           setFoundUsers={setFoundUsers}

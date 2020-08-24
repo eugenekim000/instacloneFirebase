@@ -58,21 +58,23 @@ function App() {
             </UserContext.Provider>
           </>
         )}
-        <Switch>
-          <Route
-            path="/login"
-            render={() => <Login setUser={setUser} user={user} />}
-          />
-          <Route
-            path="/signup"
-            render={() => <SignUp setUser={setUser} user={user} />}
-          />
-          <Route
-            exact
-            path="*"
-            render={() => <Login setUser={setUser} user={user} />}
-          />
-        </Switch>
+        {!user && (
+          <Switch>
+            <Route
+              path="/login"
+              render={() => <Login setUser={setUser} user={user} />}
+            />
+            <Route
+              path="/signup"
+              render={() => <SignUp setUser={setUser} user={user} />}
+            />
+            <Route
+              exact
+              path="*"
+              render={() => <Login setUser={setUser} user={user} />}
+            />
+          </Switch>
+        )}
       </Router>
     </div>
   );

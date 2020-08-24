@@ -30,10 +30,20 @@ export default function SearchBarResult({
   });
 
   return (
-    <div ref={myRef} className="search-result-container">
-      {foundUsers.map((foundUser: any) => (
-        <SearchResultItem foundUsers={foundUser} />
-      ))}
-    </div>
+    <>
+      {foundUsers.length ? (
+        <div ref={myRef} className="search-result-container">
+          {foundUsers.map((foundUser: any) => (
+            <SearchResultItem foundUsers={foundUser} />
+          ))}
+        </div>
+      ) : (
+        <div ref={myRef} className="search-result-container">
+          <SearchResultItem
+            foundUsers={{ username: "", avatar: "", name: "" }}
+          />
+        </div>
+      )}
+    </>
   );
 }
