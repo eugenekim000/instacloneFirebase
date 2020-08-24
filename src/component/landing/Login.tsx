@@ -10,12 +10,13 @@ export default function Login({}: Props): ReactElement {
         <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"></img>
       </section>
 
-      <section>
+      <form className="login-input-forms">
         <input placeholder="Email"></input>
         <input placeholder="Password"></input>
         <button>log in</button>
-        <p>forgot password?</p>
-      </section>
+      </form>
+
+      <p>forgot password?</p>
 
       <section>
         <div>Don't have an account? Sign up</div>

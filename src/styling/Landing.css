@@ -12,3 +12,8 @@
   padding: 18px 36px 18px 36px;
   align-items: center;
 }
+
+.login-input-forms {
+  display: flex;
+  flex-direction: column;
+}
