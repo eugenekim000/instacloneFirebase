@@ -59,9 +59,19 @@ function App() {
           </>
         )}
         <Switch>
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={SignUp} />
-          <Route exact path="*" component={Login} />
+          <Route
+            path="/login"
+            render={() => <Login setUser={setUser} user={user} />}
+          />
+          <Route
+            path="/signup"
+            render={() => <SignUp setUser={setUser} user={user} />}
+          />
+          <Route
+            exact
+            path="*"
+            render={() => <Login setUser={setUser} user={user} />}
+          />
         </Switch>
       </Router>
     </div>

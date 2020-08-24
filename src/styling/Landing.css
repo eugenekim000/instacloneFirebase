@@ -15,6 +15,16 @@ input::placeholder {
   font-size: 11px;
 }
 
+.login-container h3 {
+  color: rgb(170, 170, 170);
+  margin-bottom: 15px;
+}
+
+.login-disclaimer {
+  font-size: 8px !important;
+  color: lightgrey !important;
+}
+
 .login-image-container {
   margin-bottom: 15px;
 }
@@ -34,7 +44,7 @@ input::placeholder {
 
 .login-input-forms * {
   margin-bottom: 5px;
-  font-size: 10px;
+  font-size: 8px;
 }
 
 .login-input-forms button {
@@ -42,7 +52,7 @@ input::placeholder {
 }
 
 .login-input-wrapper {
-  padding: 2px 0 2px 0;
+  padding: 2px 0 2px 5px;
   border: 1px solid #dbdbdb;
   border-radius: 2px;
   position: relative;
@@ -54,6 +64,7 @@ input::placeholder {
   left: 0;
   bottom: 0;
   padding-top: 5px;
+  padding-right: 10px;
 }
 
 .login-image-container {
@@ -82,17 +93,30 @@ input::placeholder {
   border: 1px solid #dbdbdb;
   margin-top: 10px;
   padding: 18px 36px 18px 36px;
+  text-align: center;
 }
 
 .login-github {
+  display: flex;
   width: 100%;
   background: white;
   border: 1px solid #dbdbdb;
   margin-top: 10px;
   padding: 10px 38px 10px 36px;
   font-weight: bold;
+  justify-content: center;
 }
 
-.login-github p {
+.login-github a {
+  padding-top: 2px;
+  text-align: center;
+}
+
+.login-redirect {
+  width: 100%;
+  background: white;
+  border: 1px solid #dbdbdb;
+  margin-top: 10px;
+  padding: 18px 36px 18px 36px;
   text-align: center;
 }

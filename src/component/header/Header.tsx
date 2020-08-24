@@ -27,24 +27,24 @@ export default function Header({
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
 
-  useEffect(() => {
-    console.log("render header, user username");
-    const unsubscribe = auth().onAuthStateChanged((authUser) => {
-      if (authUser) {
-        setUser(authUser);
+  // useEffect(() => {
+  //   console.log("render header, user username");
+  //   const unsubscribe = auth().onAuthStateChanged((authUser) => {
+  //     if (authUser) {
+  //       setUser(authUser);
 
-        if (authUser.displayName) {
-          console.log(user, "this is the user - from header");
-        } else {
-          return authUser.updateProfile({ displayName: username });
-        }
-      }
-    });
+  //       if (authUser.displayName) {
+  //         console.log(user, "this is the user - from header");
+  //       } else {
+  //         return authUser.updateProfile({ displayName: username });
+  //       }
+  //     }
+  //   });
 
-    return () => {
-      unsubscribe();
-    };
-  }, [user, username]);
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // }, [user, username]);
 
   return (
     <div className="app-header">

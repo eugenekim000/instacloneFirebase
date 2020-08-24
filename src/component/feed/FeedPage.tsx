@@ -78,7 +78,7 @@ export default function FeedPage({ user, posts }: Props): ReactElement {
           ))}
         </>
       ) : (
-        <h3 className="image-upload-login">Please Log in to upload!</h3>
+        <h3 className="image-upload-login">Empty Feed</h3>
       )}
     </>
   );
