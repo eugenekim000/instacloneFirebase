@@ -41,8 +41,13 @@ function App() {
       <Router>
         {user && (
           <>
-            <Header setPosts={setPosts} setUser={setUser} user={user}></Header>
             <UserContext.Provider value={user}>
+              <Header
+                setPosts={setPosts}
+                setUser={setUser}
+                user={user}
+              ></Header>
+
               <Switch>
                 <Route
                   exact

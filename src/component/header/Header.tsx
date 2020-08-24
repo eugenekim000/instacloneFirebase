@@ -21,11 +21,6 @@ export default function Header({
   setUser,
   user,
 }: Props): ReactElement {
-  const [open, setOpen] = useState(false);
-  const [openSignIn, setOpenSignIn] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
   const [render, setRender] = useState(false);
 
   return (
@@ -47,30 +42,11 @@ export default function Header({
           </Link>
 
           <Camera />
-
-          {/* <Link to={user ? `/${user.displayName}` : ""}> */}
           <>
             <User onClick={() => setRender(true)} />
-            {render && <ProfileDropdown />}
+            {render && <ProfileDropdown setRender={setRender} />}
           </>
         </div>
-        {/* 
-        {user ? (
-          <Button
-            onClick={() =>
-              auth()
-                .signOut()
-                .then(() => setUser(null))
-            }
-          >
-            Sign Out
-          </Button>
-        ) : (
-          <div className="app-login-container">
-            <Button onClick={() => setOpen(true)}>Sign Up</Button>
-            <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
-          </div>
-        )} */}
       </div>
     </div>
   );
