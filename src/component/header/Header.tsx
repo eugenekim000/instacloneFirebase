@@ -3,7 +3,6 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { auth } from "firebase";
-import { db } from "../../firebase";
 import AuthModal from "../AuthModal";
 
 import { ReactComponent as Compass } from "../../images/compass-unselected.svg";

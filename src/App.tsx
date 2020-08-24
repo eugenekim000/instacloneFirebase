@@ -1,6 +1,8 @@
 import React, { useState, useEffect, createContext } from "react";
 import "./styling/App.css";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { auth } from "firebase";
+
 import Profile from "./component/profile/Profile";
 import Explore from "./component/explore/Explore";
 import EditProfilePage from "./component/settings/EditProfilePage";
@@ -8,6 +10,7 @@ import NotFound from "./component/NotFound";
 import Header from "./component/header/Header";
 import FeedPage from "./component/feed/FeedPage";
 import PostPage from "./component/post/PostPage";
+import Login from "./component/landing/Login";
 
 interface AppContext {
   user: any;
@@ -19,24 +22,46 @@ function App() {
   const [posts, setPosts] = useState<Partial<any>>([]);
   const [user, setUser] = useState<any>(null);
 
+  useEffect(() => {
+    console.log("render header, user username");
+    const unsubscribe = auth().onAuthStateChanged((authUser) => {
+      if (authUser) {
+        setUser(authUser);
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [user]);
+
   return (
     <div className="App">
       <Router>
-        <Header setPosts={setPosts} setUser={setUser} user={user}></Header>
-        <UserContext.Provider value={user}>
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={() => <FeedPage user={user} posts={posts} />}
-            />
-            <Route path="/explore" component={Explore} />
-            <Route exact path="/:username" component={Profile} />
-            <Route path="/accounts/edit" component={EditProfilePage} />
-            <Route path="/post/:postid" component={PostPage} />
-            <Route exact path="*" component={NotFound} />
-          </Switch>
-        </UserContext.Provider>
+        {user && (
+          <>
+            <Header setPosts={setPosts} setUser={setUser} user={user}></Header>
+            <UserContext.Provider value={user}>
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  render={() => <FeedPage user={user} posts={posts} />}
+                />
+                <Route path="/explore" component={Explore} />
+                <Route exact path="/:username" component={Profile} />
+                <Route path="/accounts/edit" component={EditProfilePage} />
+                <Route path="/post/:postid" component={PostPage} />
+                <Route exact path="*" component={NotFound} />
+              </Switch>
+            </UserContext.Provider>
+          </>
+        )}
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Login} />
+          <Route exact path="*" component={Login} />
+        </Switch>
       </Router>
     </div>
   );

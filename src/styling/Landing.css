@@ -1,0 +1,14 @@
+.login-container {
+  width: 250px;
+  height: 400px;
+  background: white;
+  border: 1px solid #dbdbdb;
+  display: flex;
+  flex-direction: column;
+  object-fit: contain;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  padding: 18px 36px 18px 36px;
+  align-items: center;
+}
