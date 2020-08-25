@@ -53,7 +53,6 @@ export default function SignUp({ setUser, user }: Props): ReactElement {
 
     let usernameCheck = await checkUsernameAvail(username);
     if (!usernameCheck) {
-      console.log(usernameCheck, "usernamecheck");
       alert("username already taken!");
       return;
     }
@@ -62,9 +61,11 @@ export default function SignUp({ setUser, user }: Props): ReactElement {
       .createUserWithEmailAndPassword(email, password)
       .then((authUser) => {
         db.collection("users").doc(username).set({
-          followersNum: 0,
-          followingNum: 0,
+          notificationCount: 0,
           profile: "",
+          name: "",
+          website: "",
+          bio: "",
         });
         return authUser.user?.updateProfile({ displayName: username });
       })

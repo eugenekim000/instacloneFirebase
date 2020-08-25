@@ -24,7 +24,7 @@ function App() {
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    console.log("render header, user username");
+    console.log(user);
     const unsubscribe = auth().onAuthStateChanged((authUser) => {
       if (authUser) {
         setUser(authUser);

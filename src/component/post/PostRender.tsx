@@ -10,7 +10,12 @@ import { ReactComponent as UnlikeIcon } from "../../images/black-like.svg";
 import { ReactComponent as LikeIcon } from "../../images/red-like.svg";
 import { ReactComponent as ChatIcon } from "../../images/chat.svg";
 import { ReactComponent as MoreIcon } from "../../images/more.svg";
-import { postLikeQuery, userQuery, postCommentQuery } from "../../queries";
+import {
+  postLikeQuery,
+  userQuery,
+  postCommentQuery,
+  newNotication,
+} from "../../queries";
 import { OptionModal } from "../modals/OptionModal";
 import { LikeModal } from "../modals/LikeModal";
 
@@ -93,11 +98,21 @@ export const PostRender = ({
           else {
             setPostLikeNum(snapShot.size);
             setPostLikes(snapShot.docs.map((doc) => doc.id));
+
+            let notificationData = {
+              username: username,
+              user: user.displayName,
+              photo: user.photoURL,
+              type: "like",
+              timestamp: firebase.firestore.Timestamp.now().seconds.toString(),
+              postId: postId,
+              postImage: image,
+            };
+
+            newNotication(notificationData);
           }
         }
       );
-
-    console.log(postLikes, "post likes set!");
 
     return () => {
       unsubscribe();
@@ -113,6 +128,19 @@ export const PostRender = ({
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
     setComment("");
+
+    let notificationData = {
+      username: username,
+      user: user.displayName,
+      photo: user.photoURL,
+      type: "comment",
+      content: comment,
+      timestamp: firebase.firestore.Timestamp.now().seconds.toString(),
+      postId: postId,
+      postImage: image,
+    };
+
+    newNotication(notificationData);
   };
 
   const handleChatClick = () => {

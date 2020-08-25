@@ -1,4 +1,5 @@
 import { db } from "./firebase";
+import firebase from "firebase";
 
 export const allPostQuery = () => db.collection("posts");
 
@@ -33,3 +34,10 @@ export const followingQuery = (user: string, username: string) =>
 
 export const followersQuery = (user: string, username: string) =>
   userQuery(username).collection("followers").doc(user);
+
+export const newNotication = (data: any) => {
+  userQuery(data.username).update({
+    notificatonCount: firebase.firestore.FieldValue.increment(1),
+  });
+  userQuery(data.username).collection("notifications").add(data);
+};

@@ -1,6 +1,13 @@
-import React, { ReactElement, useState, useEffect } from "react";
+import React, { ReactElement, useState, useEffect, useContext } from "react";
 import "../../styling/FollowButton.css";
-import { userQuery, followingQuery, followersQuery } from "../../queries";
+import {
+  userQuery,
+  followingQuery,
+  followersQuery,
+  newNotication,
+} from "../../queries";
+import { UserContext } from "../../App";
+import firebase from "firebase";
 
 interface Props {
   user: string;
@@ -14,6 +21,12 @@ export const FollowButton = ({
   setFollowers,
 }: Props): ReactElement => {
   const [isFollowing, setIsFollowing] = useState(false);
+  const userData = useContext(UserContext);
+  const notificationData = {
+    user: userData.displayName,
+    username: username,
+    photo: userData.photoURL,
+  };
 
   useEffect(() => {
     if (user && username) {
@@ -21,10 +34,8 @@ export const FollowButton = ({
         .get()
         .then((doc) => {
           if (doc.exists) {
-            console.log("iam following!!");
             setIsFollowing(true);
           } else {
-            console.log("i am not following", doc.data());
             setIsFollowing(false);
           }
         })
@@ -45,6 +56,17 @@ export const FollowButton = ({
               setFollowers((prevState) => prevState + 1);
             }
             setIsFollowing(true);
+          })
+          .then(() => {
+            let data = {
+              ...notificationData,
+              timestamp: firebase.firestore.Timestamp.now().seconds.toString(),
+              type: "follow",
+            };
+
+            console.log(data, "data from follow!!");
+
+            newNotication(data);
           })
           .catch((err: any) => console.log(err.message))
       )
