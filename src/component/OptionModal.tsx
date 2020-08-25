@@ -74,7 +74,6 @@ export function OptionModal({
         transition={{ duration: 0.05 }}
         className="option-modal-container"
       >
-        {/* <div className="option-modal-container"> */}
         <button onClick={handleRedirect}>Go to Post</button>
         <button onClick={handleCopy}>Copy Link</button>
         {ownerCheck && (
@@ -86,7 +85,6 @@ export function OptionModal({
           </button>
         )}
         <button onClick={() => setOption(false)}>Cancel</button>
-        {/* </div> */}
       </motion.div>
     </Modal>
   );

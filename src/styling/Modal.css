@@ -75,3 +75,23 @@
   padding-bottom: 8px;
   border-bottom: 1px solid #dbdbdb;
 }
+
+.follow-list-empty {
+  background: white;
+}
+
+.follow-list-empty * {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: 400;
+}
+
+.follow-list-empty:last-child {
+  padding-bottom: 10px;
+}
+
+.follow-list-empty svg {
+  width: 40px;
+  height: 40px;
+  padding-top: 5px;
+}
