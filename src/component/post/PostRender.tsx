@@ -76,7 +76,13 @@ export const PostRender = ({
         .collection("comments")
         .orderBy("timestamp", "asc")
         .onSnapshot((snapshot) => {
-          setcomments(snapshot.docs.map((doc) => doc.data()));
+          setcomments(
+            snapshot.docs.map((doc) => {
+              let idObj = { id: doc.id };
+              let data = doc.data();
+              return { ...data, ...idObj };
+            })
+          );
         });
       console.log("rerendering post Id");
     }
@@ -113,6 +119,8 @@ export const PostRender = ({
     });
     setComment("");
   };
+
+  const handleDeleteComment = (commentId: string) => {};
 
   const handleChatClick = () => {
     textInput.current?.focus();
@@ -213,12 +221,19 @@ export const PostRender = ({
 
       <div className="post-comments">
         {comments.map((comment) => (
-          <p>
-            <Link to={`/${comment.username}`}>
-              <strong>{comment.username} </strong>
-            </Link>
-            {comment.text}
-          </p>
+          <span className="post-comment">
+            <p>
+              <Link to={`/${comment.username}`}>
+                <strong>{comment.username} </strong>
+              </Link>
+              {comment.text}
+            </p>
+            {comment.username === user.displayName ? (
+              <button onClick={() => handleDeleteComment(comment.id)}>x</button>
+            ) : (
+              <></>
+            )}
+          </span>
         ))}
       </div>
 

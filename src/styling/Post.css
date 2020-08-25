@@ -82,6 +82,27 @@
   font-size: 12px;
 }
 
+.post-comment {
+  display: flex;
+}
+
+.post-comment:hover > button {
+  opacity: 1 !important;
+}
+
+.post-comment button {
+  opacity: 0;
+  max-width: 20px;
+  max-height: 20px;
+  background: transparent;
+  border: none;
+  color: red;
+}
+
+.post-comment button:hover {
+  cursor: pointer;
+}
+
 .post-text {
   font-size: 12px;
 }

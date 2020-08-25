@@ -15,8 +15,6 @@ export function PostFetch({ paramPostId }: any): ReactElement {
   const user = useContext(UserContext);
 
   useEffect(() => {
-    console.log(user, "this is the user");
-    console.log(paramPostId, "this is from temp post");
     if (user) {
       postsQuery(paramPostId)
         .get()

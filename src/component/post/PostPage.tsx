@@ -12,7 +12,6 @@ export default function PostPage(props: any): ReactElement {
 
   useEffect(() => {
     setRender(true);
-    console.log(paramPostId, "this is the post id");
   }, []);
 
   return (
