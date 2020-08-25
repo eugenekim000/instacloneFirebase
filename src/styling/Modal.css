@@ -24,6 +24,10 @@
   background-color: white;
 }
 
+.option-modal-container button:hover {
+  cursor: pointer;
+}
+
 .follow-modal-container {
   display: flex;
   max-height: 20rem;

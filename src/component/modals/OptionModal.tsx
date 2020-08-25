@@ -1,9 +1,9 @@
 import React, { ReactElement } from "react";
 import { Modal } from "@material-ui/core";
-import "../styling/Modal.css";
+import "../../styling/Modal.css";
 import { useHistory } from "react-router-dom";
-import { postsQuery, userPostQuery } from "../queries";
-import { storage } from "../firebase";
+import { postsQuery, userPostQuery } from "../../queries";
+import { storage } from "../../firebase";
 import { motion } from "framer-motion";
 
 interface Props {

@@ -117,6 +117,7 @@ export function UploadDropdown({
               type="file"
               className="dropdown-inputfile"
               onChange={handleChange}
+              accept="image/png, image/jpeg"
             />
           </>
         </div>

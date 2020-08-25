@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { Modal } from "@material-ui/core";
-import { PostFetch } from "./post/PostFetch";
+import { PostFetch } from "../post/PostFetch";
 interface Props {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;

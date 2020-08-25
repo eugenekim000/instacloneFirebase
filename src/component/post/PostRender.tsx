@@ -11,7 +11,7 @@ import { ReactComponent as LikeIcon } from "../../images/red-like.svg";
 import { ReactComponent as ChatIcon } from "../../images/chat.svg";
 import { ReactComponent as MoreIcon } from "../../images/more.svg";
 import { postLikeQuery, userQuery } from "../../queries";
-import { OptionModal } from "../OptionModal";
+import { OptionModal } from "../modals/OptionModal";
 
 interface Props {
   username: string;

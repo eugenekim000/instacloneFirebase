@@ -22,8 +22,8 @@
   display: grid;
   max-width: 613px;
   max-height: 194px;
-  justify-items: start;
   overflow: hidden;
+  margin-left: 100px;
 }
 
 .profile-images {
@@ -113,12 +113,47 @@
   font-size: 10px;
 }
 
+.setting-username-input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.setting-username-input-label:hover {
+  cursor: pointer;
+}
+
+.profile-images-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.profile-images-wrapper svg {
+  height: 60px;
+  width: 60px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.profile-images-wrapper * {
+  font-weight: 400;
+  text-align: center;
+  padding-top: 5px;
+}
+
 @media (max-width: 735px) {
   .profile-avatar-container {
     margin-left: 0px;
     margin-right: 20px;
   }
+  .profile-stats p {
+    font-size: 12px;
+  }
   .profile-stats > :not(:last-child) {
     margin-right: 2rem;
+  }
+  .profile-description-container {
+    margin-left: 40px;
   }
 }

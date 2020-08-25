@@ -3,7 +3,7 @@ import { postCommentsQuery, postLikeQuery } from "./../queries";
 import "../styling/Hover.css";
 import { ReactComponent as HeartIcon } from "../images/heart-black.svg";
 import { ReactComponent as ChatIcon } from "../images/chat-black.svg";
-import PostModal from "./PostModal";
+import PostModal from "./modals/PostModal";
 interface Props {
   image: string;
   id: string;

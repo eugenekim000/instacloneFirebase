@@ -4,6 +4,7 @@ import {
   userQuery as userProfileQuery,
   allFollowingQuery,
   allFollowersQuery,
+  userQuery,
 } from "../../queries";
 import "../../styling/Profile.css";
 import { useHistory, Link } from "react-router-dom";
@@ -11,6 +12,8 @@ import { UserContext } from "../../App";
 import { FollowButton } from "./FollowButton";
 import HoverImg from "../HoverImg";
 import { FollowModal } from "../modals/FollowModal";
+import { storage } from "../../firebase";
+import { ReactComponent as CameraIcon } from "../../images/camera.svg";
 
 interface Props {
   props: any;
@@ -97,6 +100,32 @@ export default function Profile(props: any): ReactElement {
       });
   }, []);
 
+  const handleProfilePic = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const image = e.target.files![0];
+
+    const uploadTask = storage.ref(`avatars/${image!.name}`).put(image);
+
+    uploadTask.on(
+      "state_changed",
+      () => {},
+      (err: any) => console.log(err.message, "upload"),
+      () => {
+        uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+          setAvatar(url);
+          user
+            .updateProfile({
+              photoURL: url,
+            })
+            .then(() => {
+              userQuery(user.displayName).set({ avatar: user.photoURL });
+              console.log(user.photoURL);
+            })
+            .catch((err: any) => console.log(err.message));
+        });
+      }
+    );
+  };
+
   return (
     <div className="profile-container">
       <FollowModal
@@ -112,9 +141,27 @@ export default function Profile(props: any): ReactElement {
         followType="Followers"
       />
       <header className="profile-header">
-        <div className="profile-avatar-container">
-          <Avatar className={classes.large} src={avatar} />
-        </div>
+        {username !== user.displayName ? (
+          <div className="profile-avatar-container">
+            <Avatar className={classes.large} src={avatar} />
+          </div>
+        ) : (
+          <>
+            <label
+              htmlFor="edit-avatar"
+              className="setting-username-input-label"
+            >
+              <Avatar className={classes.large} src={avatar} />
+            </label>
+            <input
+              className="setting-username-input"
+              id="edit-avatar"
+              type="file"
+              onChange={handleProfilePic}
+              accept="image/png, image/jpeg"
+            ></input>
+          </>
+        )}
         <section className="profile-description-container">
           <div className="profile-buttons">
             <h2>{username}</h2>
@@ -162,10 +209,22 @@ export default function Profile(props: any): ReactElement {
       <div className="profile-line"></div>
 
       <div className="profile-images">
-        {posts[0] &&
+        {posts[0] ? (
           posts.map(({ imageURL, id }: Posts) => (
             <HoverImg image={imageURL} id={id} username={username}></HoverImg>
-          ))}
+          ))
+        ) : (
+          <>
+            <div></div>
+            <div className="profile-images-container">
+              <div className="profile-images-wrapper">
+                <CameraIcon />
+                <h4>No Posts Yet</h4>
+                <h6>When posted, you'll see photos here.</h6>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

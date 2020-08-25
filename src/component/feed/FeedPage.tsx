@@ -77,7 +77,9 @@ export default function FeedPage({ user, posts }: Props): ReactElement {
           ))}
         </>
       ) : (
-        <h3 className="image-upload-login">Empty Feed</h3>
+        <h3 className="feed-post-empty">
+          Empty Feed...Check out the explore tab to follow people!
+        </h3>
       )}
     </>
   );
