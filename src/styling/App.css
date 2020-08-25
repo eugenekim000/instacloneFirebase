@@ -26,7 +26,7 @@
 
 .app-header-content {
   display: grid;
-  grid-template-columns: 1fr 20rem 1fr;
+  grid-template-columns: 1fr 10rem 1fr;
   justify-items: center;
   align-items: center;
   width: 100%;
@@ -55,7 +55,7 @@
   display: flex;
   /* justify-content: center; */
   align-items: center;
-  min-width: 120px;
+  min-width: 60px;
   margin-bottom: 8px;
   /* justify-content: space-between; */
 }
@@ -134,17 +134,121 @@
   padding: 5px;
 }
 
+.dropdown-item:hover {
+  background-color: #e7e7e7;
+}
+
+.dropdown-item a {
+  text-align: center;
+  padding-bottom: 3px;
+}
+
 .dropdown-item svg {
   height: 14px;
   width: 14px;
 }
 
 .dropdown-item:first-child {
-  margin-top: 6px;
+  margin-top: 1px;
 }
 
 .dropdown-item:last-child {
+  display: flex;
   border-top: 1px solid #dbdbdb;
   justify-content: center;
-  margin-top: 10px;
+  padding-top: 10px;
+  padding-bottom: 12px;
+}
+
+.dropdown-item-caption {
+  align-items: center;
+  display: flex;
+  justify-self: center;
+  align-items: center;
+}
+
+.dropdown-item-caption textarea {
+  border: 1px solid #dbdbdb;
+  resize: none;
+  width: 97%;
+  height: 80px;
+  display: block;
+  font-size: 11px;
+  text-align: center;
+  margin-top: auto;
+}
+
+.dropdown-item-caption textarea:focus {
+  text-align: left;
+}
+
+.dropdown-item-button-wrapper button {
+  width: 100%;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding-top: 8px;
+  padding-bottom: 12px;
+  font-size: 11px;
+}
+
+.dropdown-item-button-wrapper:hover {
+  background-color: #e7e7e7;
+}
+
+.dropdown-item-file {
+  display: flex;
+  max-width: 100%;
+  margin-top: 1px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.dropdown-item-file:hover {
+  background-color: #e7e7e7;
+  cursor: pointer;
+}
+
+.dropdown-inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.dropdown-inputfile-label {
+  cursor: pointer;
+}
+
+.dropdown-inputfile + label:hover {
+  background-color: #e7e7e7;
+  cursor: pointer;
+}
+
+.dropdown-inputfile-label img {
+  width: 40px;
+  height: 40px;
+  padding: 3px;
+  object-fit: contain;
+}
+
+.dropdown-item-file label {
+  font-size: 12px;
+}
+
+@media only screen and (max-width: 600px) {
+  .search-bar-container {
+    display: none;
+  }
+  .app-header {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+  .app-header-content {
+    grid-template-columns: 0.5fr 1fr;
+  }
 }

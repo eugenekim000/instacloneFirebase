@@ -108,3 +108,19 @@ a {
   text-decoration: none;
   color: black;
 }
+
+@media only screen and (max-width: 600px) {
+  .modal-post-container {
+    min-width: 300px;
+    max-width: 300px;
+  }
+
+  .individual-post-page {
+    min-width: 300px;
+    max-width: 300px;
+  }
+  .feed-post-container {
+    min-width: 300px;
+    max-width: 300px;
+  }
+}

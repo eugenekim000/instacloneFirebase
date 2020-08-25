@@ -1,0 +1,137 @@
+import React, { ReactElement, useRef, useEffect, useState } from "react";
+import { storage, db } from "../../firebase";
+import firebase from "firebase";
+
+interface Props {
+  setCameraRender: React.Dispatch<React.SetStateAction<boolean>>;
+  username: string;
+}
+
+export function UploadDropdown({
+  setCameraRender,
+  username,
+}: Props): ReactElement {
+  const myRef: any = useRef();
+  const handleClickOutside = (e: any) => {
+    if (!myRef.current!.contains(e.target)) {
+      setCameraRender(false);
+    }
+  };
+
+  const [image, setImage] = useState<any>("");
+  const [imagePrev, setImagePrev] = useState<any>("");
+  const [caption, setCaption] = useState("");
+  const [progress, setProgress] = useState(0);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files![0];
+
+    if (file) {
+      setImage(file);
+      setImagePrev(URL.createObjectURL(file));
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleUpload = () => {
+    if (!image) {
+      alert("Please upload an image!");
+      return;
+    }
+
+    const currentTime = firebase.firestore.Timestamp.now().seconds.toString();
+
+    const fileName = image!.name + currentTime;
+
+    const uploadTask = storage.ref(`images/${fileName}`).put(image);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+
+        setProgress(progress);
+      },
+      (error) => {
+        console.log("error is happening on uploadtask.on");
+        console.log(error);
+        alert(error.message);
+      },
+      () => {
+        storage
+          .ref("images")
+          .child(fileName)
+          .getDownloadURL()
+          .then((url) => {
+            db.collection("posts")
+              .add({
+                timestamp: currentTime,
+                caption: caption,
+                image: url,
+                username: username,
+                filename: fileName,
+              })
+              .then((docRef) => {
+                db.collection("users")
+                  .doc(username)
+                  .collection("posts")
+                  .doc(docRef.id)
+                  .set({ image: url, timestamp: currentTime });
+              });
+
+            setProgress(0);
+            setCaption("");
+            setImage("");
+            setImagePrev("");
+          });
+      }
+    );
+  };
+
+  return (
+    <div ref={myRef} className="profile-dropdown-container">
+      <div
+        className="profile-dropdown-wrapper"
+        style={{ height: "170px", width: "200px" }}
+      >
+        <div className="dropdown-item-file">
+          <>
+            {!imagePrev ? (
+              <label className="dropdown-inputfile-label" htmlFor="file">
+                Choose a file...
+              </label>
+            ) : (
+              <label className="dropdown-inputfile-label" htmlFor="file">
+                <img src={imagePrev} alt="selected file by the user!"></img>
+              </label>
+            )}
+            <input
+              name="file"
+              id="file"
+              type="file"
+              className="dropdown-inputfile"
+              onChange={handleChange}
+            />
+          </>
+        </div>
+        <div className="dropdown-item-caption">
+          <textarea
+            placeholder="Write a caption..."
+            maxLength={100}
+            onChange={(e) => setCaption(e.target.value)}
+            value={caption}
+          ></textarea>
+        </div>
+        <div className="dropdown-item-button-wrapper">
+          <button onClick={handleUpload}>Upload!</button>
+        </div>
+      </div>
+    </div>
+  );
+}

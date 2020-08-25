@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { auth } from "firebase";
 import { ProfileDropdown } from "./ProfileDropdown";
+import { UploadDropdown } from "./UploadDropdown";
 
 import { ReactComponent as Compass } from "../../images/compass-unselected.svg";
 import { ReactComponent as User } from "../../images/user-unselected.svg";
@@ -22,6 +23,7 @@ export default function Header({
   user,
 }: Props): ReactElement {
   const [render, setRender] = useState(false);
+  const [cameraRender, setCameraRender] = useState(false);
 
   return (
     <div className="app-header">
@@ -41,7 +43,16 @@ export default function Header({
             <Compass />
           </Link>
 
-          <Camera />
+          <>
+            <Camera onClick={() => setCameraRender(true)} />
+            {cameraRender && (
+              <UploadDropdown
+                setCameraRender={setCameraRender}
+                username={user.displayName}
+              />
+            )}
+          </>
+
           <>
             <User onClick={() => setRender(true)} />
             {render && <ProfileDropdown setRender={setRender} />}

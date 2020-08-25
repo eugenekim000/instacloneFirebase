@@ -23,7 +23,7 @@ export function ProfileDropdown({ setRender }: Props): ReactElement {
     console.log(user, "use from profile dropdown");
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  });
+  }, []);
 
   return (
     <div ref={myRef} className="profile-dropdown-container">

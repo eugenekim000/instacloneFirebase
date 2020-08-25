@@ -47,7 +47,8 @@ function App() {
                 setUser={setUser}
                 user={user}
               ></Header>
-
+            </UserContext.Provider>
+            <UserContext.Provider value={user}>
               <Switch>
                 <Route
                   exact

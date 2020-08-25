@@ -62,7 +62,6 @@ export default function FeedPage({ user, posts }: Props): ReactElement {
     <>
       {user?.displayName && followingPost.length ? (
         <>
-          <ImageUpload username={user?.displayName}></ImageUpload>
           {followingPost.map((post: Post) => (
             <div className="feed-post-container">
               <PostRender
