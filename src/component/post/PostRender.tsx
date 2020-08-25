@@ -10,7 +10,7 @@ import { ReactComponent as UnlikeIcon } from "../../images/black-like.svg";
 import { ReactComponent as LikeIcon } from "../../images/red-like.svg";
 import { ReactComponent as ChatIcon } from "../../images/chat.svg";
 import { ReactComponent as MoreIcon } from "../../images/more.svg";
-import { postLikeQuery, userQuery } from "../../queries";
+import { postLikeQuery, userQuery, postCommentQuery } from "../../queries";
 import { OptionModal } from "../modals/OptionModal";
 
 interface Props {
@@ -120,8 +120,6 @@ export const PostRender = ({
     setComment("");
   };
 
-  const handleDeleteComment = (commentId: string) => {};
-
   const handleChatClick = () => {
     textInput.current?.focus();
   };
@@ -143,6 +141,10 @@ export const PostRender = ({
     if (postLikeNum > 1) return `${postLikeNum} likes`;
     else if (postLikeNum === 1) return "1 like";
     return "Be the first to like this";
+  };
+
+  const handleDeleteComment = (commentId: string) => {
+    postCommentQuery(postId, commentId).delete();
   };
 
   return (

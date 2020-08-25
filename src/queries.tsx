@@ -13,6 +13,9 @@ export const postLikeQuery = (postId: string) =>
 export const postCommentsQuery = (postId: string) =>
   db.collection("posts").doc(postId).collection("comments");
 
+export const postCommentQuery = (postId: string, commentId: string) =>
+  db.collection("posts").doc(postId).collection("comments").doc(commentId);
+
 export const userQuery = (username: string) =>
   db.collection("users").doc(username);
 
