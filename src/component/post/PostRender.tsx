@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 
 import "../../styling/Post.css";
 import Avatar from "@material-ui/core/Avatar";
@@ -173,9 +174,23 @@ export const PostRender = ({
         <section className="post-icons">
           <button className="post-like-button" onClick={handleLikeClick}>
             {likedState ? (
-              <LikeIcon style={{ height: 24, width: 24 }} />
+              <motion.div
+                whileTap={{
+                  scale: 1.2,
+                  transition: { duration: 0.1 },
+                }}
+              >
+                <LikeIcon style={{ height: 24, width: 24 }} />
+              </motion.div>
             ) : (
-              <UnlikeIcon style={{ height: 24, width: 24 }} />
+              <motion.div
+                whileTap={{
+                  scale: 1.2,
+                  transition: { duration: 0.1 },
+                }}
+              >
+                <UnlikeIcon style={{ height: 24, width: 24 }} />
+              </motion.div>
             )}
           </button>
 

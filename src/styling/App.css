@@ -126,6 +126,33 @@
   top: -15px;
 }
 
+.profile-dropdown-wrapper-upload:before {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  position: absolute;
+
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid white;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+  right: 10px;
+  top: -15px;
+}
+
+.profile-dropdown-wrapper-upload {
+  position: absolute;
+  background: white;
+  width: 160px;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+  filter: drop-shadow(0 0 3px #dbdbdb);
+  transform: translate(-107%, 12%);
+  border-radius: 5px;
+}
+
 .dropdown-item {
   display: flex;
   flex-direction: row;

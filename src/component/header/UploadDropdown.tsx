@@ -97,7 +97,7 @@ export function UploadDropdown({
   return (
     <div ref={myRef} className="profile-dropdown-container">
       <div
-        className="profile-dropdown-wrapper"
+        className="profile-dropdown-wrapper-upload"
         style={{ height: "170px", width: "200px" }}
       >
         <div className="dropdown-item-file">

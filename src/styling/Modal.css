@@ -1,3 +1,9 @@
+.generic-modal-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .option-modal-container {
   display: flex;
   max-height: 20rem;
@@ -6,11 +12,7 @@
   flex-direction: column;
   justify-self: center;
   border-radius: 10px;
-  margin: 0;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   overflow: hidden;
 }
 

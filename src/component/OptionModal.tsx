@@ -3,7 +3,8 @@ import { Modal } from "@material-ui/core";
 import "../styling/Modal.css";
 import { useHistory } from "react-router-dom";
 import { postsQuery, userPostQuery } from "../queries";
-import { db, storage } from "../firebase";
+import { storage } from "../firebase";
+import { motion } from "framer-motion";
 
 interface Props {
   open: boolean;
@@ -62,8 +63,18 @@ export function OptionModal({
   };
 
   return (
-    <Modal open={open} onClose={() => setOption(false)} className='generic-modal-container'>
-      <div className="option-modal-container">
+    <Modal
+      open={open}
+      onClose={() => setOption(false)}
+      className="generic-modal-container"
+    >
+      <motion.div
+        initial={{ scale: 1.1 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 0.05 }}
+        className="option-modal-container"
+      >
+        {/* <div className="option-modal-container"> */}
         <button onClick={handleRedirect}>Go to Post</button>
         <button onClick={handleCopy}>Copy Link</button>
         {ownerCheck && (
@@ -75,7 +86,8 @@ export function OptionModal({
           </button>
         )}
         <button onClick={() => setOption(false)}>Cancel</button>
-      </div>
+        {/* </div> */}
+      </motion.div>
     </Modal>
   );
 }
