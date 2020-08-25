@@ -81,6 +81,7 @@ export default function Profile(props: any): ReactElement {
           return;
         } else {
           setFollowerUsers(docSnapshot.docs.map((doc) => doc.id));
+          setFollowers(docSnapshot.docs.length);
         }
       });
 
