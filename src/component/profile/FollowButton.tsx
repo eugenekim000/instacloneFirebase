@@ -16,14 +16,15 @@ export const FollowButton = ({
   const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
-    console.log(user, username, "user and username!!");
     if (user && username) {
       followingQuery(user, username)
         .get()
         .then((doc) => {
           if (doc.exists) {
+            console.log("iam following!!");
             setIsFollowing(true);
           } else {
+            console.log("i am not following", doc.data());
             setIsFollowing(false);
           }
         })
@@ -34,7 +35,6 @@ export const FollowButton = ({
   const handleFollow = (e: any) => {
     e.preventDefault();
 
-    console.log("handle follow");
     followingQuery(user, username)
       .set({ exist: true })
       .then(() =>

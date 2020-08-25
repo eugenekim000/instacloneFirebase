@@ -27,8 +27,6 @@ export default function FeedPage({ user, posts }: Props): ReactElement {
         .get()
         .then((snapShot) => {
           snapShot.docs.map((doc) => (object[doc.id] = true));
-
-          console.log(object, "object!!");
         }) //get posts that are contained in following
         .then(() => {
           allPostQuery()

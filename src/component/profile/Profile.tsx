@@ -175,7 +175,8 @@ export default function Profile(props: any): ReactElement {
                   </Link>
                 </>
               ) : (
-                user.displayName && (
+                user.displayName &&
+                username && (
                   <FollowButton
                     user={user.displayName}
                     username={username}

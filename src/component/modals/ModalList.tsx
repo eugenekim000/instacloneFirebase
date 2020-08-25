@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import "../../styling/Profile.css";
-import { FollowButton } from "./FollowButton";
+import { FollowButton } from "../profile/FollowButton";
 import { useHistory } from "react-router-dom";
 import { userQuery } from "../../queries";
 
@@ -9,11 +9,8 @@ interface Props {
   followData: any;
 }
 
-export default function FollowList({ followData }: Props): ReactElement {
+export default function ModalList({ followData }: Props): ReactElement {
   const history = useHistory();
-  // let username = "testusername";
-  // let avatar =
-  //   "https://preview.redd.it/e4gmhupelki51.jpg?width=640&crop=smart&auto=webp&s=48114ff8202878edcfd1f19528e59855768eb7a5";
   const [userData, setUserData] = useState<any>({});
 
   useEffect(() => {

@@ -3,16 +3,30 @@
   color: black;
   font-weight: 600;
   width: 5rem;
-  border: 1px solid #dbdbdb;
+  border: 1px solid #dbdbdb !important;
+
   border-radius: 4px;
-  padding: 5px 10px 5px 10px;
+  padding: 5px 10px 5px 10px !important;
 }
 
-.follow-button {
-  background-color: #0095f6;
+.follow-list-container > .follow-button {
+  background-color: #0095f6 !important;
+  padding: 0 !important;
   color: white;
   font-weight: 600;
   width: 5rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.follow-button {
+  background-color: #0095f6 !important;
+  padding: 0.2rem !important;
+  color: white;
+  font-weight: 600;
+  width: 4rem;
   border: 1px solid transparent;
   border-radius: 4px;
   padding-top: 5px;

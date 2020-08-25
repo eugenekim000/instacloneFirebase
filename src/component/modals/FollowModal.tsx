@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect } from "react";
 import { Modal } from "@material-ui/core";
 import { db, storage } from "../../firebase";
 import "../../styling/Modal.css";
-import FollowList from "../profile/FollowList";
+import ModalList from "../modals/ModalList";
 import { ReactComponent as PersonIcon } from "../../images/group.svg";
 import { motion } from "framer-motion";
 
@@ -20,7 +20,6 @@ export function FollowModal({
   followData,
 }: Props): ReactElement {
   useEffect(() => {
-    console.log(followData, "this is the follow data passed!!");
     return () => {};
   }, []);
 
@@ -41,7 +40,7 @@ export function FollowModal({
           {followData.length ? (
             <div className="follows-list-container">
               {followData.map((data) => (
-                <FollowList followData={data}></FollowList>
+                <ModalList followData={data}></ModalList>
               ))}
             </div>
           ) : (

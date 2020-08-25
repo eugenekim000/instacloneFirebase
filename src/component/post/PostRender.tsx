@@ -12,6 +12,7 @@ import { ReactComponent as ChatIcon } from "../../images/chat.svg";
 import { ReactComponent as MoreIcon } from "../../images/more.svg";
 import { postLikeQuery, userQuery, postCommentQuery } from "../../queries";
 import { OptionModal } from "../modals/OptionModal";
+import { LikeModal } from "../modals/LikeModal";
 
 interface Props {
   username: string;
@@ -35,20 +36,14 @@ export const PostRender = ({
   );
   const textInput = useRef<HTMLInputElement>(null);
   const [comment, setComment] = useState("");
+  const [postLikes, setPostLikes] = useState<any>([]);
   const [postLikeNum, setPostLikeNum] = useState(0);
   const [likedState, setLikedState] = useState(false);
+  const [openLike, setOpenLike] = useState(false);
   const [postAvatar, setPostAvatar] = useState("");
   const [option, setOption] = useState(false);
 
   useEffect(() => {
-    console.log(
-      username,
-      caption,
-      image,
-      postId,
-      filename,
-      "this is from postrender"
-    );
     postLikeQuery(postId)
       .doc(user.displayName)
       .get()
@@ -84,11 +79,9 @@ export const PostRender = ({
             })
           );
         });
-      console.log("rerendering post Id");
     }
 
-    let getPostLikes = postLikeQuery(postId);
-    getPostLikes
+    postLikeQuery(postId)
       .get()
       .then(
         (
@@ -99,10 +92,12 @@ export const PostRender = ({
           if (snapShot.empty) return;
           else {
             setPostLikeNum(snapShot.size);
-            // setPostLikes(snapShot.docs.map((doc) => doc.data()));
+            setPostLikes(snapShot.docs.map((doc) => doc.id));
           }
         }
       );
+
+    console.log(postLikes, "post likes set!");
 
     return () => {
       unsubscribe();
@@ -137,7 +132,6 @@ export const PostRender = ({
   };
 
   const displayPostLikes = (postLikeNum: number) => {
-    console.log("display post likes", postId);
     if (postLikeNum > 1) return `${postLikeNum} likes`;
     else if (postLikeNum === 1) return "1 like";
     return "Be the first to like this";
@@ -157,6 +151,16 @@ export const PostRender = ({
         username={username}
         fileName={filename}
       ></OptionModal>
+
+      {postLikes[0] ? (
+        <LikeModal
+          openLike={openLike}
+          setOpenLike={setOpenLike}
+          postLikesData={postLikes}
+        ></LikeModal>
+      ) : (
+        <></>
+      )}
 
       <div className="post-header">
         <Avatar className="post-avatar" alt="user" src={postAvatar}></Avatar>
@@ -211,7 +215,9 @@ export const PostRender = ({
       </div>
 
       <h4 className="post-text">
-        <h4> {displayPostLikes(postLikeNum)}</h4>
+        <h4 onClick={() => setOpenLike(true)} className="post-likes">
+          {displayPostLikes(postLikeNum)}
+        </h4>
         <Link to={`/${username}`}>
           <h3>
             {" "}

@@ -107,6 +107,10 @@
   font-size: 12px;
 }
 
+.post-likes:hover {
+  cursor: pointer;
+}
+
 .post-icons-container {
   margin-left: 13px;
 }
