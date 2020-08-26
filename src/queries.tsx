@@ -35,6 +35,13 @@ export const followingQuery = (user: string, username: string) =>
 export const followersQuery = (user: string, username: string) =>
   userQuery(username).collection("followers").doc(user);
 
+export const notificationQuery = (user: string): any => {
+  db.collection("users")
+    .doc(user)
+    .collection("notifications")
+    .orderBy("timestamp", "asc");
+};
+
 export const newNotication = (data: any) => {
   userQuery(data.username).update({
     notificatonCount: firebase.firestore.FieldValue.increment(1),

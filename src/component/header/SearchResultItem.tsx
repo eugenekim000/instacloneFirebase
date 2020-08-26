@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import "../../styling/Profile.css";
 import { useHistory } from "react-router-dom";
@@ -14,10 +14,6 @@ interface Props {
 export function SearchResultItem({ foundUsers }: Props): ReactElement {
   const { username, name, avatar } = foundUsers;
   const history = useHistory();
-
-  useEffect(() => {
-    console.log(username, "username form search bar");
-  }, []);
 
   return (
     <>

@@ -98,18 +98,6 @@ export const PostRender = ({
           else {
             setPostLikeNum(snapShot.size);
             setPostLikes(snapShot.docs.map((doc) => doc.id));
-
-            let notificationData = {
-              username: username,
-              user: user.displayName,
-              photo: user.photoURL,
-              type: "like",
-              timestamp: firebase.firestore.Timestamp.now().seconds.toString(),
-              postId: postId,
-              postImage: image,
-            };
-
-            newNotication(notificationData);
           }
         }
       );
@@ -149,6 +137,17 @@ export const PostRender = ({
 
   const handleLikeClick = () => {
     if (!likedState) {
+      let notificationData = {
+        username: username,
+        user: user.displayName,
+        photo: user.photoURL,
+        type: "like",
+        timestamp: firebase.firestore.Timestamp.now().seconds.toString(),
+        postId: postId,
+        postImage: image,
+      };
+
+      newNotication(notificationData);
       setPostLikeNum((prevState) => prevState + 1);
       setLikedState((prevState) => !prevState);
       postLikeQuery(postId).doc(user.displayName).set({ exists: true });

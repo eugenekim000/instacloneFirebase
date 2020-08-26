@@ -5,10 +5,12 @@ import { Button } from "@material-ui/core";
 import { auth } from "firebase";
 import { ProfileDropdown } from "./ProfileDropdown";
 import { UploadDropdown } from "./UploadDropdown";
+import { NotificationDropdown } from "./NotificationDropDown";
 
 import { ReactComponent as Compass } from "../../images/compass-unselected.svg";
 import { ReactComponent as User } from "../../images/user-unselected.svg";
 import { ReactComponent as Camera } from "../../images/camera.svg";
+import { ReactComponent as Heart } from "../../images/heart.svg";
 import SearchBar from "./SearchBar";
 
 interface Props {
@@ -24,6 +26,7 @@ export default function Header({
 }: Props): ReactElement {
   const [render, setRender] = useState(false);
   const [cameraRender, setCameraRender] = useState(false);
+  const [heartRender, setHeartRender] = useState(false);
 
   return (
     <div className="app-header">
@@ -50,6 +53,13 @@ export default function Header({
                 setCameraRender={setCameraRender}
                 username={user.displayName}
               />
+            )}
+          </>
+
+          <>
+            <Heart onClick={() => setHeartRender(true)} />
+            {heartRender && (
+              <NotificationDropdown setHeartRender={setHeartRender} />
             )}
           </>
 
