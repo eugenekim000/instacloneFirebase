@@ -1,6 +1,7 @@
 import React, { ReactElement, useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../App";
+import { auth } from "firebase";
 
 import { ReactComponent as Profile } from "../../images/user-selected.svg";
 import { ReactComponent as Settings } from "../../images/settings.svg";
@@ -41,7 +42,14 @@ export function ProfileDropdown({ setRender }: Props): ReactElement {
             <Settings /> Settings
           </Link>
         </div>
-        <div className="dropdown-item">Log out</div>
+        <div className="dropdown-item">
+          <button
+            className="dropdown-signout-button"
+            onClick={() => auth().signOut()}
+          >
+            Sign Out
+          </button>
+        </div>
       </div>
     </div>
   );

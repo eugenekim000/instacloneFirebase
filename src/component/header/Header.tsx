@@ -1,11 +1,13 @@
 import "../../styling/App.css";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { auth } from "firebase";
+import { db } from "../../firebase";
 import { ProfileDropdown } from "./ProfileDropdown";
 import { UploadDropdown } from "./UploadDropdown";
 import { NotificationDropdown } from "./NotificationDropDown";
+import Badge from "@material-ui/core/Badge";
 
 import { ReactComponent as Compass } from "../../images/compass-unselected.svg";
 import { ReactComponent as User } from "../../images/user-unselected.svg";
@@ -27,6 +29,28 @@ export default function Header({
   const [render, setRender] = useState(false);
   const [cameraRender, setCameraRender] = useState(false);
   const [heartRender, setHeartRender] = useState(false);
+  const [notification, setNotification] = useState(0);
+
+  useEffect(() => {
+    let unsubscribe: any;
+
+    unsubscribe = db
+      .collection("users")
+      .doc(user.displayName)
+      .onSnapshot((snapshot: any) => {
+        let data = snapshot.data();
+        setNotification(data.notificationCount);
+      });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleClick = () => {
+    setHeartRender(true);
+    db.collection("users")
+      .doc(user.displayName)
+      .update({ notificationCount: 0 });
+  };
 
   return (
     <div className="app-header">
@@ -46,7 +70,7 @@ export default function Header({
             <Compass />
           </Link>
 
-          <>
+          <span>
             <Camera onClick={() => setCameraRender(true)} />
             {cameraRender && (
               <UploadDropdown
@@ -54,19 +78,25 @@ export default function Header({
                 username={user.displayName}
               />
             )}
-          </>
+          </span>
 
-          <>
-            <Heart onClick={() => setHeartRender(true)} />
+          <span className="header-heart-icon-container">
+            <Badge badgeContent={notification} color="secondary">
+              <Heart
+                onClick={() => handleClick()}
+                className="header-heart-icon"
+              />
+            </Badge>
+
             {heartRender && (
               <NotificationDropdown setHeartRender={setHeartRender} />
             )}
-          </>
+          </span>
 
-          <>
+          <span>
             <User onClick={() => setRender(true)} />
             {render && <ProfileDropdown setRender={setRender} />}
-          </>
+          </span>
         </div>
       </div>
     </div>

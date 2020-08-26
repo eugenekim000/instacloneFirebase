@@ -1,0 +1,76 @@
+.notification-dropdown-wrapper:before {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  filter: drop-shadow(0 0 3px #dbdbdb);
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid black;
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+  right: 20px;
+  top: -20px;
+  z-index: 1;
+}
+
+.notification-dropdown-wrapper {
+  position: absolute;
+  background: white;
+  width: 400px;
+  max-height: 200px;
+  justify-content: center;
+  align-items: center;
+  filter: drop-shadow(0 0 3px #dbdbdb);
+  transform: translate(-87%, 5%);
+  border-radius: 5px;
+  overflow: auto;
+  font-size: 11px;
+}
+
+.notification-username .svg {
+  justify-content: center;
+  align-items: center;
+}
+.notification-info {
+  display: flex;
+  margin-left: 15px;
+}
+
+.notification-list-container {
+  display: flex;
+  align-items: center;
+  grid-template-columns: 1fr 1fr;
+  justify-content: space-between;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.notification-username {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: left;
+  margin-left: 10px;
+  height: 60px;
+  width: 225px;
+}
+
+.notification-info > a > div {
+  margin-top: 15px;
+}
+
+.notification-rightside button {
+  height: 20px;
+  font-size: 9px;
+  margin-right: 10px;
+}
+
+.notification-rightside * {
+  margin-right: 10px;
+}
+
+.notification-rightside img {
+  height: 60px;
+  width: 60px;
+  object-fit: contain;
+  margin-right: 10px;
+}

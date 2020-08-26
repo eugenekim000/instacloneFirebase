@@ -95,7 +95,7 @@ export function UploadDropdown({
   };
 
   return (
-    <div ref={myRef} className="profile-dropdown-container">
+    <span ref={myRef} className="profile-dropdown-container">
       <div
         className="profile-dropdown-wrapper-upload"
         style={{ height: "170px", width: "200px" }}
@@ -133,6 +133,6 @@ export function UploadDropdown({
           <button onClick={handleUpload}>Upload!</button>
         </div>
       </div>
-    </div>
+    </span>
   );
 }

@@ -44,7 +44,7 @@ export const notificationQuery = (user: string): any => {
 
 export const newNotication = (data: any) => {
   userQuery(data.username).update({
-    notificatonCount: firebase.firestore.FieldValue.increment(1),
+    notificationCount: firebase.firestore.FieldValue.increment(1),
   });
   userQuery(data.username).collection("notifications").add(data);
 };
