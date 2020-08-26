@@ -53,6 +53,13 @@
   max-height: 400px;
 }
 
+.follow-list-container-results-none {
+  font-size: 11px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
 .follows-list-container {
   overflow: auto;
 }

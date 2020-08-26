@@ -41,8 +41,9 @@ export default function Profile(props: any): ReactElement {
   const [openFollowers, setOpenFollowers] = useState(false);
   const user = useContext(UserContext);
 
+  let paramUsername = props.match.params.username;
+
   useEffect(() => {
-    let paramUsername = props.match.params.username;
     setUsername(paramUsername);
 
     userProfileQuery(paramUsername)
@@ -56,6 +57,9 @@ export default function Profile(props: any): ReactElement {
         const data: any = docSnapshot.data();
         const { bio, website } = data;
         if (data.avatar) setAvatar(data.avatar);
+        else {
+          setAvatar("");
+        }
         setProfileDesc(bio);
         setWebsite(website);
       });
@@ -99,7 +103,7 @@ export default function Profile(props: any): ReactElement {
           }))
         );
       });
-  }, []);
+  }, [username, paramUsername]);
 
   const handleProfilePic = (e: React.ChangeEvent<HTMLInputElement>) => {
     const image = e.target.files![0];

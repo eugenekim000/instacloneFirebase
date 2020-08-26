@@ -18,7 +18,7 @@ export function SearchResultItem({ foundUsers }: Props): ReactElement {
   return (
     <>
       {username ? (
-        <div className="follow-list-container">
+        <div className="search-results follow-list-container">
           <Avatar
             src={avatar}
             style={{ height: "27px", width: "27px", cursor: "pointer" }}
@@ -35,7 +35,9 @@ export function SearchResultItem({ foundUsers }: Props): ReactElement {
           </div>
         </div>
       ) : (
-        <div className="follow-list-container">No results found.</div>
+        <div className="follow-list-container-results-none search-results">
+          No results found.
+        </div>
       )}
     </>
   );

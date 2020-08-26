@@ -82,6 +82,7 @@
   color: #999;
   text-align: center;
   border-radius: 3px;
+  font-size: 10px;
 }
 
 .header-search-bar:focus {

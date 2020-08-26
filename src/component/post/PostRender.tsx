@@ -5,7 +5,7 @@ import "../../styling/Post.css";
 import Avatar from "@material-ui/core/Avatar";
 import { db } from "../../firebase";
 import firebase from "firebase";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { ReactComponent as UnlikeIcon } from "../../images/black-like.svg";
 import { ReactComponent as LikeIcon } from "../../images/red-like.svg";
 import { ReactComponent as ChatIcon } from "../../images/chat.svg";
@@ -247,7 +247,6 @@ export const PostRender = ({
         </h4>
         <Link to={`/${username}`}>
           <h3>
-            {" "}
             <strong>{username}</strong>
           </h3>
         </Link>{" "}

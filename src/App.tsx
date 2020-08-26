@@ -55,10 +55,14 @@ function App() {
                   path="/"
                   render={() => <FeedPage user={user} posts={posts} />}
                 />
-                <Route path="/explore" component={Explore} />
-                <Route exact path="/:username" component={Profile} />
-                <Route path="/accounts/edit" component={EditProfilePage} />
-                <Route path="/post/:postid" component={PostPage} />
+                <Route path="/explore" component={Explore} exact />
+                <Route path="/:username" component={Profile} exact />
+                <Route
+                  path="/accounts/edit"
+                  component={EditProfilePage}
+                  exact
+                />
+                <Route path="/post/:postid" component={PostPage} exact />
                 <Route exact path="*" component={NotFound} />
               </Switch>
             </UserContext.Provider>
