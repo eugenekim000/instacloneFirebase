@@ -146,7 +146,7 @@
   position: absolute;
   background: white;
   width: 400px;
-  height: 200px;
+  max-height: 200px;
   justify-content: center;
   align-items: center;
   filter: drop-shadow(0 0 3px #dbdbdb);
@@ -174,10 +174,30 @@
 }
 
 .notification-username {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: left;
   margin-left: 10px;
+  height: 60px;
+  width: 225px;
+}
+
+.notification-info > a > div {
+  margin-top: 15px;
+}
+
+.notification-rightside button {
+  height: 20px;
+  font-size: 9px;
+  margin-right: 10px;
 }
 
 .notification-rightside * {
+  margin-right: 10px;
+}
+
+.notification-rightside img {
   height: 60px;
   width: 60px;
   object-fit: contain;

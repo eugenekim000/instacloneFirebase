@@ -3,6 +3,7 @@ import Avatar from "@material-ui/core/Avatar";
 import "../../styling/Profile.css";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { FollowButton } from "../profile/FollowButton";
 
 interface Props {
   notification: any;
@@ -10,7 +11,7 @@ interface Props {
 
 export function NotificationItem({ notification }: Props): ReactElement {
   const history = useHistory();
-  const { photo, type, user } = notification;
+  const { photo, type, user, username } = notification;
 
   const renderSwitch = (param: string) => {
     switch (param) {
@@ -49,7 +50,7 @@ export function NotificationItem({ notification }: Props): ReactElement {
             </div>
           </div>
 
-          {notification.type === "comment" || notification.type === "like" ? (
+          {type === "comment" || type === "like" ? (
             <span className="notification-rightside">
               <Link to={`/post/${notification.postId}`}>
                 <img
@@ -60,7 +61,7 @@ export function NotificationItem({ notification }: Props): ReactElement {
             </span>
           ) : (
             <span className="notification-rightside">
-              <button>button</button>
+              <FollowButton user={username} username={user} />
             </span>
           )}
         </div>

@@ -1,11 +1,6 @@
 import React, { ReactElement, useState, useEffect, useContext } from "react";
 import "../../styling/FollowButton.css";
-import {
-  userQuery,
-  followingQuery,
-  followersQuery,
-  newNotication,
-} from "../../queries";
+import { followingQuery, followersQuery, newNotication } from "../../queries";
 import { UserContext } from "../../App";
 import firebase from "firebase";
 
