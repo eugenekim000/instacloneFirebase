@@ -13,6 +13,7 @@ import { ReactComponent as Compass } from "../../images/compass-unselected.svg";
 import { ReactComponent as User } from "../../images/user-unselected.svg";
 import { ReactComponent as Camera } from "../../images/camera.svg";
 import { ReactComponent as Heart } from "../../images/heart.svg";
+import { ReactComponent as FullHeart } from "../../images/heart-black.svg";
 import SearchBar from "./SearchBar";
 
 interface Props {
@@ -81,15 +82,24 @@ export default function Header({
           </span>
 
           <span className="header-heart-icon-container">
-            <Badge badgeContent={notification} color="secondary">
-              <Heart
-                onClick={() => handleClick()}
-                className="header-heart-icon"
-              />
-            </Badge>
+            <>
+              {!heartRender && (
+                <Badge badgeContent={notification} color="secondary">
+                  <Heart
+                    onClick={() => handleClick()}
+                    className="header-heart-icon"
+                  />
+                </Badge>
+              )}
+            </>
 
             {heartRender && (
-              <NotificationDropdown setHeartRender={setHeartRender} />
+              <>
+                <Badge badgeContent={notification} color="secondary">
+                  <FullHeart className="header-heart-icon" />{" "}
+                </Badge>
+                <NotificationDropdown setHeartRender={setHeartRender} />
+              </>
             )}
           </span>
 

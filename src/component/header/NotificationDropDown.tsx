@@ -10,6 +10,7 @@ import { UserContext } from "../../App";
 import { notificationQuery } from "../../queries";
 import { db } from "../../firebase";
 import { NotificationItem } from "./NotificationItem";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 interface Props {
   setHeartRender: React.Dispatch<React.SetStateAction<boolean>>;
@@ -51,10 +52,15 @@ export function NotificationDropdown({ setHeartRender }: Props): ReactElement {
   return (
     <div ref={myRef} className="profile-dropdown-container">
       <div className="notification-dropdown-wrapper">
-        {notifications[0] &&
+        {notifications[0] ? (
           notifications.map((notification: any) => (
             <NotificationItem notification={notification}></NotificationItem>
-          ))}
+          ))
+        ) : (
+          <>
+            <Skeleton variant="rect" width={400} height={200} />
+          </>
+        )}
       </div>
     </div>
   );

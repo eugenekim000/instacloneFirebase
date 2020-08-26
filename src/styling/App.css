@@ -335,6 +335,11 @@
   border-bottom: 1px solid #dbdbdb;
 }
 
+.notification-list-container-empty {
+  width: 400px;
+  height: 200px;
+}
+
 .notification-username {
   display: flex;
   justify-content: center;
