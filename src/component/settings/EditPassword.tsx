@@ -24,6 +24,11 @@ export default function ({}: Props): ReactElement {
   const handlePasswordChange = (e: any) => {
     e.preventDefault();
 
+    if (user.displayName === "Guest") {
+      alert("Please dont change the test credentials!");
+      return;
+    }
+
     if (newPassword !== confirmPassword) {
       alert("Passwords need to match!");
       return;
@@ -71,7 +76,7 @@ export default function ({}: Props): ReactElement {
       <div className="setting-input-container">
         <Avatar className={classes.medium} src={user.photoURL} />
         <div className="setting-username">
-          <div>UserName</div>
+          <div>{user.displayName}</div>
         </div>
       </div>
 

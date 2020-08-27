@@ -67,6 +67,7 @@ export default function Login({ user, setUser }: Props): ReactElement {
             {render ? <BeatLoader size={3} color="white" /> : "Login"}
           </button>
         </form>
+        <p>Test credentials: guest@guest.com, WelcomeGuest</p>
 
         <p>Forgot password?</p>
       </div>
