@@ -1,6 +1,6 @@
 # instacloneFirebase
 
-> An instagram clone created with TypeScript, React, and Google Firebase.
+> An instagram clone created with TypeScript, React, React-Router, Google Firebase, & Google Auth.
 
 ## Installation
 
