@@ -7,6 +7,7 @@
 ### Clone
 
 - Clone this repo to your local machine using `https://github.com/eugenekim000/instacloneFirebase`
+- See it deployed here 👉 https://instagram-clone-firebase-ef88b.web.app/
 
 ### Setup
 
