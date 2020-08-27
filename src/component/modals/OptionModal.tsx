@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { postsQuery, userPostQuery } from "../../queries";
 import { storage } from "../../firebase";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 interface Props {
   open: boolean;
@@ -49,12 +50,13 @@ export function OptionModal({
       .then(() => {
         console.log("success!");
         if (origin === currentLocation) {
-          return;
-        } else {
+          setOption(false);
           history.push(`/${user.displayName}`);
+        } else {
+          setOption(false);
+          history.replace({ pathname: `/${user.displayName}` });
+          history.go(0);
         }
-
-        setOption(false);
       })
       .catch((err: any) => {
         console.log(err.message);

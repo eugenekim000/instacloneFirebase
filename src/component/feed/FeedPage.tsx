@@ -23,10 +23,14 @@ export default function FeedPage({ user, posts }: Props): ReactElement {
   const [render, setRender] = useState(false);
 
   useEffect(() => {
-    let object: any = {};
     //get following
     if (user) {
-      allFollowingQuery(user.displayName)
+      const currUser = user.displayName;
+      let object: any = {};
+      object[currUser] = true;
+
+      console.log(object, "current user!");
+      allFollowingQuery(currUser)
         .get()
         .then((snapShot) => {
           snapShot.docs.map((doc) => (object[doc.id] = true));
