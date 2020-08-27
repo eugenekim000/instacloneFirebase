@@ -1,6 +1,7 @@
 import React, { ReactElement, useRef, useEffect, useState } from "react";
 import { storage, db } from "../../firebase";
 import firebase from "firebase";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 interface Props {
   setCameraRender: React.Dispatch<React.SetStateAction<boolean>>;
@@ -130,7 +131,13 @@ export function UploadDropdown({
           ></textarea>
         </div>
         <div className="dropdown-item-button-wrapper">
-          <button onClick={handleUpload}>Upload!</button>
+          <button onClick={handleUpload} disabled={progress ? true : false}>
+            {progress === 0 ? (
+              " Upload!"
+            ) : (
+              <LinearProgress variant="determinate" value={progress} />
+            )}
+          </button>
         </div>
       </div>
     </span>

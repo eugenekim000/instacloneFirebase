@@ -233,6 +233,9 @@
   font-size: 11px;
 }
 
+.dropdown-item-button-wrapper span {
+}
+
 .dropdown-item-button-wrapper:hover {
   background-color: #e7e7e7;
 }

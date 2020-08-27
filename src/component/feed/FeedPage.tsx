@@ -2,6 +2,8 @@ import React, { ReactElement, useEffect, useState } from "react";
 import ImageUpload from "./ImageUpload";
 import { PostRender } from "../post/PostRender";
 import { allFollowingQuery, allPostQuery } from "../../queries";
+import Skeleton from "@material-ui/lab/Skeleton";
+
 interface Props {
   user: any;
   posts: any;
@@ -18,6 +20,7 @@ interface Post {
 
 export default function FeedPage({ user, posts }: Props): ReactElement {
   const [followingPost, setFollowingPost] = useState<any>([]);
+  const [render, setRender] = useState(false);
 
   useEffect(() => {
     let object: any = {};
@@ -49,8 +52,8 @@ export default function FeedPage({ user, posts }: Props): ReactElement {
                   });
                 }
               });
-
               setFollowingPost(dataArray);
+              setRender(true);
             });
         });
     }
@@ -58,7 +61,13 @@ export default function FeedPage({ user, posts }: Props): ReactElement {
 
   return (
     <>
-      {user?.displayName && followingPost.length ? (
+      {!render && (
+        <div className="feed-post-container">
+          <Skeleton variant="rect" width={"500px"} height={"500px"} />
+        </div>
+      )}
+
+      {render && followingPost.length ? (
         <>
           {followingPost.map((post: Post) => (
             <div className="feed-post-container">
@@ -75,9 +84,11 @@ export default function FeedPage({ user, posts }: Props): ReactElement {
           ))}
         </>
       ) : (
-        <h3 className="feed-post-empty">
-          Empty Feed...Check out the explore tab to follow people!
-        </h3>
+        render && (
+          <h3 className="feed-post-empty" style={{ fontWeight: 300 }}>
+            Empty Feed...Check out the explore tab to follow people!
+          </h3>
+        )
       )}
     </>
   );

@@ -1,5 +1,7 @@
 import React, { ReactElement, useEffect, useState, useContext } from "react";
 import { Avatar, makeStyles } from "@material-ui/core";
+import Skeleton from "@material-ui/lab/Skeleton";
+import Box from "@material-ui/core/Box";
 import {
   userQuery as userProfileQuery,
   allFollowingQuery,
@@ -39,11 +41,13 @@ export default function Profile(props: any): ReactElement {
   const [avatar, setAvatar] = useState("");
   const [openFollowing, setOpenFollowing] = useState(false);
   const [openFollowers, setOpenFollowers] = useState(false);
+  const [render, setRender] = useState(false);
   const user = useContext(UserContext);
 
   let paramUsername = props.match.params.username;
 
   useEffect(() => {
+    setRender(false);
     setUsername(paramUsername);
 
     userProfileQuery(paramUsername)
@@ -94,7 +98,6 @@ export default function Profile(props: any): ReactElement {
       .orderBy("timestamp", "desc")
       .get()
       .then((snapshot) => {
-        console.log(snapshot.docs, "snapshot docs");
         setNumPosts(snapshot.docs.length);
         setPosts(
           snapshot.docs.map((doc) => ({
@@ -102,6 +105,7 @@ export default function Profile(props: any): ReactElement {
             imageURL: doc.data().image,
           }))
         );
+        setRender(true);
       });
   }, [username, paramUsername]);
 
@@ -145,93 +149,144 @@ export default function Profile(props: any): ReactElement {
         setOpenFollowing={setOpenFollowers}
         followType="Followers"
       />
-      <header className="profile-header">
-        {username !== user.displayName ? (
-          <div className="profile-avatar-container">
-            <Avatar className={classes.large} src={avatar} />
-          </div>
-        ) : (
-          <>
-            <label
-              htmlFor="edit-avatar"
-              className="setting-username-input-label"
-            >
-              <Avatar className={classes.large} src={avatar} />
-            </label>
-            <input
-              className="setting-username-input"
-              id="edit-avatar"
-              type="file"
-              onChange={handleProfilePic}
-              accept="image/png, image/jpeg"
-            ></input>
-          </>
-        )}
-        <section className="profile-description-container">
-          <div className="profile-buttons">
-            <h2>{username}</h2>
-            {user &&
-              (username === user.displayName ? (
-                <>
-                  <Link to="/accounts/edit">
-                    <button className="profile-edit-button">
-                      Edit Profile
-                    </button>
-                  </Link>
-                </>
-              ) : (
-                user.displayName &&
-                username && (
-                  <FollowButton
-                    user={user.displayName}
-                    username={username}
-                    setFollowers={setFollowers}
-                  />
-                )
-              ))}
-          </div>
 
-          <div className="profile-stats">
-            <p>{numPosts} posts</p>{" "}
-            <p
-              onClick={() => setOpenFollowers(true)}
-              style={{ cursor: "pointer" }}
-            >
-              {followers} followers
-            </p>{" "}
-            <p
-              onClick={() => setOpenFollowing(true)}
-              style={{ cursor: "pointer" }}
-            >
-              {followingUsers.length} following
-            </p>
-          </div>
-          <div>{profileDesc}</div>
-          <a style={{ color: "#00376b" }} href={website}>
-            {website}
-          </a>
-        </section>
-      </header>
-      <div className="profile-line"></div>
-
-      <div className="profile-images">
-        {posts[0] ? (
-          posts.map(({ imageURL, id }: Posts) => (
-            <HoverImg image={imageURL} id={id} username={username}></HoverImg>
-          ))
-        ) : (
-          <>
-            <div></div>
-            <div className="profile-images-container">
-              <div className="profile-images-wrapper">
-                <CameraIcon />
-                <h4>No Posts Yet</h4>
-                <h6>When posted, you'll see photos here.</h6>
+      {render ? (
+        <>
+          <header className="profile-header">
+            {username !== user.displayName ? (
+              <div className="profile-avatar-container">
+                <Avatar className={classes.large} src={avatar} />
               </div>
-            </div>
-          </>
-        )}
-      </div>
+            ) : (
+              <>
+                <label
+                  htmlFor="edit-avatar"
+                  className="setting-username-input-label"
+                >
+                  <Avatar className={classes.large} src={avatar} />
+                </label>
+                <input
+                  className="setting-username-input"
+                  id="edit-avatar"
+                  type="file"
+                  onChange={handleProfilePic}
+                  accept="image/png, image/jpeg"
+                ></input>
+              </>
+            )}
+            <section className="profile-description-container">
+              <div className="profile-buttons">
+                <h2>{username}</h2>
+                {user &&
+                  (username === user.displayName ? (
+                    <>
+                      <Link to="/accounts/edit">
+                        <button className="profile-edit-button">
+                          Edit Profile
+                        </button>
+                      </Link>
+                    </>
+                  ) : (
+                    user.displayName &&
+                    username && (
+                      <FollowButton
+                        user={user.displayName}
+                        username={username}
+                        setFollowers={setFollowers}
+                      />
+                    )
+                  ))}
+              </div>
+
+              <div className="profile-stats">
+                <p>{numPosts} posts</p>{" "}
+                <p
+                  onClick={() => setOpenFollowers(true)}
+                  style={{ cursor: "pointer" }}
+                >
+                  {followers} followers
+                </p>{" "}
+                <p
+                  onClick={() => setOpenFollowing(true)}
+                  style={{ cursor: "pointer" }}
+                >
+                  {followingUsers.length} following
+                </p>
+              </div>
+              <div>{profileDesc}</div>
+              <a style={{ color: "#00376b" }} href={website}>
+                {website}
+              </a>
+            </section>
+          </header>
+          <div className="profile-line"></div>
+
+          <div className="profile-images">
+            {posts[0] ? (
+              posts.map(({ imageURL, id }: Posts) => (
+                <HoverImg
+                  image={imageURL}
+                  id={id}
+                  username={username}
+                ></HoverImg>
+              ))
+            ) : (
+              <>
+                <div></div>
+                <div className="profile-images-container">
+                  <div className="profile-images-wrapper">
+                    <CameraIcon />
+                    <h4>No Posts Yet</h4>
+                    <h6>When posted, you'll see photos here.</h6>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        </>
+      ) : (
+        <header className="profile-header">
+          <div className="profile-avatar-container">
+            <Skeleton
+              variant="circle"
+              width={100}
+              height={100}
+              animation="wave"
+            />
+          </div>
+
+          <section className="profile-description-container">
+            <Skeleton variant="rect" width={200} height={10} animation="wave" />
+
+            <Box display="flex" alignItems="center">
+              <Box margin={1}>
+                <Skeleton
+                  variant="rect"
+                  width={70}
+                  height={10}
+                  animation="wave"
+                />
+              </Box>
+              <Box margin={1}>
+                <Skeleton
+                  variant="rect"
+                  width={70}
+                  height={10}
+                  animation="wave"
+                />
+              </Box>
+              <Box margin={1}>
+                <Skeleton
+                  variant="rect"
+                  width={70}
+                  height={10}
+                  animation="wave"
+                />
+              </Box>
+            </Box>
+          </section>
+        </header>
+      )}
     </div>
   );
 }

@@ -26,6 +26,7 @@ interface Props {
   postId: string;
   user: any;
   filename: string;
+  setRender?: any;
 }
 
 export const PostRender = ({
@@ -35,6 +36,7 @@ export const PostRender = ({
   postId,
   user,
   filename,
+  setRender,
 }: Props) => {
   const [comments, setcomments] = useState<firebase.firestore.DocumentData[]>(
     []
@@ -47,6 +49,7 @@ export const PostRender = ({
   const [openLike, setOpenLike] = useState(false);
   const [postAvatar, setPostAvatar] = useState("");
   const [option, setOption] = useState(false);
+  // const [render, setRender] = useState(false);
 
   useEffect(() => {
     postLikeQuery(postId)
@@ -99,6 +102,7 @@ export const PostRender = ({
             setPostLikeNum(snapShot.size);
             setPostLikes(snapShot.docs.map((doc) => doc.id));
           }
+          if (setRender) setRender(true);
         }
       );
 
@@ -169,131 +173,139 @@ export const PostRender = ({
   };
 
   return (
-    <div className="post">
-      <OptionModal
-        open={option}
-        setOption={setOption}
-        postId={postId}
-        user={user}
-        username={username}
-        fileName={filename}
-      ></OptionModal>
+    <>
+      {/* {render ? ( */}
+      <div className="post">
+        <OptionModal
+          open={option}
+          setOption={setOption}
+          postId={postId}
+          user={user}
+          username={username}
+          fileName={filename}
+        ></OptionModal>
 
-      {postLikes[0] ? (
-        <LikeModal
-          openLike={openLike}
-          setOpenLike={setOpenLike}
-          postLikesData={postLikes}
-        ></LikeModal>
-      ) : (
-        <></>
-      )}
+        {postLikes[0] ? (
+          <LikeModal
+            openLike={openLike}
+            setOpenLike={setOpenLike}
+            postLikesData={postLikes}
+          ></LikeModal>
+        ) : (
+          <></>
+        )}
 
-      <div className="post-header">
-        <Avatar className="post-avatar" alt="user" src={postAvatar}></Avatar>
+        <div className="post-header">
+          <Avatar className="post-avatar" alt="user" src={postAvatar}></Avatar>
 
-        <Link to={`/${username}`}>
-          <h3> {username}</h3>
-        </Link>
+          <Link to={`/${username}`}>
+            <h3> {username}</h3>
+          </Link>
 
-        <div onClick={() => setOption(true)}>
-          <MoreIcon
-            style={{
-              height: 14,
-              width: 14,
-              position: "absolute",
-              right: "15px",
-              cursor: "pointer",
-            }}
-          />
+          <div onClick={() => setOption(true)}>
+            <MoreIcon
+              style={{
+                height: 14,
+                width: 14,
+                position: "absolute",
+                right: "15px",
+                cursor: "pointer",
+              }}
+            />
+          </div>
         </div>
-      </div>
 
-      <img className="post-image" alt="post" src={image}></img>
+        <img className="post-image" alt="post" src={image}></img>
 
-      <div className="post-icons-container">
-        <section className="post-icons">
-          <button className="post-like-button" onClick={handleLikeClick}>
-            {likedState ? (
-              <motion.div
-                whileTap={{
-                  scale: 1.2,
-                  transition: { duration: 0.1 },
-                }}
-              >
-                <LikeIcon style={{ height: 24, width: 24 }} />
-              </motion.div>
-            ) : (
-              <motion.div
-                whileTap={{
-                  scale: 1.2,
-                  transition: { duration: 0.1 },
-                }}
-              >
-                <UnlikeIcon style={{ height: 24, width: 24 }} />
-              </motion.div>
-            )}
-          </button>
+        <div className="post-icons-container">
+          <section className="post-icons">
+            <button className="post-like-button" onClick={handleLikeClick}>
+              {likedState ? (
+                <motion.div
+                  whileTap={{
+                    scale: 1.2,
+                    transition: { duration: 0.1 },
+                  }}
+                >
+                  <LikeIcon style={{ height: 24, width: 24 }} />
+                </motion.div>
+              ) : (
+                <motion.div
+                  whileTap={{
+                    scale: 1.2,
+                    transition: { duration: 0.1 },
+                  }}
+                >
+                  <UnlikeIcon style={{ height: 24, width: 24 }} />
+                </motion.div>
+              )}
+            </button>
 
-          <button className="post-chat-button" onClick={handleChatClick}>
-            <ChatIcon style={{ height: 24, width: 24 }} />
-          </button>
-        </section>
-      </div>
+            <button className="post-chat-button" onClick={handleChatClick}>
+              <ChatIcon style={{ height: 24, width: 24 }} />
+            </button>
+          </section>
+        </div>
 
-      <h4 className="post-text">
-        <h4 onClick={() => setOpenLike(true)} className="post-likes">
-          {displayPostLikes(postLikeNum)}
+        <h4 className="post-text">
+          <h4 onClick={() => setOpenLike(true)} className="post-likes">
+            {displayPostLikes(postLikeNum)}
+          </h4>
+          <Link to={`/${username}`}>
+            <h3>
+              <strong>{username}</strong>
+            </h3>
+          </Link>{" "}
+          {caption}
         </h4>
-        <Link to={`/${username}`}>
-          <h3>
-            <strong>{username}</strong>
-          </h3>
-        </Link>{" "}
-        {caption}
-      </h4>
 
-      <div className="post-comments">
-        {comments.map((comment) => (
-          <span className="post-comment">
-            <p>
-              <Link to={`/${comment.username}`}>
-                <strong>{comment.username} </strong>
-              </Link>
-              {comment.text}
-            </p>
-            {comment.username === user.displayName ? (
-              <button onClick={() => handleDeleteComment(comment.id)}>x</button>
-            ) : (
-              <></>
-            )}
-          </span>
-        ))}
+        <div className="post-comments">
+          {comments.map((comment) => (
+            <span className="post-comment">
+              <p>
+                <Link to={`/${comment.username}`}>
+                  <strong>{comment.username} </strong>
+                </Link>
+                {comment.text}
+              </p>
+              {comment.username === user.displayName ? (
+                <button onClick={() => handleDeleteComment(comment.id)}>
+                  x
+                </button>
+              ) : (
+                <></>
+              )}
+            </span>
+          ))}
+        </div>
+
+        {user && (
+          <form className="post-comment-box">
+            <input
+              ref={textInput}
+              className="post-input"
+              value={comment}
+              type="text"
+              placeholder="Add a comment..."
+              onChange={(e) => setComment(e.target.value)}
+            ></input>
+            <button
+              className="post-button"
+              disabled={!comment}
+              type="submit"
+              onClick={postComment}
+              style={{
+                color: comment ? "rgba(var(--d69,0,149,246),1)" : "#6082a3",
+              }}
+            >
+              Post
+            </button>
+          </form>
+        )}
       </div>
-
-      {user && (
-        <form className="post-comment-box">
-          <input
-            ref={textInput}
-            className="post-input"
-            value={comment}
-            type="text"
-            placeholder="Add a comment..."
-            onChange={(e) => setComment(e.target.value)}
-          ></input>
-          <button
-            className="post-button"
-            disabled={!comment}
-            type="submit"
-            onClick={postComment}
-            style={{
-              color: comment ? "rgba(var(--d69,0,149,246),1)" : "#6082a3",
-            }}
-          >
-            Post
-          </button>
-        </form>
-      )}
-    </div>
+      {/* ) : (
+        <> </>
+      )} */}
+    </>
   );
 };

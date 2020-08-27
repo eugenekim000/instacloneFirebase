@@ -22,12 +22,15 @@ export const UserContext = createContext<any | null>(null);
 function App() {
   const [posts, setPosts] = useState<Partial<any>>([]);
   const [user, setUser] = useState<any>(null);
+  const [render, setRender] = useState(false);
 
   useEffect(() => {
     console.log(user);
     const unsubscribe = auth().onAuthStateChanged((authUser) => {
       if (authUser) {
         setUser(authUser);
+      } else {
+        setRender(true);
       }
     });
 
@@ -68,7 +71,7 @@ function App() {
             </UserContext.Provider>
           </>
         )}
-        {!user && (
+        {!user && render && (
           <Switch>
             <Route
               path="/login"
