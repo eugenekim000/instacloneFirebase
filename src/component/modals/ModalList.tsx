@@ -52,12 +52,22 @@ export default function ModalList({ followData }: Props): ReactElement {
         <>
           <Box display="flex" alignItems="center">
             <Box margin={1}>
-              <Skeleton variant="circle" width={24} height={24}>
+              <Skeleton
+                variant="circle"
+                width={24}
+                height={24}
+                animation="wave"
+              >
                 <Avatar />
               </Skeleton>
             </Box>
             <Box>
-              <Skeleton variant="rect" width={180} height={10} />
+              <Skeleton
+                variant="rect"
+                width={180}
+                height={10}
+                animation="wave"
+              />
             </Box>
           </Box>
         </>

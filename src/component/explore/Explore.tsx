@@ -1,5 +1,6 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import "../../styling/Explore.css";
+import Skeleton from "@material-ui/lab/Skeleton";
 import { allPostQuery } from "../../queries";
 import { shuffle } from "../../helper";
 import HoverImg from "../HoverImg";
@@ -33,12 +34,23 @@ export default function Explore({}: Props): ReactElement {
 
   return (
     <>
-      {render && (
+      {render ? (
         <div className="explore-images-container">
           <div className="explore-images">
             {posts.map(({ username, id, image }: any) => (
               <HoverImg username={username} id={id} image={image} />
             ))}
+          </div>
+        </div>
+      ) : (
+        <div className="explore-images-container-empty">
+          <div className="explore-images-empty">
+            <Skeleton variant="rect" />
+            <Skeleton variant="rect" />
+            <Skeleton variant="rect" />
+            <Skeleton variant="rect" />
+            <Skeleton variant="rect" />
+            <Skeleton variant="rect" />
           </div>
         </div>
       )}

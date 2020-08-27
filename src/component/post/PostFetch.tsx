@@ -3,6 +3,7 @@ import { PostRender } from "../post/PostRender";
 import { UserContext } from "../../App";
 import { useHistory, Link } from "react-router-dom";
 import { postsQuery } from "../../queries";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 export function PostFetch({ paramPostId }: any): ReactElement {
   const [caption, setCaption] = useState("");
@@ -38,7 +39,7 @@ export function PostFetch({ paramPostId }: any): ReactElement {
 
   return (
     <div>
-      {render && (
+      {render ? (
         <PostRender
           username={username}
           caption={caption}
@@ -47,6 +48,8 @@ export function PostFetch({ paramPostId }: any): ReactElement {
           user={user}
           filename={fileName}
         />
+      ) : (
+        <Skeleton variant="rect" width={500} height={500} animation="wave" />
       )}
     </div>
   );

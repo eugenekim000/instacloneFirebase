@@ -5,7 +5,6 @@ import "../../styling/Modal.css";
 import ModalList from "../modals/ModalList";
 import { ReactComponent as PersonIcon } from "../../images/group.svg";
 import { motion } from "framer-motion";
-import Skeleton from "@material-ui/lab/Skeleton";
 
 interface Props {
   openFollowing: boolean;

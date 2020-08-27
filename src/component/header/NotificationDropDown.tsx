@@ -58,7 +58,12 @@ export function NotificationDropdown({ setHeartRender }: Props): ReactElement {
           ))
         ) : (
           <>
-            <Skeleton variant="rect" width={400} height={200} />
+            <Skeleton
+              variant="rect"
+              width={400}
+              height={150}
+              animation="wave"
+            />
           </>
         )}
       </div>

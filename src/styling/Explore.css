@@ -20,3 +20,28 @@
   grid-row-start: span 2;
   grid-row-end: auto;
 }
+
+.explore-images-empty {
+  max-width: 935px;
+  display: grid;
+  margin-left: auto;
+  margin-right: auto;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 28px;
+}
+
+.explore-images-empty span {
+  max-height: 10em;
+  max-width: 100%;
+  height: 15em;
+  width: 5em;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.explore-images-empty > :nth-child(18n + 2) {
+  grid-column-start: 2;
+  grid-column-end: -1;
+  grid-row-start: span 2;
+  grid-row-end: auto;
+}
