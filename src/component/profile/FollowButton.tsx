@@ -3,6 +3,8 @@ import "../../styling/FollowButton.css";
 import { followingQuery, followersQuery, newNotication } from "../../queries";
 import { UserContext } from "../../App";
 import firebase from "firebase";
+import { css } from "@emotion/core";
+import BeatLoader from "react-spinners/BeatLoader";
 
 interface Props {
   user: string;
@@ -15,6 +17,7 @@ export const FollowButton = ({
   username,
   setFollowers,
 }: Props): ReactElement => {
+  const [render, setRender] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
   const userData = useContext(UserContext);
   const notificationData = {
@@ -25,6 +28,7 @@ export const FollowButton = ({
 
   useEffect(() => {
     if (user && username) {
+      setRender(true);
       followingQuery(user, username)
         .get()
         .then((doc) => {
@@ -33,6 +37,7 @@ export const FollowButton = ({
           } else {
             setIsFollowing(false);
           }
+          setRender(false);
         })
         .catch((err: any) => console.log(err));
     }
@@ -40,7 +45,7 @@ export const FollowButton = ({
 
   const handleFollow = (e: any) => {
     e.preventDefault();
-
+    setRender(true);
     followingQuery(user, username)
       .set({ exist: true })
       .then(() =>
@@ -59,17 +64,24 @@ export const FollowButton = ({
               type: "follow",
             };
 
-            console.log(data, "data from follow!!");
-
             newNotication(data);
+            setRender(false);
           })
-          .catch((err: any) => console.log(err.message))
+          .catch((err: any) => {
+            setRender(false);
+            console.log(err.message);
+          })
       )
-      .catch((err: any) => console.log(err.message));
+      .catch((err: any) => {
+        setRender(false);
+        console.log(err.message);
+      });
   };
 
   const handleUnFollow = (e: any) => {
     e.preventDefault();
+    setRender(true);
+
     followingQuery(user, username)
       .delete()
       .then(() => {
@@ -80,10 +92,17 @@ export const FollowButton = ({
               setFollowers((prevState) => prevState - 1);
             }
             setIsFollowing(false);
+            setRender(false);
           })
-          .catch((err: any) => console.log(err.message));
+          .catch((err: any) => {
+            setRender(false);
+            console.log(err.message);
+          });
       })
-      .catch((err: any) => console.log(err.message));
+      .catch((err: any) => {
+        setRender(false);
+        console.log(err.message);
+      });
   };
 
   return (
@@ -92,12 +111,17 @@ export const FollowButton = ({
         <button
           onClick={(e: any) => handleUnFollow(e)}
           className="unfollow-button"
+          disabled={render ? true : false}
         >
-          Unfollow
+          {render ? <BeatLoader size={5} color="black" /> : "Unfollow"}
         </button>
       ) : (
-        <button onClick={(e: any) => handleFollow(e)} className="follow-button">
-          Follow
+        <button
+          onClick={(e: any) => handleFollow(e)}
+          className="follow-button"
+          disabled={render ? true : false}
+        >
+          {render ? <BeatLoader size={5} color="white" /> : "Follow"}
         </button>
       )}
     </>
