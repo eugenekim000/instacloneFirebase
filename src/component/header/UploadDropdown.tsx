@@ -1,7 +1,15 @@
-import React, { ReactElement, useRef, useEffect, useState } from "react";
+import React, {
+  ReactElement,
+  useRef,
+  useEffect,
+  useState,
+  useContext,
+} from "react";
 import { storage, db } from "../../firebase";
 import firebase from "firebase";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import { useHistory } from "react-router-dom";
+import { UserContext } from "../../App";
 
 interface Props {
   setCameraRender: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,7 +31,9 @@ export function UploadDropdown({
   const [imagePrev, setImagePrev] = useState<any>("");
   const [caption, setCaption] = useState("");
   const [progress, setProgress] = useState(0);
+  const user = useContext(UserContext);
 
+  const history = useHistory();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
 
@@ -45,10 +55,10 @@ export function UploadDropdown({
     }
 
     const currentTime = firebase.firestore.Timestamp.now().seconds.toString();
-
     const fileName = image!.name + currentTime;
-
     const uploadTask = storage.ref(`images/${fileName}`).put(image);
+
+    let imageURL: string;
 
     uploadTask.on(
       "state_changed",
@@ -79,17 +89,20 @@ export function UploadDropdown({
                 filename: fileName,
               })
               .then((docRef) => {
+                imageURL = docRef.id;
                 db.collection("users")
                   .doc(username)
                   .collection("posts")
                   .doc(docRef.id)
                   .set({ image: url, timestamp: currentTime });
+              })
+              .then(() => {
+                setProgress(0);
+                setCaption("");
+                setImage("");
+                setImagePrev("");
+                history.push(`/post/${imageURL}`);
               });
-
-            setProgress(0);
-            setCaption("");
-            setImage("");
-            setImagePrev("");
           });
       }
     );
