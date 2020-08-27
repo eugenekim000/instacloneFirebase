@@ -20,6 +20,7 @@ export function NotificationDropdown({ setHeartRender }: Props): ReactElement {
   const myRef: any = useRef();
   const user = useContext(UserContext);
   const [notifications, setNotifications] = useState<any>([]);
+  const [render, setRender] = useState(false);
 
   const handleClickOutside = (e: any) => {
     if (!myRef.current!.contains(e.target)) {
@@ -37,7 +38,7 @@ export function NotificationDropdown({ setHeartRender }: Props): ReactElement {
       .orderBy("timestamp", "desc")
       .onSnapshot((snapshot) => {
         setNotifications(snapshot.docs.map((doc) => doc.data()));
-        snapshot.docs.map((doc) => console.log(doc.data()));
+        setRender(true);
       });
 
     return () => unsubscribe();
@@ -52,10 +53,16 @@ export function NotificationDropdown({ setHeartRender }: Props): ReactElement {
   return (
     <div ref={myRef} className="profile-dropdown-container">
       <div className="notification-dropdown-wrapper">
-        {notifications[0] ? (
-          notifications.map((notification: any) => (
-            <NotificationItem notification={notification}></NotificationItem>
-          ))
+        {render ? (
+          notifications[0] ? (
+            notifications.map((notification: any) => (
+              <NotificationItem notification={notification}></NotificationItem>
+            ))
+          ) : (
+            <NotificationItem
+              notification={{ photo: "", type: "", user: "", username: "" }}
+            ></NotificationItem>
+          )
         ) : (
           <>
             <Skeleton

@@ -2,6 +2,7 @@ import React, { ReactElement, useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../App";
 import { auth } from "firebase";
+import { useHistory } from "react-router-dom";
 
 import { ReactComponent as Profile } from "../../images/user-selected.svg";
 import { ReactComponent as Settings } from "../../images/settings.svg";
@@ -13,6 +14,7 @@ interface Props {
 export function ProfileDropdown({ setRender }: Props): ReactElement {
   const myRef: any = useRef();
   const user = useContext(UserContext);
+  const history = useHistory();
 
   const handleClickOutside = (e: any) => {
     if (!myRef.current!.contains(e.target)) {
@@ -45,7 +47,14 @@ export function ProfileDropdown({ setRender }: Props): ReactElement {
         <div className="dropdown-item">
           <button
             className="dropdown-signout-button"
-            onClick={() => auth().signOut()}
+            onClick={() =>
+              auth()
+                .signOut()
+                .then(() => {
+                  history.replace({ pathname: `/` });
+                  history.go(0);
+                })
+            }
           >
             Sign Out
           </button>

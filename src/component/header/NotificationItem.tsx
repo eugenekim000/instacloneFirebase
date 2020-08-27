@@ -66,7 +66,12 @@ export function NotificationItem({ notification }: Props): ReactElement {
           )}
         </div>
       ) : (
-        <div className="follow-list-container">No notifications.</div>
+        <div
+          className="follow-list-container"
+          style={{ justifyContent: "center" }}
+        >
+          No notifications.
+        </div>
       )}
     </>
   );

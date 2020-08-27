@@ -40,6 +40,11 @@ input::placeholder {
   color: white;
   background-color: #0095f6;
   font-weight: bold;
+  cursor: pointer;
+}
+
+.login-input-forms button:disabled {
+  background-color: #cccccc;
 }
 
 .login-input-forms * {

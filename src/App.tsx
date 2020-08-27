@@ -25,14 +25,19 @@ function App() {
   const [render, setRender] = useState(false);
 
   useEffect(() => {
-    console.log(user);
+    console.log(user, "app");
     const unsubscribe = auth().onAuthStateChanged((authUser) => {
       if (authUser) {
         setUser(authUser);
+        setRender(true);
       } else {
         setRender(true);
       }
     });
+
+    if (user) {
+      setRender(true);
+    }
 
     return () => {
       unsubscribe();

@@ -1,8 +1,11 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as Github } from "../../images/github.svg";
+import { useHistory } from "react-router-dom";
 import { auth } from "firebase";
 import { db } from "../../firebase";
+import { css } from "@emotion/core";
+import BeatLoader from "react-spinners/BeatLoader";
 
 interface Props {
   setUser: React.Dispatch<any>;
@@ -14,6 +17,8 @@ export default function SignUp({ setUser, user }: Props): ReactElement {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
+  const [render, setRender] = useState(false);
+  const history = useHistory();
 
   const checkUsernameAvail = async (checkName: string | undefined) => {
     let userQuery = await db.collection("users").doc(checkName);
@@ -51,6 +56,8 @@ export default function SignUp({ setUser, user }: Props): ReactElement {
   ) => {
     e.preventDefault();
 
+    setRender(true);
+
     let usernameCheck = await checkUsernameAvail(username);
     if (!usernameCheck) {
       alert("username already taken!");
@@ -63,10 +70,11 @@ export default function SignUp({ setUser, user }: Props): ReactElement {
         db.collection("users").doc(username).set({
           notificationCount: 0,
           profile: "",
-          name: "",
+          name: name,
           website: "",
           bio: "",
         });
+        history.push("/");
         return authUser.user?.updateProfile({ displayName: username });
       })
       .catch((error) => alert(error.message));
@@ -85,29 +93,38 @@ export default function SignUp({ setUser, user }: Props): ReactElement {
             <input
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
+              required
             ></input>
           </div>
           <div className="login-input-wrapper">
             <input
               onChange={(e) => setName(e.target.value)}
               placeholder="Full Name"
+              required
             ></input>
           </div>
           <div className="login-input-wrapper">
             <input
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Username"
+              required
             ></input>
           </div>
           <div className="login-input-wrapper">
             <input
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
+              type="password"
+              required
             ></input>
           </div>
 
-          <button onClick={(e) => handleSignUp(e)} type="submit">
-            Sign Up
+          <button
+            onClick={(e) => handleSignUp(e)}
+            type="submit"
+            disabled={!email || !password || !username || !name ? true : false}
+          >
+            {render ? <BeatLoader size={3} color="white" /> : "Sign Up"}
           </button>
 
           <p className="login-disclaimer">

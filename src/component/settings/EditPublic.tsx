@@ -84,6 +84,8 @@ export default function EditPublic({}: Props): ReactElement {
     e.preventDefault();
     if (!userName) return;
 
+    console.log(userName, "username");
+
     db.collection("users")
       .doc(userName)
       .get()
@@ -137,14 +139,7 @@ export default function EditPublic({}: Props): ReactElement {
             value={name}
           ></input>
         </div>
-        {/* <div className="setting-input-container">
-          <label>Username</label>
-          <input
-            onChange={(e) => onChangeHandler(e, setUserName)}
-            placeholder={user ? user.displayName : ""}
-            value={userName}
-          ></input>
-        </div> */}
+
         <div className="setting-input-container">
           <label>Website</label>
           <input

@@ -3,6 +3,8 @@ import "../../styling/Landing.css";
 import { Link } from "react-router-dom";
 import { auth } from "firebase";
 import { ReactComponent as Github } from "../../images/github.svg";
+import { css } from "@emotion/core";
+import BeatLoader from "react-spinners/BeatLoader";
 
 interface Props {
   setUser: React.Dispatch<any>;
@@ -12,6 +14,7 @@ interface Props {
 export default function Login({ user, setUser }: Props): ReactElement {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [render, setRender] = useState(false);
 
   useEffect(() => {
     console.log("render login, user username");
@@ -61,7 +64,7 @@ export default function Login({ user, setUser }: Props): ReactElement {
           </div>
 
           <button onClick={(e) => handleSignIn(e)} type="submit">
-            Log in
+            {render ? <BeatLoader size={3} color="white" /> : "Login"}
           </button>
         </form>
 

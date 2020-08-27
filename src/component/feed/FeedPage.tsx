@@ -24,7 +24,7 @@ export default function FeedPage({ user, posts }: Props): ReactElement {
 
   useEffect(() => {
     //get following
-    if (user) {
+    if (user.displayName) {
       const currUser = user.displayName;
       let object: any = {};
       object[currUser] = true;

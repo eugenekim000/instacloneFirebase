@@ -35,13 +35,15 @@ export default function Header({
   useEffect(() => {
     let unsubscribe: any;
 
-    unsubscribe = db
-      .collection("users")
-      .doc(user.displayName)
-      .onSnapshot((snapshot: any) => {
-        let data = snapshot.data();
-        setNotification(data.notificationCount);
-      });
+    if (user.displayName) {
+      unsubscribe = db
+        .collection("users")
+        .doc(user.displayName)
+        .onSnapshot((snapshot: any) => {
+          let data = snapshot.data();
+          setNotification(data.notificationCount);
+        });
+    }
 
     return () => unsubscribe();
   }, []);
